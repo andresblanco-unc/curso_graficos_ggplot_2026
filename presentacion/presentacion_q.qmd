@@ -18,7 +18,7 @@ format:
 
 ## Objetivos {-}
 
-El objetivo principal del curso es que los asistentes obtengan herramientas para la generación y manejo de gráficos utilizando lenguaje R y el software RStudio, con especial énfasis en la escritura que requiere el paquete ggplot2. 
+El objetivo principal del curso es que los asistentes obtengan herramientas para la generación y manejo de gráficos utilizando lenguaje R y el software RStudio, con especial énfasis en la escritura de capas que requiere el paquete ggplot2. 
 
 ## Contenidos {-}
 
