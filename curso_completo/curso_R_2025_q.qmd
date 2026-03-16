@@ -12,10 +12,6 @@ format:
     toc-title: "Contenidos"
 ---
 
-::: {style="text-align: right;"}
-[Volver al inicio](../)
-:::
-
 ## Objetivos {.unnumbered}
 
 El objetivo principal del curso es que los asistentes obtengan herramientas para la generación y manejo de gráficos utilizando lenguaje R y el software RStudio, con especial énfasis en la escritura que requiere el paquete ggplot2.
