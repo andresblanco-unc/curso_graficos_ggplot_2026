@@ -1,0 +1,35 @@
+---
+title: "Curso Completo"
+author: "Andrés Blanco"
+date: "2026"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: left
+    toc-title: "Contenidos"
+    toc-depth: 2
+    number-sections: true
+    number-depth: 3
+---
+
+# Presentación
+{{< include ../presentacion/presentacion_q.qmd >}}
+
+# Unidad 1
+{{< include ../unidad_1/unidad_1_q.qmd >}}
+
+# Unidad 2
+{{< include ../unidad_2/unidad_2_q.qmd >}}
+
+# Unidad 3
+{{< include ../unidad_3/unidad_3_q.qmd >}}
+
+# Unidad 4
+{{< include ../unidad_4/unidad_4_q.qmd >}}
+
+# Unidad 5
+{{< include ../unidad_5/unidad_5_q.qmd >}}
+
+

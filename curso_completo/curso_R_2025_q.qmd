@@ -1,7 +1,7 @@
 ---
 title: "Gráficos para publicaciones en R con énfasis en ggplot2"
 author: "Andrés Blanco"
-date: "2025"
+date: "2026"
 format:
   html:
     theme: cosmo

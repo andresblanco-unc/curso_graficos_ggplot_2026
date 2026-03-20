@@ -4,9 +4,10 @@ date: "2025-03-12"
 format:
   html:
     theme: cosmo
-    #css: styles.css
+    css: styles.css
     toc: true
     toc-location: left
+    #number-sections: true
     toc-title: "Contenidos"
 ---
 

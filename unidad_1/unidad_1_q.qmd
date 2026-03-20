@@ -1,5 +1,4 @@
 ---
-title: "Unidad 1"
 author: "Andrés Blanco"
 date: "2026"
 format:
@@ -8,7 +7,7 @@ format:
     css: styles.css
     toc: true
     toc-location: left
-    #number-sections: true
+    number-sections: true
     toc-title: "Contenidos"
 ---
 
@@ -18,15 +17,15 @@ format:
 
 \pagebreak
 
-# Introducción a R y RStudio
+## Introducción a R y RStudio
 
-## El lenguaje R
+### El lenguaje R
 
 R es un lenguaje de escritura propio. Como todo lenguaje, tiene la gran virtud de que permite la comunicación a través de él, se puede intercambiar, podemos "hablarlo" en todas partes del mundo, compartir *scripts* con colegas y mostrarles cómo analizamos los datos. Sin embargo, su principal virtud es también su kryptonita ya que, como todo lenguaje, tiene muchos modismos. Cada persona desarrolla su propia forma de escritura, arma los *scripts* como le parece conveniente, entendible, práctico. Uno mismo a lo largo del tiempo va perfeccionando sus propios escritos, corrigiendo lo antes hecho, reescribiendo con un estilo más refinado o más avanzado.
 
 Mi reflexión a este respecto es que la experiencia con el software es dinámica, aquí no se pretende mostrar una receta cerrada que no se puede modificar (ni mucho menos), sino simplemente acercar el programa a aquellos que aún no lo conocen y permitirles dar los primeros pasos para luego iniciar su propio camino.
 
-## Ventajas y desventajas de R
+### Ventajas y desventajas de R
 
 Por supuesto este apartado es totalmente subjetivo y (al igual que todo este escrito) está enteramente marcado por mi experiencia personal. La principal desventaja salta a la vista: hay que aprender un lenguaje nuevo de escritura. De esta desventaja se desprende su principal limitación: requiere tiempo aprenderlo. El uso de R requiere tener paciencia, leer, aprender a utilizarlo, frustrarse, reintentar, googlear buscando ayuda, etc. Por otra parte, la flexibilidad de escritura a veces dificulta el entendimiento. Finalmente algo que puede parecer una desventaja (que ya veremos que no lo es) es que en algunos casos puede llevarnos bastante tiempo llegar a un gráfico aceptable de acuerdo a nuestro requerimientos, gráfico que a simple vista pareciera haber sido mucho más rápido hacerlo en otro software ya conocido (como excel).
 
@@ -39,11 +38,11 @@ De ahí en más, presenta muchas virtudes:
 -   La esencia de R es la capacidad de repetición. Retomando lo que mencioné como una supuesta desventaja (pero que no lo era), una vez que logramos un gráfico (puede ser también un comando, pero vale el ejemplo) que estéticamente nos agrada, es muy sencillo extrapolar esa apariencia a otro gráfico, aún de diferente tipo. Por lo tanto, todo ese tiempo que nos llevó armarlo, es inversión y aprendizaje para que la siguiente vez todo sea más rápido.
 -   El uso de funciones: relacionado al ítem anterior, y una vez que tengamos algo de manejo, podemos armar las funciones que nosotros queramos reuniendo los análisis que queramos ver y simplificar los comandos para que en una sola línea generemos mucha información.
 
-## Instalación de R
+### Instalación de R
 
 En windows, se debe descargar la última versión de R desde su web (<https://cran.r-project.org/bin/windows/base/>), e instalarlo como cualquier otro programa.
 
-## RStudio
+### RStudio
 
 RStudio es un software que nos va a permitir trabajar de un modo más amigable con R (que de forma nativa se utiliza en un entorno tipo terminal de programación). El programa es de uso libre y se descarga desde la web oficial (<https://posit.co/download/rstudio-desktop/>). Una vez que instalamos el programa y lo abrimos, nos ofrece muchísimas posibilidades. En este taller simplemente vamos a ver su uso básico.
 
@@ -67,7 +66,7 @@ Como se ve RStudio nos permite realizar diversas acciones de forma gráfica, sin
 
 RStudio incluye un infinidad de opciones extra que no hacen al objetivo de este curso. Para usos más avanzados es recomendable revisar la página web de los creadores, que es muy completa e incluye muchas utilidades y tutoriales. También se encuentra mucha ayuda en la pestaña Help.
 
-## Script de trabajo
+### Script de trabajo
 
 En este apartado comenzaremos propiamente a desarrollar un script de trabajo. Iremos viendo paso a paso como avanzar en su armado, desde la carga de las librerías, introducir la base de datos y el manejo de la misma, el análisis de los datos hasta la visualización gráfica de los mismos.
 
@@ -89,7 +88,7 @@ Los títulos son marcas que hacemos para volver sencillamente a otras partes de 
 
 A partir de este momento podemos ver nuestros títulos en 2 lugares: en la parte inferior izquierda de la ventana 1 o en la parte superior derecha de la misma ventana en el icono con la leyenda *Outline*. Esta estructuración, insisto, es muy útil para movernos dentro del documento sin perder mucho tiempo buscando algún comando. A su vez, si introducimos más \# al comienzo, se generan títulos de un nivel inferior.
 
-## Instalación y carga de las librerías
+### Instalación y carga de las librerías
 
 R se maneja en base a paquetes (o librerías) que contienen las funciones que queramos utilizar. Como base R trae pre-instalados una serie de paquetes que nos sirven para realizar gran cantidad de aplicaciones. Sin embargo, es muy usual que prefiramos usar otras funciones no disponibles en la base.
 
@@ -119,13 +118,13 @@ library(sciplot);library(patchwork); library(gridExtra)
 library(viridis)
 ```
 
-## Carga de nuestros datos
+### Carga de nuestros datos
 
 Como para casi cualquier acción que queramos ejecutar en R, la carga de la base de datos puede hacerse de muchas maneras. En la ventana 3 se nos ofrece una opción gráfica (a través de "Import Dataset").
 
 De todas maneras, es recomendable hacerlo mediante código, para que cada vez que ingresemos podamos incorporar la base de datos de manera muy sencilla.
 
-### Establecer el directorio de trabajo
+#### Establecer el directorio de trabajo
 
 Lo primero que debemos hacer es establecer el directorio de trabajo. Para ello corremos el comando (con un directorio ejemplo):
 
@@ -147,7 +146,7 @@ setwd("D:/OneDrive/R/Taller R 2025 Doctorado/")
 
 Ahora antes de ver cómo cargar la base de datos, haremos una breve explicación de como crear la base de datos.
 
-### Armado de la base de datos
+#### Armado de la base de datos
 
 Una vez más, aquí mostraré mi forma de armar las bases de datos, hay muchas..
 
@@ -159,13 +158,14 @@ Resumiendo, la recomendación es que una vez que tenemos nuestra tabla (en excel
 
 Para este curso utilizaremos inicialmente la base de datos "metals.csv".
 
-### Cargando la base de datos
+#### Cargando la base de datos
 
 En este aparto, cabe destacar que R es un lenguaje orientado a objetos. Cargaremos nuestra base de datos como un "objeto" de R, al cual debemos asignarle un nombre. De ahí en más, cualquier acción que modifique nuestro "objeto" quedará guardada en el objeto mismo, pero no modificará nuestro archivo original (el csv en este caso). Para crear un objeto lo asignamos con "\<-" (de forma rápida se escribe con Alt + -) o con el signo "=".
 
 Una primera forma de cargarla es mediante la función read.csv, por ejemplo:
 
-```{r eval=FALSE}
+```{r}
+#| eval: false
 metales <- read.csv("metales.csv")
 ```
 
@@ -186,7 +186,7 @@ Vemos que en este caso nos mostró directamente la clase de cada columna, y que 
 
 En la ventana 3, nos aparecerán los objetos que incorporemos.
 
-## Caracterización de la base de datos
+### Caracterización de la base de datos
 
 Para ver primeros datos y los nombres de las columnas ejecutamos los comandos:
 
@@ -218,7 +218,7 @@ levels(as.factor(metales$GT)) # para ver los niveles de un factor
 levels(as.factor(metales$Organo))
 ```
 
-### Caracterización gráfica
+#### Caracterización gráfica
 
 En este caso haremos algunos gráficos sencillos para observar la distribución de nuestra base de datos. La función `plot` (y sus derivados, como en este caso `boxplot`) viene con R base y es la forma más rápida y sencilla de graficar.
 
@@ -230,9 +230,9 @@ plot(metales$Cd)
 plot(metales$Pb~metales$Cd)
 ```
 
-## Manejo de la base de datos
+### Manejo de la base de datos
 
-### Subdividir la base de datos
+#### Subdividir la base de datos
 
 Algo muy común en el trabajo en R, es la necesidad de subdividir la base de datos para utilizar únicamente una parte de ella. Veremos un par de formas de hacerlo.
 
@@ -259,7 +259,7 @@ ALIM_VyS <- metales %>%
                     filter(Organo =="Vaina"| Organo =="Semilla")
 ```
 
-### Seleccionar filas o columnas
+#### Seleccionar filas o columnas
 
 En R base, el uso de \[ \] sirve para seleccionar filas o columnas de una database, tal que `data[filas,columnas]`. En el entorno de *dplyr* utilizaremos la función `select` para columnas:
 
@@ -275,7 +275,7 @@ metales %>% select(1:3)
 metales %>% select(GT,CO2,Pb)
 ```
 
-### Creación de nuevas variables
+#### Creación de nuevas variables
 
 Una opción muy útil ligada al paquete **dplyr** es la de transformar nuestras bases de datos para algún gráfico en particular, sin necesidad de cambiar la tabla original. Para ello utilizaremos la función `mutate`, que permite generar muchos cambios en la base de datos. Por ejemplo, en la base ALIM, si queremos agregar la cantidad absoluta de Pb extraída:
 
@@ -287,7 +287,7 @@ metales <- metales %>%
 metales$Pb_total
 ```
 
-### Cambio en los niveles de un factor
+#### Cambio en los niveles de un factor
 
 También podemos cambiar los niveles de una factor `mutate`, mediante la siguiente estructura:
 
@@ -306,7 +306,7 @@ ALIM %>% select(CO2, ET, PS) %>%
                          "Estrés térmico" = "Si")) 
 ```
 
-## Actividad 1
+### Actividad 1
 
 1.  Cree a partir de la base de datos original, una que contenga únicamente los tallos y hojas del cultivar ES Mentor, y las columnas de CO~2~, ET, Organo, PS, Zn y Pb.
 2.  Filtre la base creada para obtener otra que solo tenga aquellos datos con más de 3 ppm de Pb.
