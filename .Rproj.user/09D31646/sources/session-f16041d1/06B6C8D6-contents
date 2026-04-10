@@ -1,0 +1,28 @@
+---
+author: "Andrés Blanco"
+date: "2026-03-16"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: left
+    #number-sections: true
+    toc-title: "Contenidos"
+---
+
+::: {style="text-align: right;"}
+[Volver al inicio](../)
+:::
+
+## Objetivos {.unnumbered}
+
+El objetivo principal del curso es que los asistentes obtengan herramientas para la generación y manejo de gráficos utilizando lenguaje R y el software RStudio, con especial énfasis en la escritura de capas que requiere el paquete ggplot2.
+
+## Contenidos {.unnumbered}
+
+1.  Unidad 1. Introducción a R y RStudio. Presentación de los programas. Estructura del script de trabajo. Carga de datos y librerías. Caracterización analítica y gráfica de las variables. Tipos de objetos. Paquete dplyr para manejo y conversión de las bases de datos.\
+2.  Unidad 2. Análisis y representación de datos numéricos. Correlación lineal en R. Gráficos de correlaciones. Regresión lineal. Gráficos de supuestos. Gráficos de puntos: función plot y lineplot.CI. Manejo de parámetros gráficos. Ggplot2: introducción al paquete, gráficos de puntos y líneas. Gráfica del modelo lineal. Cálculos de media y desvío estándar para gráficos.
+3.  Unidad 3. Análisis y representación de datos categóricos. ANOVA a 1 factor y bifactorial. Pruebas de supuestos y test a posteriori. Gráficos de barras: función bargraph.CI y geom_col. Gráficos de cajas: función boxplot y geom_boxplot. Manejo de escalas e incorporación de resultados estadísticos.
+4.  Unidad 4. Estructura y estética de gráficos con ggplot2. Estructura por capas. Faceting y división por factores. Definición del theme. Manipulación de la base de datos a graficar. Escalas de colores, uso de paletas. Clasificación por color, tipo de línea y forma. Combinación de gráficos: funciones layout, grid.arrange y paquete patchwork.
+5.  Unidad 5. Otros tipos y parámetros gráficos. Gráficos de áreas. Combinación de distintos geoms. Eje secundario. Pivoteo de bases de datos. Gráficos de biplot para análisis de componentes principales. Exportación de gráficos: devices y ggsave. Manipulación externa de gráficos.

@@ -1,0 +1,26 @@
+{
+  "index.qmd": {
+    "index.html": "1fe4ad53"
+  },
+  "presentacion/presentacion_q.qmd": {
+    "presentacion_q.html": "bd81e6c3"
+  },
+  "unidad_1/unidad_1_q.qmd": {
+    "unidad_1_q.html": "ca56745d"
+  },
+  "unidad_2/unidad_2_q.qmd": {
+    "unidad_2_q.html": "a06ba321"
+  },
+  "unidad_3/unidad_3_q.qmd": {
+    "unidad_3_q.html": "974d14ce"
+  },
+  "unidad_4/unidad_4_q.qmd": {
+    "unidad_4_q.html": "35194b44"
+  },
+  "unidad_5/unidad_5_q.qmd": {
+    "unidad_5_q.html": "1148a1ce"
+  },
+  "curso_completo/curso_completo.qmd": {
+    "curso_completo.html": "73211bca"
+  }
+}
