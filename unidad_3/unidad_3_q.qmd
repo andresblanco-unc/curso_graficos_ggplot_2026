@@ -167,7 +167,24 @@ bargraph.CI(data = PEJERREY,
             lc = F); abline(h = 0)
 ```
 
-Los parámetros a modificar son los mismos que vimos anteriormente para los gráficos de puntos.
+Los parámetros a modificar son los mismos que vimos anteriormente para los gráficos de puntos. Incorporamos la opción de hacer líneas en el interior de las columnas:
+
+```{r out.width="100%", fig.align='center'}
+bargraph.CI(data = PEJERREY,
+            x.factor = sitio,
+            response = cortisol_ugdL,
+            group = sexo,
+            ylim = c(0, 8),
+            legend = T,
+            col = "black",
+            las = 1,
+            xlab = "Sitio de muestreo",
+            ylab = "Cortisol (µg/dL)",
+            cex.axis = 0.8,
+            angle = 45, # ángulo de las rayas 
+            density = c(0,20), # densidad de las rayas
+            lc = F); abline(h = 0)
+```
 
 ### geom_col (ggplot2)
 
@@ -242,11 +259,10 @@ ggplot(PEJERREY, aes(sitio, cortisol_ugdL, fill = sexo)) +
 Sin embargo, si queremos agregar las letras del Tukey realizado, será más adecuado hacerlo con el cálculo previo de medias y error estándar. Esto es así ya que nos permite ubicar adecuadamente las letras en la altura correspondiente a cada columna. Las letras las incorporaremos de forma manual con un nuevo geom, el *geom_text*:
 
 ```{r out.width="100%", fig.align='center'}
-G3 <- G3 + geom_text(aes(y = cortisol_ugdL$ymax,
+G3 + geom_text(aes(y = cortisol_ugdL$ymax,
                          label = c("bc", "c", "b", "b", "bc", "a")),
                      position = position_dodge(0.9),
                      vjust = -.5) # ajuste vertical de la posición
-G3
 ```
 
 ## Actividad 3.b

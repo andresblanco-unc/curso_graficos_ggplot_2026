@@ -20,69 +20,46 @@ library(agricolae);library(tidyverse);library(car)
 library(sciplot);library(patchwork); library(gridExtra)
 library(viridis)
 
-metales <- read_csv2("data/metales.csv")
+datos_peces <- read_csv("data/peces_morfometria.csv")
 
-ALIM <- subset(metales, metales$GT=="Alim 3,14")
-ALIM_VyS <- metales %>%
-                    filter(GT == "Alim 3,14") %>% # se agrega a lo anterior
-                    filter(Organo =="Vaina"| Organo =="Semilla")
-metales <- metales %>%
-  mutate("Pb_total" = Pb*PS)
-ALIM %>% select(CO2, ET, PS) %>%
-  mutate(ET = fct_recode(ET,
-                         "Control"  = "No",
-                         "Estrés térmico" = "Si")) 
-SEM <- metales %>% filter(Organo == "Semilla")
-HOJA <- metales %>% filter(Organo == "Hoja")
-HOJA$SPAD_cat <- as.integer(round(HOJA$SPAD, digits = 0))
+JENYNSIA <- subset(datos_peces, datos_peces$especie == "Jenynsia multidentata") 
 
-G1 <- ggplot(data = HOJA, # el data set
-       aes(x = SPAD, y = Pb)) + # x e y dentro de aes
-      geom_point()
+fit_Jenysia <-lm(peso_g ~ longitud_cm, data = JENYNSIA)
 
-G2 <- ggplot(HOJA,
-             aes(SPAD, Pb,
-                 col = ET)) + # agregamos en el aes por qué parámetro dividir
-      geom_point()
+datos_peces <- datos_peces %>% 
+  mutate("peso_relativo" = peso_g/longitud_cm)
 
-SEM_Alim <- SEM %>% filter(GT == "Alim 3,14")
+datos_peces <- datos_peces %>% 
+  mutate(sexo = fct_recode(sexo,
+                           "Macho" = "M",
+                           "Hembra" = "F"))
 
-SEM_Alim$CO2 <- as.factor(SEM_Alim$CO2) # convertimos a factor
+PEJERREY <- datos_peces %>% filter(especie == "Odontesthes bonariensis")
 
-G3 <- SEM_Alim %>% select(CO2, ET, PS) %>%
-  group_by(CO2, ET) %>%
-  summarise_all(list(mean,se)) %>%
-  ggplot(aes(ET, fn1, fill=CO2))+
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(ymin=fn1-fn2, ymax=fn1+fn2), width=.1,
+JENYNSIA$long_cat <- as.integer(round(JENYNSIA$longitud_cm, digits = 0))
+
+G1 <- ggplot(data = JENYNSIA, 
+             aes(x = longitud_cm, y = peso_g)) + 
+  geom_point()
+
+G2 <- ggplot(JENYNSIA, 
+             aes(longitud_cm, peso_g, 
+                 col = temporada)) + 
+  geom_point(size = 3)
+
+G3 <- PEJERREY %>% select(sexo, sitio, cortisol_ugdL) %>%
+  group_by(sexo, sitio) %>%
+  summarise_all(list(mean_se)) %>%
+  ggplot(aes(sitio, cortisol_ugdL$y, fill = sexo)) +
+  geom_col(position = position_dodge(.9)) + # el .9 especifica la separación
+  geom_errorbar(aes(ymin = cortisol_ugdL$ymin, ymax = cortisol_ugdL$ymax),
+                width = .1,
                 position = position_dodge(.9))
-
-library(plyr)
-ALIM_apilado <- ALIM %>% select(Organo, ET, PS) %>% 
-  group_by(ET, Organo) %>% 
-  summarise_all(funs(mean,se)) %>% 
-  ddply(c("ET"), transform,
-        percent_PS =  mean/ sum(mean) * 100) %>% 
-  ddply(c("ET"), transform, label_y=cumsum(mean)) %>% 
-  ddply(c("ET"), transform, label_y_perc=cumsum(percent_PS)) %>% 
-  mutate(Organo=factor(Organo, levels=c("Semilla", "Vaina",
-                                             "Hoja", "Tallo")))
-  
-G4 <- ALIM_apilado %>%   
-ggplot(aes(ET, mean, fill=Organo))+
-  geom_col() +
-  geom_text(aes(label=round(mean, 2), y = label_y)) ; G4
-
-G5 <- ALIM_apilado %>%   
-  ggplot(aes(ET, percent_PS, fill=Organo))+
-  geom_col() +
-  geom_text(aes(label=round(percent_PS, 2), y = label_y_perc), vjust=2) ; G5
-
 ```
 
 # Unidad 4. Estructura y estética de gráficos con ggplot2.
 
-En esta unidad veremos una serie de contenidos relacionados con parámetros estructurales del gráfico (como las escalas, la división de la ventana gráfica, etc.) y estéticos que van desde la paleta de colores utilizada hasta el tema general.
+En esta unidad veremos una serie de contenidos relacionados con parámetros estructurales del gráfico (como las escalas, la división de la ventana gráfica, etc.) y estéticos que van desde la paleta de colores utilizada hasta el tema general cuando realizamos un gráfico con **ggplot2**.
 
 Sin embargo, empezaremos viendo cómo exportar un gráfico para luego poder ir extrayendo los que iremos generando.
 
@@ -93,7 +70,7 @@ Sin embargo, empezaremos viendo cómo exportar un gráfico para luego poder ir e
 A este respecto, en mi práctica personal suelo leer los resultados desde la consola de R y, de ser necesario, realizo el pasaje manualmente de la información que me resulte de interés a un excel para su almacenamiento. De todas maneras, existen maneras de exportar diferentes formatos de archivos desde R. Cuando lo considero necesario, utilizo archivos del tipo csv. Así por ejemplo para exportar los datos de una regresión:
 
 ```{r eval = FALSE}
-REG <- summary(fit1) # creamos un objeto para poder después extraer los coeficientes
+REG <- summary(fit_Jenysia) # creamos un objeto para poder después extraer los coeficientes
 
 write.csv2(REG$coefficients, "regresión prueba.csv")
 ```
@@ -124,8 +101,8 @@ jpeg(file = "mi_grafico.jpg",
       width = 12, height = 10, #ancho y alto
      quality = 95, #grado de no-compresión
      res = 300) #resolución en puntos por pulgada
-boxplot(PS~ET,
-        data = SEM_Alim) # comandos gráficos
+boxplot(cortisol_ugdL ~ sitio,
+        data = PEJERREY) # comandos gráficos
 dev.off() # cerrar el gráfico
 ```
 
@@ -143,16 +120,84 @@ ggsave("mi gráfico.png", # nombre y formato
 
 Si se quiere exportar en formato SVG, es necesaria la instalación del paquete *svglite*.
 
-## Títulos
+## Actividad 4.a
+
+Exporte en formato pdf el gráfico de barras que realizó en la actividad 3b para el invierno, y el boxplot de la actividad 3c para verano.
+
+## Estructura de gráficos en ggplot2
+
+### Forma y tipo de línea
+
+Ya vimos en este curso que podemos clasificar dentro de un gráfico por color respecto a un determinado factor. Otro parámetro que puede generar diferencias entre los niveles de una factor o que puede ser modificado para todos nuestros valores es la forma. Para indicar el cambio se hará del mismo modo que para el color o relleno, pero con el parámetro `shape`. Las diferentes formas se pueden visualizar en el documento Refcard, son 25 y algunas permiten que se les modifique el relleno. La forma puede ser combinada por el color para enfatizar las diferencias, y originarán una sola leyenda, por ejemplo:
+
+```{r out.width="100%", fig.align='center'}
+ggplot(datos_peces,
+       aes(longitud_cm, peso_g,
+           shape = especie)) +  # o por forma
+  geom_point(size = 5)
+
+ggplot(datos_peces,
+       aes(longitud_cm, peso_g,
+           col = especie,
+           shape = especie)) +  # color y forma
+  geom_point(size = 5, alpha = .8) # agregamos transparencia
+```
+
+A su vez podemos establecer tipos de líneas en un gráfico de líneas. Funciona de la misma manera con el parámetro `linetype`:
+
+```{r out.width="100%", fig.align='center'}
+ggplot(datos_peces,
+       aes(temperatura_C, longitud_cm,
+           linetype = especie, 
+            col = especie)) +
+        geom_point() +
+         geom_line()
+```
+
+Como vemos, como todos los parámetros de clasificación responden al mismo factor, la leyenda es una sola.
+
+También se puede clasificar por tamaño en el caso de una variable continua, generará una escala automática.
+
+```{r out.width="100%", fig.align='center'}
+# clasificación continua
+ggplot(datos_peces,
+       aes(longitud_cm, peso_g,
+           fill = temperatura_C)) +  
+  geom_point(alpha = .75, shape = 21, size = 7) 
+
+# podemos repetir para enfatizar
+ggplot(datos_peces,
+aes(longitud_cm, peso_g,
+    size = peso_g)) +  
+  geom_point() 
+```
+
+### Títulos
 
 Para modificar los títulos de nuestros gráficos utilizaremos el parámetro *labs*. Allí modificaremos la etiqueta de cada eje, de la leyenda, y posibles títulos del gráfico.
 
 ```{r out.width="100%", fig.align='center'}
 G3 <- G3 +
-  labs(x = "Estrés térmico", 
-       y = "Peso seco (g)", 
-       fill = expression(CO[2]), # cambia la leyenda
-       title = "Peso seco de semillas de soja") ; G3
+  labs(x = "Sitio de muestreo",
+       y = "Cortisol (µg/dL)",
+       fill = "Sexo",
+       title = "Cortisol plasmático en pejerrey")
+
+G3
+```
+
+Podemos incluir la función expression combinada con paste para generar títulos más complejos:
+
+```{r out.width="100%", fig.align='center'}
+ggplot(datos_peces,
+       aes(temperatura_C, cortisol_ugdL,
+           col = sitio,
+           shape = sitio)) +
+  geom_point(size = 5) +
+  labs(col = "Sitio de \nmuestreo",
+       shape = "Sitio de \nmuestreo", # hay que repetir
+       x = expression(paste("Temperatura (", degree, "C)")),
+       y = expression(paste("Cortisol (", mu, "g d", L^-1,")")))
 ```
 
 ## Scales
@@ -177,34 +222,54 @@ En el caso de querer modificar los nombres que aparecen en el eje (habitualmente
 scale_x_discrete(labels = c(etiqueta1, etiqueta2, ...))
 ```
 
+Para cambiar el orden en el que aparecen elementos en el eje x usaremos el comando `limits`:
+
+```{r eval= FALSE}
+scale_x_discrete(limits = c(aparece_primero, aparece_segundo, ...))
+```
+
 Continuando con nuestro ejemplo en el G3, comparemos con y sin manipulación de ejes:
 
-```{r out.width="100%", fig.show='hold'}
+```{r, out.width="100%", fig.align='center'}
+#| layout-ncol: 2
+#| warning: false
+#| message: false
+
 G3
-G3 <- G3 + scale_x_discrete(labels = c("Sin ET", "Con ET")) +
-  scale_y_continuous(expand = c(0,0), 
-                     limits = c(0, 12), 
-                     breaks = seq(0,12, by= 1)); G3
+G3 <- G3 +
+  scale_x_discrete(labels = c("L. Central", "L. Norte",  "L. Sur")) +
+  scale_y_continuous(expand = c(0, 0),  # expande al borde
+                     limits = c(0, 8),  # límites del gráfico
+                     breaks = seq(0, 10, by = 1))  # división del eje
+G3
 ```
 
 ### Colores
 
-R permite la utilización de una gran cantidad de colores diferentes (ver documento *ColorChart*). Se pueden modificar los colores de casi todos los objetos en un gráfico, aquí nos centraremos en contornos y rellenos de nuestros elementos que representan los datos. Como regla general, si nuestro geom admite relleno este se modifica con el parámetro *fill*, mientras que *col* modificará el borde. Si no se admite relleno (gráficos de líneas o puntos), solo utilizaremos *col*. Cómo modificamos los colores varía un poco según diferentes casos:
+R permite la utilización de una gran cantidad de colores diferentes (ver [Colors in R](https://r-charts.com/colors/)). Se pueden modificar los colores de casi todos los objetos en un gráfico, aquí nos centraremos en contornos y rellenos de nuestros elementos que representan los datos. Como regla general, si nuestro *geom* admite relleno este se modifica con el parámetro *fill*, mientras que *col* modificará el borde. Si no se admite relleno (gráficos de líneas o puntos), solo utilizaremos *col*. Cómo modificamos los colores varía un poco según diferentes casos:
 
--   Si el color es el mismo para todos, se modifica dentro de los parámetros del geom. Por ejemplo: `geom_col(col= "black", fill= "red")`.
+-   Si el color es el mismo para todos, se modifica dentro de los parámetros del *geom*. Por ejemplo: `geom_col(col= "black", fill= "red")` (borde negro, relleno rojo para todas las columnas).
 
 -   Si debemos modificar el color o el relleno según un criterio de clasificación (es decir que seteamos el parámetro que clasifica en el aes()) usaremos el comando `scale_colour_manual(values=c("color1", "color2", ....))` para establecer manualmente los colores. Lo mismo para el relleno pero será `scale_fill_manual(values=c("color1", "color2", ....))`. Es importante destacar que la cantidad de colores debe coincidir con los niveles del factor en cuestión.
 
 Veamos un ejemplo donde combinamos lo visto hasta ahora:
 
-```{r out.width="100%",, fig.align='center'}
-G3 + geom_col(col = "black", position = "dodge") + # repetimos para cambiar el borde
+```{r out.width="100%", fig.align='center'}
+#| warning: false
+#| message: false
+
+G3 <- G3 + geom_col(col = "black", position = "dodge") + # repetimos para cambiar el borde
   scale_fill_manual(values = c("skyblue3", "antiquewhite2"))
+G3
 ```
 
-En estos casos decidimos establecer manualmente el color. También podemos utilizar paletas de colores que vienen preestablecidas. Algunas están con el R base y otras debemos cargarlas con paquetes. En este taller veremos el uso de la paleta **viridis**, de paquete homónimo. La función que utilizaremos es `scale_fill_viridis_d()`, donde la "d" refiere a discreto. Esta escala está especialmente diseñada para que la puedan distinguir personas daltónicas y asignará tantos colores como sean necesarios. La escala viridis va del violeta al amarillo, podemos reducir la escala estableciendo el comienzo y el final de la misma. Por otro lado, también veremos el uso del paquete *paletteer*, que incluye una enorme cantidad de paletas para utilizar (https://r-charts.com/es/paletas-colores/). Por ejemplo en el gráfico anterior:
+En estos casos decidimos establecer manualmente el color. También podemos utilizar paletas de colores que vienen preestablecidas. Algunas están con el R base y otras debemos cargarlas con paquetes. En este taller veremos el uso de la paleta **viridis**, de paquete homónimo. La función que utilizaremos es `scale_fill_viridis_d()`, donde la "d" refiere a discreto. Esta escala está especialmente diseñada para que la puedan distinguir personas daltónicas y asignará tantos colores como sean necesarios. La escala viridis va del violeta al amarillo, podemos reducir la escala estableciendo el comienzo y el final de la misma. Por otro lado, también veremos el uso del paquete *paletteer*, que incluye una enorme cantidad de [paletas](https://r-charts.com/es/paletas-colores/) para utilizar. Por ejemplo en el gráfico anterior:
 
 ```{r}
+#| layout-ncol: 2
+#| warning: false
+#| message: false
+
 G3 + geom_col(col = "black", position = "dodge") + 
   scale_fill_viridis_d()
 
@@ -227,65 +292,43 @@ paletteer_d("colorBlindness::Blue2DarkOrange12Steps", 2,
 
 Nos los da con el código RGB que podemos utilizar para otros gráficos.
 
-### Forma y tipo de línea
+## Actividad 4.b
 
-Otro parámetro que puede generar diferencias entre los niveles de una factor o que puede ser modificado para todos nuestros valores es la forma. Para indicar el cambio se hará del mismo modo que para el color o relleno, pero con el parámetro `shape`. Las diferentes formas se pueden visualizar en el documento Refcard, son 25 y algunas permiten que se les modifique el relleno. La forma puede ser combinada por el color para enfatizar las diferencias, y originarán una sola leyenda, por ejemplo:
-
-```{r out.width="100%", fig.align='center'}
-ggplot(HOJA,
-       aes(SPAD, Pb,
-           col = ET,  # clasificamos por color
-           shape = ET)) + # y por forma
-  geom_point(size= 5) +
-  scale_shape_manual(values = c(16, 18))
-```
-
-A su vez podemos establecer tipos de líneas en un gráfico de líneas. Funciona de la misma manera con el parámetro `linetype`:
-
-```{r out.width="100%", fig.align='center'}
-ggplot(HOJA,
-       aes(SPAD, Pb,
-           col = ET,
-           shape = ET,
-           linetype = ET)) +
-  geom_point(size= 5) +
-  geom_line()+
-  scale_shape_manual(values = c(16, 18)) +
-  labs(col = "Estrés \ntérmico", 
-       shape = "Estrés \ntérmico", 
-       linetype = "Estrés \ntérmico")
-```
-
-Como vemos, como todos los parámetros de clasificación responden al mismo factor, la leyenda es una sola. Para modificar el título de la leyenda se debe indicar el cambio para todos los parámetros involucrados.
-
-También se puede clasificar por tamaño en el caso de una variable continua, generará una escala automática.
-
-```{r out.width="100%", fig.align='center'}
-ggplot(HOJA,
-       aes(SPAD, Pb,
-           size = Pb, # genera una escala discreta de tamaños 
-           col = Pb)) + # genera una escala continua de color
-  geom_point()
-```
+Modifique las escalas de los ejes y colores de los gráficos desarrollados con ggplot2 en las actividades 2c, 3b y 3c. Agregue títulos a los ejes y leyendas.
 
 ## Subdivisión del gráfico con faceting
 
-Si nuestro gráfico requiere la subdivisión por varios factores, además de por colores podemos dividir la ventana con faceting. El parámetro facet_grid requiere que introduzcamos por cuál/es variable/s se dividirá, por lo tanto toma la forma var1\~var2, si solo hay una se reemplaza la faltante por un punto (.). Es importante destacar que todas las divisiones responderán a la misma escala. Así por ejemplo:
+Una de las facilidades enormes que nos brinda **ggplot2** para graficar es la posibilidad de subdividir nuestro gráfico por algún factor categórico. Esto se logra con otra capa que se denomina **facets**, o que yo llamo hacer un *faceting*.
 
-```{r}
-G2 + facet_grid(.~GT) # para dividir verticalmente
-G2 + facet_grid(GT~.) # para dividir horizontalmente
-G2 + facet_grid(CO2~GT) # para dividir por ambas
+Existen distintas funciones que se pueden aplicar. La función `facet_grid` requiere que introduzcamos por cuál/es variable/s se dividirá la forma `var1~var2`, si solo hay una se reemplaza la faltante por un punto (.). Es importante destacar que todas las divisiones responderán a la misma escala. Así por ejemplo:
+
+```{r out.width="75%", fig.align='center'}
+G2 <- ggplot(datos_peces,
+             aes(temperatura_C, cortisol_ugdL,
+                 col = sitio)) +
+  geom_point(size = 3) +
+  theme_bw(); G2
+
+G2 + facet_grid(. ~ especie)  # para dividir verticalmente
+G2 + facet_grid(especie ~ .)  # para dividir horizontalmente
+G2 + facet_grid(sexo ~ especie)  # para dividir por ambas
 ```
+
+Para más funciones y variantes en el uso de facets recomiendo ir a [este enlace](https://r-charts.com/es/ggplot2/facetas/).
 
 ### Multifaceting
 
 Si quisiéramos definir más de un nivel de división, podemos utilizar la función `facet_nested` del paquete *ggh4x*. Por ejemplo de la siguiente manera:
 
 ```{r}
+#| warning: false
 library(ggh4x)
-G2 + facet_nested(.~GT+CO2) # cada nivel de GT se divide por CO2
+G2 + facet_nested(. ~ especie + sexo) # cada nivel de especie se divide por sexo
 ```
+
+## Actividad 4.c
+
+Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
 
 ## Definiendo la estética de nuestros gráficos
 
@@ -301,7 +344,7 @@ Por estos motivos, mi recomendación es intentar hacer lo más posible directame
 
 ### Definiendo el `theme` en ggplot2
 
-Cuando realizamos un gráfico con `ggplot` la mayor parte de las cuestiones estéticas se definen dentro del parámetro `theme`. Este apartado nos permite modificar las letras del gráficos en general, de los ejes, de los títulos de los ejes, la posición y estructura de la leyenda, etc. La estructura general consiste en nombrar el elemento a modificar, luego establecer el tipo de elemento, y finalmente modificar los parámetros. Supongamos a modo de ejemplo que queremos que las etiquetas del eje *x* estén en negro, con tamaño de letra 12, con inclinación vertical. Entonces escribiremos:
+Cuando realizamos un gráfico con **ggplot2** la mayor parte de las cuestiones estéticas se definen dentro del parámetro `theme`. Este apartado nos permite modificar las letras del gráficos en general, de los ejes, de los títulos de los ejes, la posición y estructura de la leyenda, etc. La estructura general consiste en nombrar el elemento a modificar, luego establecer el tipo de elemento, y finalmente modificar los parámetros. Supongamos a modo de ejemplo que queremos que las etiquetas del eje *x* estén en negro, con tamaño de letra 12, con inclinación vertical. Entonces escribiremos:
 
 ```{r eval= FALSE}
 Gráfico +
@@ -315,17 +358,18 @@ Podemos ir separando por comas diferentes elementos que queramos modificar. Otra
 [^1]: Para más información del paquete *ggpubr* dirigirse a https://rpkgs.datanovia.com/ggpubr/ . Es un paquete muy interesante orientado a publicaciones usando ggplot2.
 
 ```{r}
-library(ggpubr)
-THEME <-theme_pubr() +
-theme(plot.caption = element_text(hjust = 0, vjust=.5),
-               plot.title.position = "plot",
-               plot.title = element_text(size=rel(1.5)),
-               text = element_text(size=12, colour = "black"),
-               axis.text = element_text(size=12 , colour = "black"),
+THEME <- theme(plot.title = element_text(size = rel(1.5)),
+               text = element_text(size = 12, colour = "black"),
+               axis.text = element_text(size = 12, colour = "black"),
                axis.line = element_line(colour = "black"),
                legend.position = "right",
-               legend.text = element_text(size=12, colour = "black"),
-               legend.background = element_rect(colour = "black")) # recuadro de la leyenda
+               legend.text = element_text(size = 12, colour = "black"),
+               legend.background = element_rect(colour = "black"),  # recuadro de la leyenda
+               panel.background = element_rect(fill = "white", 
+                                               color = "white"),
+               panel.border = element_rect(color = "white", 
+                                           fill = FALSE),
+               panel.grid.major = element_line(colour = "grey90"))
 ```
 
 Luego podemos incorporarlo al final de los gráficos, así:
@@ -363,6 +407,7 @@ fonts()
 Algo muy importante, es que al momento de exportar como pdf nuestras imágenes, la fuentes tienen que estar embebidas para que las pueda leer cualquier lector de archivos pdf. Por suerte las nuevas versiones de *ggsave()* incluyen una opción que realiza esto de manera muy simple:
 
 ```{r}
+#| ncol: 2
 G3 +
   theme(text = element_text(family = "serif", size = 18))
 G3 +
@@ -373,9 +418,14 @@ G3 +
 ggsave("G3.pdf", device = cairo_pdf)
 ```
 
+## Actividad 4.d
+
+Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la actividad 4.b y c. 
+
+
 ## División de la ventana gráfica
 
-Esta es una herramienta muy útil que nos permite visualizar más de un gráfico a la vez en la ventana 4 de RStudio. Ya que esta ventana suele ser pequeña, es recomendable marcar en *Zoom* una vez creado el conjunto de gráficos para verlo externamente.
+Esta es una herramienta muy útil que nos permite visualizar más de un gráfico a la vez en la ventana 4 de RStudio. Ya que esta ventana suele ser pequeña, es recomendable marcar en *Zoom* una vez creado el conjunto de gráficos para verlo externamente. Esta herramienta nos permite generar composiciones de varios gráficos directos para publicar.
 
 ### layout
 
@@ -410,10 +460,12 @@ layout(1) # al cerrar volvemos a establecer una ventana única
 Se deben incluir tantos gráficos como particiones creadas. Por ejemplo viendo dos gráficos creados anteriormente:
 
 ```{r echo=TRUE}
+#| message: FALSE
+
 # 1 fila y 2 columnas
 layout(matrix(1:2,1,2))
-lineplot.CI(x.factor = SPAD, response = Pb, data = HOJA)
-boxplot(PS~ET, ylim = c(0,12),  data = SEM_Alim)
+lineplot.CI(x.factor = longitud_cm, response = peso_g, data = JENYNSIA)
+boxplot(cortisol_ugdL ~ sitio, ylim = c(0, 10), data = PEJERREY)
 layout(1)
 ```
 
@@ -421,8 +473,8 @@ Los parámetros `widths` y `heights` permite establecer uno más grande que el o
 
 ```{r}
 layout(matrix(1:2,1,2), widths = c(2,1))
-lineplot.CI(x.factor = SPAD, response = Pb, data = HOJA)
-boxplot(PS~ET, ylim = c(0,12),  data = SEM_Alim)
+lineplot.CI(x.factor = longitud_cm, response = peso_g, data = JENYNSIA)
+boxplot(cortisol_ugdL ~ sitio, ylim = c(0, 10), data = PEJERREY)
 layout(1)
 ```
 
@@ -432,8 +484,8 @@ La función `par` también nos permite dividir la ventana gráfica. Las opciones
 
 ```{r eval=FALSE}
 par(mfrow = c(1, 2)) # filas y columnas
-lineplot.CI(x.factor = SPAD, response = Pb, data = HOJA)
-boxplot(PS~ET, ylim = c(0,12),  data = SEM_Alim)
+lineplot.CI(x.factor = longitud_cm, response = peso_g, data = JENYNSIA)
+boxplot(cortisol_ugdL ~ sitio, ylim = c(0, 10), data = PEJERREY)
 par(mfrow = c(1, 1)) # volvemos a como estaba antes
 ```
 
@@ -481,20 +533,14 @@ Existen diferentes combinaciones posibles, por ejemplo:
 (G2 + G3)/ G1
 ```
 
-Dentro de este paquete se encuentra la función `wrap_plots` que acomoda correctamente los gráficos y alinea los ejes. Así podemos correr:
-
-```{r}
-wrap_plots(G1, G2, G3)
-```
-
-Podemos modificar la estructura del gráfico con la función `plot_layout` dentro de `wrap_plot`. Aquí podemos definir la estructura de filas y columnas, la posición de las leyendas (o agruparlas en algún sector). Por su parte, se pueden modificar e incluso automatizar anotaciones con `plot_annotation`. Por ejemplo modificando el agrupamiento anterior:
+Podemos modificar la estructura del gráfico con la función `plot_layout`. Aquí podemos definir la estructura de filas y columnas, la posición de las leyendas (o agruparlas en algún sector). Por su parte, se pueden modificar e incluso automatizar anotaciones con `plot_annotation`. Por ejemplo modificando el agrupamiento anterior:
 
 ```{r fig.height=8}
-wrap_plots(G1 + G2 + G3 +
+G1 + G2 + G3 +
              plot_layout(ncol = 1,
                          nrow = 3,
                          byrow = NULL,
-                         guides = 'collect')) + # muestra las leyendas juntas
+                         guides = 'collect') + # muestra las leyendas juntas
   plot_annotation(tag_levels = 'a', # establecemos el tipo de enumeración
                   tag_prefix = '(',
                   tag_suffix = ')')
@@ -505,10 +551,10 @@ Veremos más adelante algunas otras posibilidades con este paquete. Para exporta
 También si los gráficos estuvieran combinados con **patchwork** podemos incluir la cuestión estética a todos a la vez al final separando con el comando &:
 
 ```{r fig.height=8}
-wrap_plots(G1 + G2 + G3 +
+G1 + G2 + G3 +
              plot_layout(ncol = 1,
                          nrow = 3,
-                         guides = 'collect')) +
+                         guides = 'collect') +
   plot_annotation(tag_levels = 'a',
                   tag_prefix = '(',
                   tag_suffix = ')') &
@@ -518,21 +564,27 @@ wrap_plots(G1 + G2 + G3 +
 Si dos de los gráficos comparten el eje x (por ejemplo), puede ser de utilidad ocultar el título en uno de ellos, o incluso ocultar la escala en el eje. Esto se puede hacer de diferentes maneras, pero aquí les muestro una incluyendo el elemento vacío en el tema con *element_blank* :
 
 ```{r fig.height=6}
-wrap_plots(G1 + THEME +
-             theme(axis.title.x = element_blank(),
-                      axis.text.x = element_blank())+ 
-          G2 + THEME +
-             plot_layout(ncol = 1,
-                         nrow = 2,
-                         guides = 'collect')) +
-  plot_annotation(tag_levels = 'a',
-                  tag_prefix = '(',
-                  tag_suffix = ')')
+ggplot(data = JENYNSIA,
+       aes(x = longitud_cm, y = peso_g)) + 
+  geom_point(size = 3, col= "darkblue") + THEME +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank()) +
+  ggplot(data = PEJERREY, 
+         aes(x = longitud_cm, y = peso_g)) + 
+  geom_point(size = 3, col= "darkgreen") + THEME +
+  plot_layout(ncol = 1,
+              nrow = 2, 
+              axis = "collect") # unifica ejes, en este caso el y
 ```
 
-## Actividad 6
+## Actividad 4.e
 
-Exporte los dos gráficos que realizó en las actividades 3 y 5 combinados en una sola figura de dos columnas y una fila, agregue etiquetas a cada uno, aplique colores y escalas a los ejes. Junte las leyendas en una sola.
+Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera:
+- En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
+- En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+
+Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
+
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)

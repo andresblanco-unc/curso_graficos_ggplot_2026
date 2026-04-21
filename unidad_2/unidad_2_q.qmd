@@ -132,8 +132,6 @@ library(corrplot)
 corrplot(CORR_Pejerrey$r)
 
 
-pValues <- cor.mtest(PEJERREY[,6:9]) # generamos un objeto de los valores p
-
 corrplot(CORR_Pejerrey$r, 
          type = "upper",  # solo mitad de arriba 
          tl.col = "black",  # color letras

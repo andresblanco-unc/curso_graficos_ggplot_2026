@@ -256,13 +256,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     Pearson's product-moment correlation
 
 data:  PEJERREY$longitud_cm and PEJERREY$peso_g
-t = 16.763, df = 25, p-value = 4.152e-15
+t = 16.507, df = 40, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.9094557 0.9810399
+ 0.8794780 0.9641087
 sample estimates:
       cor 
-0.9582818 </code></pre>
+0.9338029 </code></pre>
 </div>
 </div>
 <p>Vemos que nos arroja los resultados del valor del coeficiente lineal de pearson y su valor p asociado.</p>
@@ -286,14 +286,14 @@ sample estimates:
     Shapiro-Wilk normality test
 
 data:  PEJERREY$longitud_cm
-W = 0.96931, p-value = 0.5838</code></pre>
+W = 0.96648, p-value = 0.2504</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code>
     Shapiro-Wilk normality test
 
 data:  PEJERREY$peso_g
-W = 0.88678, p-value = 0.006751</code></pre>
+W = 0.97219, p-value = 0.39</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row">
@@ -313,7 +313,7 @@ W = 0.88678, p-value = 0.006751</code></pre>
     Shapiro-Wilk normality test
 
 data:  log(PEJERREY$peso_g + 1)
-W = 0.95299, p-value = 0.2531</code></pre>
+W = 0.94449, p-value = 0.0411</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">log</span>(PEJERREY<span class="sc">$</span>peso_g<span class="sc">+</span><span class="dv">1</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">log</span>(PEJERREY<span class="sc">$</span>peso_g<span class="sc">+</span><span class="dv">1</span>), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,11 +335,11 @@ W = 0.95299, p-value = 0.2531</code></pre>
     Spearman's rank correlation rho
 
 data:  PEJERREY$longitud_cm and PEJERREY$peso_g
-S = 141.52, p-value = 6.37e-15
+S = 482.68, p-value &lt; 2.2e-16
 alternative hypothesis: true rho is not equal to 0
 sample estimates:
       rho 
-0.9568005 </code></pre>
+0.9608885 </code></pre>
 </div>
 </div>
 </section>
@@ -351,11 +351,11 @@ sample estimates:
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">use =</span> <span class="st">"complete.obs"</span>, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>CORR <span class="co"># obtenemos los coeficientes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                 longitud_cm     peso_g temperatura_C transparencia_cm
-longitud_cm        1.0000000  0.9582818    0.16529955      -0.30453658
-peso_g             0.9582818  1.0000000    0.16880557      -0.36222893
-temperatura_C      0.1652995  0.1688056    1.00000000       0.04709404
-transparencia_cm  -0.3045366 -0.3622289    0.04709404       1.00000000</code></pre>
+<pre><code>                 longitud_cm      peso_g temperatura_C transparencia_cm
+longitud_cm       1.00000000  0.93380294   -0.16328425       0.03128702
+peso_g            0.93380294  1.00000000   -0.11177907       0.04206695
+temperatura_C    -0.16328425 -0.11177907    1.00000000      -0.06799808
+transparencia_cm  0.03128702  0.04206695   -0.06799808       1.00000000</code></pre>
 </div>
 </div>
 <p>Otra función de utilidad que nos permite ver los coeficientes y los valores <em>p</em> al mismo tiempo es la función <code>rcorr</code> del paquete <strong>Hmisc</strong>:</p>
@@ -365,20 +365,20 @@ transparencia_cm  -0.3045366 -0.3622289    0.04709404       1.00000000</code></p
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>CORR_Pejerrey <span class="co"># aquí observamos primero los valores de coeficientes y luego el valor p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 longitud_cm peso_g temperatura_C transparencia_cm
-longitud_cm             1.00   0.96          0.17            -0.30
-peso_g                  0.96   1.00          0.17            -0.36
-temperatura_C           0.17   0.17          1.00             0.05
-transparencia_cm       -0.30  -0.36          0.05             1.00
+longitud_cm             1.00   0.93         -0.16             0.03
+peso_g                  0.93   1.00         -0.11             0.04
+temperatura_C          -0.16  -0.11          1.00            -0.07
+transparencia_cm        0.03   0.04         -0.07             1.00
 
-n= 27 
+n= 42 
 
 
 P
                  longitud_cm peso_g temperatura_C transparencia_cm
-longitud_cm                  0.0000 0.4100        0.1225          
-peso_g           0.0000             0.4000        0.0633          
-temperatura_C    0.4100      0.4000               0.8156          
-transparencia_cm 0.1225      0.0633 0.8156                        </code></pre>
+longitud_cm                  0.0000 0.3015        0.8441          
+peso_g           0.0000             0.4810        0.7914          
+temperatura_C    0.3015      0.4810               0.6687          
+transparencia_cm 0.8441      0.7914 0.6687                        </code></pre>
 </div>
 </div>
 <p>Ahora veremos dos paquetes que nos permiten ver en forma gráfica el resultado de nuestra correlación. El primero es el paquete <strong>corrplot</strong> del cual usaremos las funciones <code>cor.mtest</code> y <code>corrplot</code>:</p>
@@ -392,17 +392,15 @@ transparencia_cm 0.1225      0.0633 0.8156                        </code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pValues <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(PEJERREY[,<span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>]) <span class="co"># generamos un objeto de los valores p</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(CORR_Pejerrey<span class="sc">$</span>r, </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,  <span class="co"># solo mitad de arriba </span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,  <span class="co"># color letras</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">'grey20'</span>, <span class="co"># color números</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">p.mat =</span> CORR_Pejerrey<span class="sc">$</span>P, <span class="co"># valores p</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.05</span>,  </span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">insig =</span> <span class="st">'blank'</span>,   <span class="co"># qué hacer con los no significativos</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.srt =</span> <span class="dv">45</span>,     <span class="co"># ángulo de títulos</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">diag =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(CORR_Pejerrey<span class="sc">$</span>r, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,  <span class="co"># solo mitad de arriba </span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,  <span class="co"># color letras</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">'grey20'</span>, <span class="co"># color números</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">p.mat =</span> CORR_Pejerrey<span class="sc">$</span>P, <span class="co"># valores p</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.05</span>,  </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">insig =</span> <span class="st">'blank'</span>,   <span class="co"># qué hacer con los no significativos</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.srt =</span> <span class="dv">45</span>,     <span class="co"># ángulo de títulos</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">diag =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -472,7 +470,7 @@ transparencia_cm 0.1225      0.0633 0.8156                        </code></pre>
     Shapiro-Wilk normality test
 
 data:  resid(fit_Jenysia)
-W = 0.98092, p-value = 0.8718</code></pre>
+W = 0.97651, p-value = 0.5309</code></pre>
 </div>
 </div>
 <p>Como no se rechaza la hipótesis nula (p&gt;0,05), no tenemos evidencia para decir que la distribución no sea normal.</p>
@@ -486,18 +484,18 @@ lm(formula = peso_g ~ longitud_cm, data = JENYNSIA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.57404 -0.18005 -0.00607  0.14614  0.66865 
+-0.49455 -0.18944 -0.02657  0.19398  0.60352 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -3.81959    0.34256  -11.15 2.10e-11 ***
-longitud_cm  1.06442    0.06363   16.73 1.96e-15 ***
+(Intercept) -4.34938    0.35633  -12.21 4.57e-15 ***
+longitud_cm  1.15321    0.06156   18.73  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.2742 on 26 degrees of freedom
-Multiple R-squared:  0.915, Adjusted R-squared:  0.9117 
-F-statistic: 279.8 on 1 and 26 DF,  p-value: 1.959e-15</code></pre>
+Residual standard error: 0.289 on 40 degrees of freedom
+Multiple R-squared:  0.8977,    Adjusted R-squared:  0.8951 
+F-statistic: 350.9 on 1 and 40 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R<sup>2</sup> y el p del R<sup>2</sup>. En nuestro caso el modelo obtenido será <em>y= -3,81 + 1,06 x</em> y explica el 91% de la variabilidad.</p>
@@ -540,7 +538,7 @@ F-statistic: 279.8 on 1 and 26 DF,  p-value: 1.959e-15</code></pre>
     Shapiro-Wilk normality test
 
 data:  resid(fit_Jenysia_3)
-W = 0.95853, p-value = 0.3217</code></pre>
+W = 0.97926, p-value = 0.6331</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit_Jenysia_3)<span class="sc">~</span>JENYNSIA<span class="sc">$</span>long_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -548,7 +546,7 @@ W = 0.95853, p-value = 0.3217</code></pre>
     Bartlett test of homogeneity of variances
 
 data:  resid(fit_Jenysia_3) by JENYNSIA$long_cat
-Bartlett's K-squared = 7.7318, df = 3, p-value = 0.05189</code></pre>
+Bartlett's K-squared = 6.7691, df = 3, p-value = 0.07963</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit_Jenysia_3,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>JENYNSIA<span class="sc">$</span>long_cat, </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -568,18 +566,18 @@ lm(formula = peso_g ~ long_cat, data = JENYNSIA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.67326 -0.36308  0.00711  0.21269  0.94982 
+-0.94032 -0.35117  0.04914  0.37637  1.20968 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -2.92822    0.51349  -5.703 5.32e-06 ***
-long_cat     0.89691    0.09518   9.424 7.19e-10 ***
+(Intercept) -3.06645    0.54410  -5.636 1.54e-06 ***
+long_cat     0.93446    0.09431   9.909 2.52e-12 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.4475 on 26 degrees of freedom
-Multiple R-squared:  0.7735,    Adjusted R-squared:  0.7648 
-F-statistic:  88.8 on 1 and 26 DF,  p-value: 7.192e-10</code></pre>
+Residual standard error: 0.4861 on 40 degrees of freedom
+Multiple R-squared:  0.7105,    Adjusted R-squared:  0.7033 
+F-statistic: 98.18 on 1 and 40 DF,  p-value: 2.516e-12</code></pre>
 </div>
 </div>
 <p>Vemos que el resultado es muy similar al de antes, por supuesto.</p>
@@ -741,7 +739,7 @@ F-statistic:  88.8 on 1 and 26 DF,  p-value: 7.192e-10</code></pre>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"violetred4"</span>, <span class="co"># cambiamos borde</span></span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill=</span> <span class="st">"violetred2"</span>) <span class="sc">+</span> <span class="co"># cambiamos relleno</span></span>
 <span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -774,7 +772,7 @@ F-statistic:  88.8 on 1 and 26 DF,  p-value: 7.192e-10</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
