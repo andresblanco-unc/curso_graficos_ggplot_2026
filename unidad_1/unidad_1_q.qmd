@@ -38,6 +38,8 @@ De ahí en más, presenta muchas virtudes:
 -   La esencia de R es la capacidad de repetición. Retomando lo que mencioné como una supuesta desventaja (pero que no lo era), una vez que logramos un gráfico (puede ser también un comando, pero vale el ejemplo) que estéticamente nos agrada, es muy sencillo extrapolar esa apariencia a otro gráfico, aún de diferente tipo. Por lo tanto, todo ese tiempo que nos llevó armarlo, es inversión y aprendizaje para que la siguiente vez todo sea más rápido.
 -   El uso de funciones: relacionado al ítem anterior, y una vez que tengamos algo de manejo, podemos armar las funciones que nosotros queramos reuniendo los análisis que queramos ver y simplificar los comandos para que en una sola línea generemos mucha información.
 
+Por supuesto que todas estas ventajas y desventajas han sufrido grandes modificaciones desde la irrupción de la inteligencia artificial. Hoy en día es muy fácil armar funciones complejas, gráficos muy avanzados y scripts infinitos sin tener grandes conocimientos. El objetivo de este curso es sentar las bases para que dicho uso sea medido y comprendido, además de poder realizar modificaciones manuales que creamos convenientes. En este sentido, es una invitación de este curso intentar trabajarlo sin la ayuda de la IA, aunque más no sea la última vez que trabajemos de esta forma.
+
 ## Instalación de R
 
 En windows, se debe descargar la última versión de R desde su web (<https://cran.r-project.org/bin/windows/base/>), e instalarlo como cualquier otro programa.
@@ -46,9 +48,11 @@ En windows, se debe descargar la última versión de R desde su web (<https://cr
 
 RStudio es un software que nos va a permitir trabajar de un modo más amigable con R (que de forma nativa se utiliza en un entorno tipo terminal de programación). El programa es de uso libre y se descarga desde la web oficial (<https://posit.co/download/rstudio-desktop/>). Una vez que instalamos el programa y lo abrimos, nos ofrece muchísimas posibilidades. En este taller simplemente vamos a ver su uso básico.
 
+Actualmente otros softwares están irrumpiendo en escena con bastante más soporte para inteligencia artificial (como es el caso de [Visual Code Studio](https://code.visualstudio.com/), o la versión de Posit llamada [Positron](https://posit.co/products/ide/positron/)). Sin embargo, considero que RStudio es una herramienta algo más amigable para una iniciación al software.
+
 Al abrir el programa lo primero que destaca es que se encuentra dividido en 4 ventanas:
 
-![](images/rstudio.png)
+![](imgs/rstudio.png)
 
 1.  Ventana 1 - Script de trabajo: arriba a la izquierda. En ella abriremos y editaremos nuestros scripts de trabajo. A medida que se escriben las líneas para ejecutarlas debemos posicionarnos en ella (o seleccionarla) y correrlas (Run, arriba a la derecha, o más fácil *Ctrl + r*).
 
@@ -134,7 +138,7 @@ setwd("D:/DATOS/R")
 
 Si queremos revisar en qué directorio nos encontramos, ejecutamos
 
-```{r }
+```{r eval=FALSE}
 getwd()
 ```
 
@@ -142,74 +146,75 @@ Ahora antes de ver cómo cargar la base de datos, haremos una breve explicación
 
 ### Armado de la base de datos
 
-Una vez más, aquí mostraré mi forma de armar las bases de datos, hay muchas..
+Una vez más, aquí mostraré mi forma de armar las bases de datos, hay muchas...
 
 La forma de la base de datos es la misma que se utiliza en otros software como Infostat. Debemos crear una columna por cada factor o variable que tengamos, y repetir el nivel del factor para cada unidad experimental (cada fila).
 
-El formato en el que yo creo mis bases de datos es csv (archivo separado por comas). Para ello se exporta desde excel o calc el archivo en ese formato. El documento debe tener una única hoja con las base de datos limpia, es decir sin columnas o filas extras con comentarios, datos extra, etc. Por otro lado, es recomendable que los nombres de las columnas sean lo más cortos posibles, y que no tengan espacios. Otra recomendación es omitir el uso de tildes u otros caracteres especiales en cualquier parte del documento puede llegar a tener problemas según la codificación que usemos en RStudio. La más compatible es la UTF-8, que no suele generar problemas.
+El formato en el que yo creo mis bases de datos es csv (archivo separado por comas). Para ello se exporta desde Excel o Calc el archivo en ese formato. El documento debe tener una única hoja con las base de datos limpia, es decir sin columnas o filas extras con comentarios, datos extra, etc. Por otro lado, es recomendable que los nombres de las columnas sean lo más cortos posibles, y que no tengan espacios. Otra recomendación es omitir el uso de tildes u otros caracteres especiales en cualquier parte del documento puede llegar a tener problemas según la codificación que usemos en RStudio. La más compatible es la UTF-8, que no suele generar problemas.
 
-Resumiendo, la recomendación es que una vez que tenemos nuestra tabla (en excel por ejemplo) con los datos listos, copiarla y pegarla en un documento nuevo. Allí ver de simplificar los nombres de las columnas, también de los niveles de factores a utilizar. Guardar este nuevo documento como csv, si estamos en idioma español establecer para la separación de columnas ";". Por supuesto, guardamos el archivo en el directorio de trabajo.
+Resumiendo, la recomendación es que una vez que tenemos nuestra tabla (en Excel por ejemplo) con los datos listos, copiarla y pegarla en un documento nuevo. Allí ver de simplificar los nombres de las columnas, también de los niveles de factores a utilizar. Guardar este nuevo documento como csv, si estamos en idioma español establecer para la separación de columnas ";". Por supuesto, guardamos el archivo en el directorio de trabajo.
 
 Para este curso utilizaremos inicialmente la base de datos "metals.csv".
 
 ### Cargando la base de datos
 
-En este aparto, cabe destacar que R es un lenguaje orientado a objetos. Cargaremos nuestra base de datos como un "objeto" de R, al cual debemos asignarle un nombre. De ahí en más, cualquier acción que modifique nuestro "objeto" quedará guardada en el objeto mismo, pero no modificará nuestro archivo original (el csv en este caso). Para crear un objeto lo asignamos con "\<-" (de forma rápida se escribe con Alt + -) o con el signo "=".
+R es un lenguaje orientado a objetos. Por lo tanto, cargaremos nuestra base de datos como un "objeto" de R, al cual debemos asignarle un nombre. De ahí en más, cualquier acción que modifique nuestro "objeto" quedará guardada en el objeto mismo, pero no modificará nuestro archivo original (el csv en este caso). Para crear un objeto lo asignamos con "**\<-**" (de forma rápida se escribe con *Alt + -*) o con el signo "**=**".
 
-Una primera forma de cargarla es mediante la función read.csv, por ejemplo:
-
-```{r}
-#| eval: false
-metales <- read.csv("metales.csv")
-```
-
-Como la base está en español, no se carga correctamente. Debemos corregir un par de parámetros:
+Una primera forma de cargarla es mediante la función read.csv, y se pueden establecer un par de parámetros:
 
 ```{r}
-metales <- read.csv("data/metales.csv", dec=",", sep=";")
-lapply(metales, class) # vemos que crea factores
+datos_peces <- read.csv("data/peces_morfometria.csv", dec=".", sep=",")
+lapply(datos_peces, class) # vemos que crea factores
 ```
 
-La función que yo más utilizo es la que viene con el paquete tidyverse, llamada `read_csv`. Si usamos `read_csv2`, toma la coma como separador decimal:
+La función que yo más utilizo es la que viene con el paquete **tidyverse**, llamada `read_csv`. Si usamos `read_csv2`, toma la coma como separador decimal:
 
 ```{r warning=FALSE}
-metales <- read_csv2("data/metales.csv")
+datos_peces <- read_csv("data/peces_morfometria.csv")
 ```
 
-Vemos que en este caso nos mostró directamente la clase de cada columna, y que crea objetos tipo character en vez de factor.
+Vemos que en este caso nos mostró directamente la clase de cada columna, y que crea objetos tipo *character* en vez de *factor*.
 
 En la ventana 3, nos aparecerán los objetos que incorporemos.
 
 ## Caracterización de la base de datos
 
-Para ver primeros datos y los nombres de las columnas ejecutamos los comandos:
+Para ver los primeros 6 datos y los nombres de las columnas ejecutamos la función `head`:
 
 ```{r}
-head(metales)
+head(datos_peces)
 ```
 
-Para ver la tabla completa, se debe tildar en el nombre del objeto en la ventana 3. Aprovechando que tenemos la tabla a nuestra vista, daré aquí una breve descripción de los datos. La tabla cargada cuenta con datos de plantas de soja de 3 cultivares (o genotipos) diferentes: Alim 3,14, ES Mentor y Sigalia (todos en la columna GT). Estas plantas crecieron en cámaras climáticas con condiciones controladas de luz, temperatura, humedad y concentración de CO~2~. Las siguientes columnas de la base de datos son las siguientes:
+Para ver la tabla completa, se debe tildar en el nombre del objeto en la ventana 3. Aprovechando que tenemos la tabla a nuestra vista, daré aquí una breve descripción de los datos. Esta base de datos contiene registros morfométricos, fisiológicos y ambientales de peces colectados en tres lagunas pampeanas de la región central de Argentina. Se incluyen tres especies nativas con rangos de talla muy distintos, lo que la hace especialmente útil para explorar relaciones alométricas, correlaciones entre variables continuas y comparaciones entre grupos. Las variables registradas son:
 
--   CO~2~: es la concentración en la cual crecieron las plantas. Tiene dos niveles: 400 ppm y 550 ppm.
+-   **id:** Identificador numérico único de cada individuo.
 
--   ET: estrés térmico. Algunas de las plantas fueron sometidas a estrés térmico en el periodo crítico de llenado de grano. Tiene dos niveles: Sí o No.
+-   **especie:** Especie a la que pertenece el individuo (*Odontesthes bonariensis*, *Jenynsia multidentata* o *Cichlasoma dimerus*).
 
--   Órgano: refiere a si se trata de raíces, tallos, hojas, vainas o semillas.
+-   **sitio:** Laguna de muestreo (Laguna Norte, Laguna Sur o Laguna Central).
 
--   PS: peso seco del órgano correspondiente.
+-   **sexo:** Sexo del individuo (M/F).
 
--   Mn, Cu, Zn, Pb, Cd: concentración del metal en el órgano correspondiente en ppm.
+-   **temporada:** Temporada de muestreo (Verano o Invierno).
 
--   SPAD: medición promedio de SPAD (verdor) en hojas a lo largo del desarrollo. Valor sólo válido para las hojas.
+-   **longitud_cm:** Longitud total del pez en centímetros.
 
-Además podemos ver un resumen de nuestra base o hacerle "preguntas" a R sobre la base de datos. Al escribir "\$" a continuación de un objeto podemos ver las columnas individuales. Por ejemplo:
+-   **peso_g:** Peso corporal en gramos. Se relaciona con la longitud mediante una función alométrica (W = a·L\^b).
+
+-   **temperatura_C:** Temperatura del agua en el momento del muestreo, en °C.
+
+-   **transparencia_cm:** Transparencia del agua medida con disco de Secchi, en centímetros.
+
+-   **cortisol_ugdL:** Concentración plasmática de cortisol en µg/dL, utilizada como indicador de estrés fisiológico.
+
+Siguiendo con el análisis de nuestra base de datos, podemos ver un resumen de nuestra base o hacerle "preguntas" a R sobre la base de datos. Al escribir "\$" a continuación de un objeto podemos ver las columnas individuales. Por ejemplo:
 
 ```{r}
-summary(metales) # resumen de la base
-is.double(metales$PS) # double indica numérico continuo
-is.character(metales$GT)
-levels(as.factor(metales$GT)) # para ver los niveles de un factor
-levels(as.factor(metales$Organo))
+summary(datos_peces) # resumen de la base
+is.double(datos_peces$temperatura_C) # double indica numérico continuo
+is.character(datos_peces$longitud_cm)
+levels(as.factor(datos_peces$especie)) # para ver los niveles de un factor
+as.character(datos_peces$transparencia_cm)
 ```
 
 ### Caracterización gráfica
@@ -218,10 +223,10 @@ En este caso haremos algunos gráficos sencillos para observar la distribución 
 
 ```{r, out.width='50%'}
 #| layout-ncol: 2
-boxplot(metales$PS~metales$Organo)
-boxplot(metales$Pb~metales$GT)
-plot(metales$Cd)
-plot(metales$Pb~metales$Cd)
+plot(datos_peces$longitud_cm)
+plot(datos_peces$longitud_cm~datos_peces$temperatura_C)
+boxplot(datos_peces$peso_g~datos_peces$especie)
+boxplot(datos_peces$peso_g~datos_peces$sitio)
 ```
 
 ## Manejo de la base de datos
@@ -230,27 +235,27 @@ plot(metales$Pb~metales$Cd)
 
 Algo muy común en el trabajo en R, es la necesidad de subdividir la base de datos para utilizar únicamente una parte de ella. Veremos un par de formas de hacerlo.
 
-Con las funciones que incluye R base, utilizaremos `subset`. Por ejemplo para elegir solo las muestras del genotipo *Alim 3,14*:
+Con las funciones que incluye R base, utilizaremos `subset`. Por ejemplo para elegir solo las muestras de la especie *Jenynsia multidentata*:
 
 ```{r}
-ALIM <- subset(metales, metales$GT=="Alim 3,14")
+JENYNSIA <- subset(datos_peces, datos_peces$especie == "Jenynsia multidentata")
 ```
 
-Y creamos un objeto que se llama *ALIM*, nuevamente mediante *\<-*.
+Y creamos un objeto que se llama *JENYNSIA*, nuevamente mediante *\<-*.
 
-Otra forma de hacerlo es mediante el uso de pipes (%\>%). Las pipes sirven para concatenar una serie de acciones para modificar una base de datos. En primer lugar se ubica la base a modificar y entre cada linea de comando %\>% (*Ctrl + Shift + m*). Así, podemos crear la misma base de antes con `filter`:
+Otra forma de hacerlo es mediante el uso de pipes (**%\>%**). Las pipes sirven para concatenar una serie de acciones para modificar una base de datos. En primer lugar se ubica la base a modificar y entre cada linea de comando %\>% (*Ctrl + Shift + m*). Así, podemos filtrar una base de datos con `filter`:
 
 ```{r}
-ALIM <- metales %>% filter(GT == "Alim 3,14")
+Laguna_Central <- datos_peces %>% filter(sitio == "Laguna Central")
 ```
 
 Si queremos filtrar por más de un parámetro:
 
 ```{r}
 # en dos pasos
-ALIM_VyS <- metales %>%
-                    filter(GT == "Alim 3,14") %>% # se agrega a lo anterior
-                    filter(Organo =="Vaina"| Organo =="Semilla")
+Peces_Invierno <- datos_peces %>% 
+  filter(temporada == "Invierno") %>% # se agrega a lo anterior
+  filter(especie == "Cichlasoma dimerus" | especie == "Odontesthes bonariensis")
 ```
 
 ### Seleccionar filas o columnas
@@ -259,26 +264,26 @@ En R base, el uso de \[ \] sirve para seleccionar filas o columnas de una databa
 
 ```{r}
 # seleccionar filas 1 a 3
-metales[1:3,]
+datos_peces[1:3,]
 
 # seleccionar columnas 1 a 3
-metales[,1:3]
-metales %>% select(1:3)
+datos_peces[,1:3]
+datos_peces %>% select(1:3)
 
 # seleccionar por nombre de la columna
-metales %>% select(GT,CO2,Pb)
+datos_peces %>% select(sitio, especie)
 ```
 
 ### Creación de nuevas variables
 
-Una opción muy útil ligada al paquete **dplyr** es la de transformar nuestras bases de datos para algún gráfico en particular, sin necesidad de cambiar la tabla original. Para ello utilizaremos la función `mutate`, que permite generar muchos cambios en la base de datos. Por ejemplo, en la base ALIM, si queremos agregar la cantidad absoluta de Pb extraída:
+Una opción muy útil ligada al paquete **dplyr** es la de transformar nuestras bases de datos para algún gráfico en particular, sin necesidad de cambiar la tabla original. Para ello utilizaremos la función `mutate`, que permite generar muchos cambios en la base de datos. Por ejemplo, en la base `datos_peces`, si queremos agregar la la variable peso por unidad de longitud:
 
 ```{r}
-metales <- metales %>%
-  mutate("Pb_total" = Pb*PS) # se crea una nueva columna
+datos_peces <- datos_peces %>% 
+  mutate("peso_relativo" = peso_g/longitud_cm) # se crea una nueva columna
 
 # para ver la columna nueva
-metales$Pb_total
+head(datos_peces$peso_relativo)
 ```
 
 ### Cambio en los niveles de un factor
@@ -294,16 +299,16 @@ También podemos cambiar los niveles de una factor `mutate`, mediante la siguien
 Y podemos incluir una línea para cada nivel que queramos modificar. Por ejemplo:
 
 ```{r out.height="50%"}
-ALIM %>% select(CO2, ET, PS) %>%
-  mutate(ET = fct_recode(ET,
-                         "Control"  = "No",
-                         "Estrés térmico" = "Si")) 
+datos_peces <- datos_peces %>% 
+  mutate(sexo = fct_recode(sexo,
+                           "Macho" = "M",
+                           "Hembra" = "F"))
 ```
 
 ## Actividad 1
 
-1.  Cree a partir de la base de datos original, una que contenga únicamente los tallos y hojas del cultivar ES Mentor, y las columnas de CO~2~, ET, Organo, PS, Zn y Pb.
-2.  Filtre la base creada para obtener otra que solo tenga aquellos datos con más de 3 ppm de Pb.
+1.  Cree a partir de la base de datos original, una que contenga únicamente los individuos de la especie *Cichlasoma dimerus y Odontesthes bonariensis* que se encuentran en la Laguna Norte en invierno.
+2.  Filtre la base creada para obtener otra que solo tenga aquellos individuos con peso relativo mayor a 1.
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)

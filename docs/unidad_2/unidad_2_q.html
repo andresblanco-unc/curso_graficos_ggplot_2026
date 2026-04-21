@@ -156,15 +156,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#análisis-de-normalidad" id="toc-análisis-de-normalidad" class="nav-link" data-scroll-target="#análisis-de-normalidad"><span class="header-section-number">1.1.1</span> Análisis de normalidad</a></li>
   <li><a href="#muchas-columnas-a-la-vez" id="toc-muchas-columnas-a-la-vez" class="nav-link" data-scroll-target="#muchas-columnas-a-la-vez"><span class="header-section-number">1.1.2</span> Muchas columnas a la vez</a></li>
+  <li><a href="#actividad-2.a" id="toc-actividad-2.a" class="nav-link" data-scroll-target="#actividad-2.a"><span class="header-section-number">1.1.3</span> Actividad 2.a</a></li>
   </ul></li>
-  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="header-section-number">1.2</span> Regresión lineal simple</a></li>
-  <li><a href="#actividad-2" id="toc-actividad-2" class="nav-link" data-scroll-target="#actividad-2"><span class="header-section-number">1.3</span> Actividad 2</a></li>
-  <li><a href="#gráficos-de-puntos" id="toc-gráficos-de-puntos" class="nav-link" data-scroll-target="#gráficos-de-puntos"><span class="header-section-number">1.4</span> Gráficos de puntos</a>
+  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="header-section-number">1.2</span> Regresión lineal simple</a>
   <ul class="collapse">
-  <li><a href="#función-plot" id="toc-función-plot" class="nav-link" data-scroll-target="#función-plot"><span class="header-section-number">1.4.1</span> Función plot</a></li>
-  <li><a href="#función-lineplot.ci-paquete-sciplot" id="toc-función-lineplot.ci-paquete-sciplot" class="nav-link" data-scroll-target="#función-lineplot.ci-paquete-sciplot"><span class="header-section-number">1.4.2</span> Función lineplot.CI (paquete sciplot)</a></li>
-  <li><a href="#función-ggplot-paquete-ggplot2" id="toc-función-ggplot-paquete-ggplot2" class="nav-link" data-scroll-target="#función-ggplot-paquete-ggplot2"><span class="header-section-number">1.4.3</span> Función ggplot (paquete ggplot2)</a></li>
-  <li><a href="#actividad-3" id="toc-actividad-3" class="nav-link" data-scroll-target="#actividad-3"><span class="header-section-number">1.4.4</span> Actividad 3</a></li>
+  <li><a href="#actividad-2.b" id="toc-actividad-2.b" class="nav-link" data-scroll-target="#actividad-2.b"><span class="header-section-number">1.2.1</span> Actividad 2.b</a></li>
+  </ul></li>
+  <li><a href="#gráficos-de-puntos" id="toc-gráficos-de-puntos" class="nav-link" data-scroll-target="#gráficos-de-puntos"><span class="header-section-number">1.3</span> Gráficos de puntos</a>
+  <ul class="collapse">
+  <li><a href="#función-plot" id="toc-función-plot" class="nav-link" data-scroll-target="#función-plot"><span class="header-section-number">1.3.1</span> Función plot</a></li>
+  <li><a href="#función-lineplot.ci-paquete-sciplot" id="toc-función-lineplot.ci-paquete-sciplot" class="nav-link" data-scroll-target="#función-lineplot.ci-paquete-sciplot"><span class="header-section-number">1.3.2</span> Función lineplot.CI (paquete sciplot)</a></li>
+  <li><a href="#función-ggplot-paquete-ggplot2" id="toc-función-ggplot-paquete-ggplot2" class="nav-link" data-scroll-target="#función-ggplot-paquete-ggplot2"><span class="header-section-number">1.3.3</span> Función ggplot (paquete ggplot2)</a></li>
+  <li><a href="#actividad-2.c" id="toc-actividad-2.c" class="nav-link" data-scroll-target="#actividad-2.c"><span class="header-section-number">1.3.4</span> Actividad 2.c</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -216,16 +219,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="correlación" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="correlación"><span class="header-section-number">1.1</span> Correlación</h2>
 <p>Cuando queremos evaluar la relación entre 2 variables continuas, sin establecer relaciones de dependencia, el análisis que debemos hacer es un análisis de correlación lineal. El test de correlación lineal más utilizado es el de correlación de Pearson, que nos arroja el coeficiente de Pearson, que toma valores entre -1 y 1, según la relación sea inversa o directa. Valores cercanos a cero indican falta de relación entre las variables. La correlación de Pearson tiene como supuestos la distribución normal de las variables (entre otros). Debemos poner a prueba esos supuestos para poder realizar este tipo de análisis.</p>
-<p>Comenzaremos creando una base de datos de las semillas:</p>
+<p>Comenzaremos creando una base de datos de los individuos de <em>Odontesthes bonariensis</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SEM <span class="ot">&lt;-</span> metales <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Organo <span class="sc">==</span> <span class="st">"Semilla"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>PEJERREY <span class="ot">&lt;-</span> datos_peces <span class="sc">%&gt;%</span> <span class="fu">filter</span>(especie <span class="sc">==</span> <span class="st">"Odontesthes bonariensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Veremos primero como analizar de a pares de variables. Lo recomendable es iniciar con una exploración gráfica de los datos, en este caso vamos a relacionar la acumulación de Cu y Zn en semillas.</p>
+<p>Veremos primero como analizar de a pares de variables. Lo recomendable es iniciar con una exploración gráfica de los datos, en este caso vamos a relacionar la longitud con el peso de los individuos.</p>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exploración gráfica</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SEM<span class="sc">$</span>Cu, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SEM<span class="sc">$</span>Zn, <span class="at">pch =</span> <span class="dv">17</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SEM<span class="sc">$</span>Cu, SEM<span class="sc">$</span>Zn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PEJERREY<span class="sc">$</span>longitud_cm, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PEJERREY<span class="sc">$</span>peso_g, <span class="at">pch =</span> <span class="dv">17</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PEJERREY<span class="sc">$</span>longitud_cm, PEJERREY<span class="sc">$</span>peso_g)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PEJERREY<span class="sc">$</span>longitud_cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -239,142 +243,103 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="unidad_2_q_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid"></p>
 </div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Vemos que hay un valor extremo en el gráfico de Cu, para identificarlo podemos correr <em>identify</em>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SEM<span class="sc">$</span>Cu)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">identify</span>(SEM<span class="sc">$</span>Cu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora veremos cómo hacer la correlación de pearson, de momento ignorando los supuestos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(SEM<span class="sc">$</span>Cu, SEM<span class="sc">$</span>Zn, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(PEJERREY<span class="sc">$</span>longitud_cm, PEJERREY<span class="sc">$</span>peso_g, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
 
-data:  SEM$Cu and SEM$Zn
-t = 5.4405, df = 34, p-value = 4.599e-06
+data:  PEJERREY$longitud_cm and PEJERREY$peso_g
+t = 16.763, df = 25, p-value = 4.152e-15
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- 0.4558295 0.8256796
+ 0.9094557 0.9810399
 sample estimates:
       cor 
-0.6822013 </code></pre>
+0.9582818 </code></pre>
 </div>
 </div>
 <p>Vemos que nos arroja los resultados del valor del coeficiente lineal de pearson y su valor p asociado.</p>
 <section id="análisis-de-normalidad" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="análisis-de-normalidad"><span class="header-section-number">1.1.1</span> Análisis de normalidad</h3>
 <p>En esta sección veremos cómo poner a prueba la normalidad de nuestros datos con el test de Shapiro Wilk y como visualizarlo gráficamente en un qqplot. Recordemos que la hipótesis nula del test es que los datos son normales, por lo que si rechazamos la hipótesis (p&lt;0,05) no hay normalidad:</p>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forma analítica</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(SEM<span class="sc">$</span>Cu)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(SEM<span class="sc">$</span>Zn)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Forma gráfica</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(SEM<span class="sc">$</span>Cu)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(SEM<span class="sc">$</span>Cu, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(SEM<span class="sc">$</span>Zn)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(SEM<span class="sc">$</span>Zn, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forma analítica</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(PEJERREY<span class="sc">$</span>longitud_cm)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(PEJERREY<span class="sc">$</span>peso_g)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Forma gráfica</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(PEJERREY<span class="sc">$</span>longitud_cm)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(PEJERREY<span class="sc">$</span>longitud_cm, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(PEJERREY<span class="sc">$</span>peso_g)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(PEJERREY<span class="sc">$</span>peso_g, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  SEM$Cu
-W = 0.87266, p-value = 0.0006623</code></pre>
+data:  PEJERREY$longitud_cm
+W = 0.96931, p-value = 0.5838</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  SEM$Zn
-W = 0.97345, p-value = 0.527</code></pre>
+data:  PEJERREY$peso_g
+W = 0.88678, p-value = 0.006751</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
-<p>Vemos que para el caso del Cu no son normales los datos de acuerdo con el test analítico, aunque el gráfico muestra un valor extremo. En una primera instancia podemos transformar las variables, que en R lo podemos hacer directamente:</p>
+<p>Vemos que para el caso del peso_g no son normales los datos de acuerdo con el test analítico, y el gráfico muestra una curva sigmoidea. En una primera instancia podemos transformar las variables, que en R lo podemos hacer directamente:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(SEM<span class="sc">$</span>Cu)) <span class="co"># convertimos al logaritmo en base 10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">log</span>(PEJERREY<span class="sc">$</span>peso_g<span class="sc">+</span><span class="dv">1</span>)) <span class="co"># convertimos al logaritmo en base 10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  log(SEM$Cu)
-W = 0.86508, p-value = 0.0004317</code></pre>
+data:  log(PEJERREY$peso_g + 1)
+W = 0.95299, p-value = 0.2531</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">log</span>(SEM<span class="sc">$</span>Cu))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">log</span>(SEM<span class="sc">$</span>Cu), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">log</span>(PEJERREY<span class="sc">$</span>peso_g<span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">log</span>(PEJERREY<span class="sc">$</span>peso_g<span class="sc">+</span><span class="dv">1</span>), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
 </figure>
 </div>
-</div>
-</div>
-<p>Sigue sin mostrar normalidad. Como vimos antes, el primer valor es mucho más alto que sus réplicas, si tomáramos la decisión de extraerlo hacemos el test sin él:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(SEM[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Cu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  SEM[-1, ]$Cu
-W = 0.87851, p-value = 0.001098</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(SEM[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Cu)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(SEM[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Cu, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Podemos conformarnos con la eliminación, y correr el test así (no olvidar eliminar el valor en ambas bases de datos):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(SEM[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Cu, SEM[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Zn, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  SEM[-1, ]$Cu and SEM[-1, ]$Zn
-t = 7.5311, df = 33, p-value = 1.161e-08
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- 0.6283377 0.8919974
-sample estimates:
-      cor 
-0.7950977 </code></pre>
 </div>
 </div>
 <p>Si no logramos de ninguna manera corregir la normalidad, podemos también correr el test no paramétrico de Spearman que no tiene supuestos asociados, aunque también presenta menor potencia. En este caso el coeficiente es el coeficiente de Spearman (<em>rho</em>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(SEM<span class="sc">$</span>Cu, SEM<span class="sc">$</span>Zn,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"spearman"</span>, <span class="at">exact =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(PEJERREY<span class="sc">$</span>longitud_cm, PEJERREY<span class="sc">$</span>peso_g, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> <span class="st">"spearman"</span>, <span class="at">exact =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Spearman's rank correlation rho
 
-data:  SEM$Cu and SEM$Zn
-S = 2004.8, p-value = 2.233e-07
+data:  PEJERREY$longitud_cm and PEJERREY$peso_g
+S = 141.52, p-value = 6.37e-15
 alternative hypothesis: true rho is not equal to 0
 sample estimates:
       rho 
-0.7419853 </code></pre>
+0.9568005 </code></pre>
 </div>
 </div>
 </section>
@@ -382,71 +347,115 @@ sample estimates:
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="muchas-columnas-a-la-vez"><span class="header-section-number">1.1.2</span> Muchas columnas a la vez</h3>
 <p>Existen otros test que permiten correlacionar pares de variables pero correrlas todas a la vez. A diferencia de la función <code>cor.test</code> que solo admite 2 variables, la función <code>cor</code> permite cargar una serie de columnas y luego podemos ver los coeficientes en forma matricial:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CORR <span class="ot">&lt;-</span> <span class="fu">cor</span>(SEM[, <span class="fu">c</span>(<span class="st">"Pb"</span>, <span class="st">"Cd"</span>, <span class="st">"Mn"</span>, <span class="st">"Cu"</span>, <span class="st">"Zn"</span>)],</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">use =</span> <span class="st">"complete.obs"</span>, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>CORR <span class="co"># obtenemos los coeficientes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>CORR <span class="ot">&lt;-</span> <span class="fu">cor</span>(PEJERREY[, <span class="fu">c</span>(<span class="st">"longitud_cm"</span>, <span class="st">"peso_g"</span>, <span class="st">"temperatura_C"</span>, <span class="st">"transparencia_cm"</span>)],</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">use =</span> <span class="st">"complete.obs"</span>, <span class="at">method =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>CORR <span class="co"># obtenemos los coeficientes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Pb         Cd         Mn         Cu            Zn
-Pb 1.0000000000  0.1480843  0.3825917  0.1104054  0.0009652035
-Cd 0.1480843231  1.0000000 -0.3435795  0.2023747  0.6365851679
-Mn 0.3825916853 -0.3435795  1.0000000 -0.3945261 -0.3955337272
-Cu 0.1104053538  0.2023747 -0.3945261  1.0000000  0.6822013201
-Zn 0.0009652035  0.6365852 -0.3955337  0.6822013  1.0000000000</code></pre>
+<pre><code>                 longitud_cm     peso_g temperatura_C transparencia_cm
+longitud_cm        1.0000000  0.9582818    0.16529955      -0.30453658
+peso_g             0.9582818  1.0000000    0.16880557      -0.36222893
+temperatura_C      0.1652995  0.1688056    1.00000000       0.04709404
+transparencia_cm  -0.3045366 -0.3622289    0.04709404       1.00000000</code></pre>
 </div>
 </div>
-<p>Otra función de utilidad que nos permite ver los coeficientes y los valores p al mismo tiempo es la función <code>rcorr</code> del paquete <strong>Hmisc</strong>:</p>
+<p>Otra función de utilidad que nos permite ver los coeficientes y los valores <em>p</em> al mismo tiempo es la función <code>rcorr</code> del paquete <strong>Hmisc</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>CORR.Sem <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(SEM[,<span class="dv">7</span><span class="sc">:</span><span class="dv">11</span>])) <span class="co">#argumento matricial</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>CORR.Sem <span class="co"># aquí observamos primero los valores de coeficientes y luego el valor p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>CORR_Pejerrey <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(PEJERREY[,<span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>]))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>CORR_Pejerrey <span class="co"># aquí observamos primero los valores de coeficientes y luego el valor p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Mn    Cu    Zn    Cd   Pb
-Mn  1.00 -0.39 -0.40 -0.34 0.38
-Cu -0.39  1.00  0.68  0.20 0.11
-Zn -0.40  0.68  1.00  0.64 0.00
-Cd -0.34  0.20  0.64  1.00 0.15
-Pb  0.38  0.11  0.00  0.15 1.00
+<pre><code>                 longitud_cm peso_g temperatura_C transparencia_cm
+longitud_cm             1.00   0.96          0.17            -0.30
+peso_g                  0.96   1.00          0.17            -0.36
+temperatura_C           0.17   0.17          1.00             0.05
+transparencia_cm       -0.30  -0.36          0.05             1.00
 
-n= 36 
+n= 27 
 
 
 P
-   Mn     Cu     Zn     Cd     Pb    
-Mn        0.0173 0.0170 0.0402 0.0213
-Cu 0.0173        0.0000 0.2365 0.5215
-Zn 0.0170 0.0000        0.0000 0.9955
-Cd 0.0402 0.2365 0.0000        0.3887
-Pb 0.0213 0.5215 0.9955 0.3887       </code></pre>
+                 longitud_cm peso_g temperatura_C transparencia_cm
+longitud_cm                  0.0000 0.4100        0.1225          
+peso_g           0.0000             0.4000        0.0633          
+temperatura_C    0.4100      0.4000               0.8156          
+transparencia_cm 0.1225      0.0633 0.8156                        </code></pre>
 </div>
 </div>
 <p>Ahora veremos dos paquetes que nos permiten ver en forma gráfica el resultado de nuestra correlación. El primero es el paquete <strong>corrplot</strong> del cual usaremos las funciones <code>cor.mtest</code> y <code>corrplot</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pValues <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(SEM[,<span class="dv">7</span><span class="sc">:</span><span class="dv">11</span>]) <span class="co"># generamos un objeto de los valores p</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(CORR.Sem<span class="sc">$</span>r,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">'grey20'</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">p.mat =</span> pValues<span class="sc">$</span>p, <span class="co"># para ver los valores p</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">insig =</span> <span class="st">'blank'</span>,</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.srt =</span> <span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(CORR_Pejerrey<span class="sc">$</span>r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pValues <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(PEJERREY[,<span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>]) <span class="co"># generamos un objeto de los valores p</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(CORR_Pejerrey<span class="sc">$</span>r, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">type =</span> <span class="st">"upper"</span>,  <span class="co"># solo mitad de arriba </span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.col =</span> <span class="st">"black"</span>,  <span class="co"># color letras</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">addCoef.col =</span> <span class="st">'grey20'</span>, <span class="co"># color números</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">p.mat =</span> CORR_Pejerrey<span class="sc">$</span>P, <span class="co"># valores p</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sig.level =</span> <span class="fl">0.05</span>,  </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">insig =</span> <span class="st">'blank'</span>,   <span class="co"># qué hacer con los no significativos</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">tl.srt =</span> <span class="dv">45</span>,     <span class="co"># ángulo de títulos</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">diag =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finalmente, introduciré la función <code>chart.Correlation</code> del paquete <strong>PerformanceAnalytics</strong>, que permite visualizar interacciones, gráficos de dispersión, coeficientes de correlación y significancia todo al mismo tiempo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"PerformanceAnalytics"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chart.Correlation</span>(SEM[,<span class="dv">9</span><span class="sc">:</span><span class="dv">11</span>],</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">histogram=</span><span class="cn">TRUE</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"pearson"</span>,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"PerformanceAnalytics"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chart.Correlation</span>(PEJERREY[,<span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>], </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">histogram=</span><span class="cn">TRUE</span>, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"pearson"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los invito a profundizar más en el uso de los paquetes por su propia cuenta.</p>
+</section>
+<section id="actividad-2.a" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="actividad-2.a"><span class="header-section-number">1.1.3</span> Actividad 2.a</h3>
+<p>Genere bases de datos para cada una de las especies y analice si existe una correlación entre longitud_cm, peso_g, cortisol en sangre, temperatura y transparencia. Realice un gráfico con corrplot y otro con chart.Correlation, explore posibilidades de las funciones en la sección ayuda.</p>
+</section>
+</section>
+<section id="regresión-lineal-simple" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">1.2</span> Regresión lineal simple</h2>
+<p>El análisis de regresión lineal tiene algunos parecidos con el de correlación, pero en este caso hay una de la variables que consideramos que influye en la otra. Es decir, que hay una variable <em>x</em> independiente (regresora) y una <em>y</em> dependiente. Ambas variables deben ser numéricas. El modelo plantea el ajuste lineal de los datos, por lo tanto hay pruebas de hipótesis para la ordenada al origen y la pendiente de la recta de ajuste. Los supuestos del modelo son la distribución normal de las variables y la homogeneidad de los errores. Un detalle importante, es que el modelo solo es válido en el rango de nuestra <em>x</em>.</p>
+<p>Por otro lado, existe un parámetro llamado el coeficiente de determinación (R<sup>2</sup>) que nos da una idea de qué porcentaje de variabilidad de <em>y</em> está siendo explicado con <em>x</em>. Este coeficiente toma valores entre 0 y 1, cuanto mayor es mejor es el ajuste de nuestra nube de puntos a la recta.</p>
+<p>Para analizar una regresión lineal en nuestra base datos, retomaremos la relación entre largo y peso de los peces, aunque en este caso entendiendo que el peso depende del largo del pez. Así por ejemplo, para la especie <em>Jenynsia multidentata</em>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(JENYNSIA<span class="sc">$</span>longitud_cm, JENYNSIA<span class="sc">$</span>peso_g, <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Para realizar una regresión lineal (y que en realidad será de la misma manera para un ANOVA), se debe plantear un modelo lineal mediante la función <code>lm</code> de la forma <code>lm(y~x)</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fit_Jenysia <span class="ot">&lt;-</span><span class="fu">lm</span>(peso_g <span class="sc">~</span> longitud_cm, <span class="at">data =</span> JENYNSIA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Una vez creado el objeto, vamos a poner a prueba los supuestos, tanto de forma gráfica como analítica. Al someter nuestro modelo a la función <code>plot</code>, se nos crean 4 gráficos para poner a prueba los supuestos. Para verlos todos juntos dividiremos la ventana gráfica con la función <code>layout</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit_Jenysia) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -455,175 +464,205 @@ Pb 0.0213 0.5215 0.9955 0.3887       </code></pre>
 </div>
 </div>
 </div>
-<p>Los invito a profundizar más en el uso de los paquetes por su propia cuenta.</p>
-</section>
-</section>
-<section id="regresión-lineal-simple" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">1.2</span> Regresión lineal simple</h2>
-<p>El análisis de regresión lineal tiene algunos parecidos con el de correlación, pero en este caso hay una de la variables que consideramos que influye en la otra. Es decir, que hay una variable <em>x</em> independiente (regresora) y una <em>y</em> dependiente. Ambas variables deben ser numéricas. El modelo plantea el ajuste lineal de los datos, por lo tanto hay pruebas de hipótesis para la ordenada al origen y la pendiente de la recta de ajuste. Los supuestos del modelo son la distribución normal de las variables y la homogeneidad de los errores. Un detalle importante, es que el modelo solo es válido en el rango de nuestra <em>x</em>.</p>
-<p>Por otro lado, existe un parámetro llamado el coeficiente de determinación (R<sup>2</sup>) que nos da una idea de qué porcentaje de variabilidad de <em>y</em> está siendo explicado con <em>x</em>. Este coeficiente toma valores entre 0 y 1, cuanto mayor es mejor es el ajuste de nuestra nube de puntos a la recta.</p>
-<p>En nuestro ejemplo para desarrollar una regresión lineal simple, relacionaremos el verdor de las hojas (a través de la medición SPAD) con el Pb acumulado en las mismas. Para ello generaremos una base de datos para las hojas, y haremos un gráfico rápido para ver esa relación:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>HOJA <span class="ot">&lt;-</span> metales <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Organo <span class="sc">==</span> <span class="st">"Hoja"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(HOJA<span class="sc">$</span>SPAD, HOJA<span class="sc">$</span>Pb, <span class="at">pch=</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Para realizar una regresión lineal (y que en realidad será de la misma manera para un ANOVA), se debe plantear un modelo lineal mediante la función <code>lm</code> de la forma lm(y~x):</p>
+<p>Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la derecha nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la izquierda el gráfico de <em>residuos vs leverage</em> que nos permite visualizar la distancia de Cook’s. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 23 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span><span class="fu">lm</span>(Pb <span class="sc">~</span> SPAD, <span class="at">data =</span> HOJA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Una vez creado el objeto, vamos a poner a prueba los supuestos, tanto de forma gráfica como analítica. Al someter nuestro modelo a la función <code>plot</code>, se nos crean 4 gráficos para poner a prueba los supuestos. Para verlos todos juntos dividiremos la ventana gráfica con la función <code>layout</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit1) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la derecha nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la izquierda el gráfico de <em>residuos vs leverage</em> que nos permite visualizar la distancia de Cook’s. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 17 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit_Jenysia))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  resid(fit1)
-W = 0.98603, p-value = 0.9207</code></pre>
+data:  resid(fit_Jenysia)
+W = 0.98092, p-value = 0.8718</code></pre>
 </div>
 </div>
 <p>Como no se rechaza la hipótesis nula (p&gt;0,05), no tenemos evidencia para decir que la distribución no sea normal.</p>
 <p>Una vez puestos a prueba los supuestos, procedemos a ver la tabla de regresión:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_Jenysia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = Pb ~ SPAD, data = HOJA)
+lm(formula = peso_g ~ longitud_cm, data = JENYNSIA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.78646 -0.76173  0.08411  0.66012  3.08197 
+-0.57404 -0.18005 -0.00607  0.14614  0.66865 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -8.43169    1.62522  -5.188 9.79e-06 ***
-SPAD         0.51098    0.06243   8.185 1.51e-09 ***
+(Intercept) -3.81959    0.34256  -11.15 2.10e-11 ***
+longitud_cm  1.06442    0.06363   16.73 1.96e-15 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.221 on 34 degrees of freedom
-Multiple R-squared:  0.6634,    Adjusted R-squared:  0.6535 
-F-statistic:    67 on 1 and 34 DF,  p-value: 1.507e-09</code></pre>
+Residual standard error: 0.2742 on 26 degrees of freedom
+Multiple R-squared:  0.915, Adjusted R-squared:  0.9117 
+F-statistic: 279.8 on 1 and 26 DF,  p-value: 1.959e-15</code></pre>
 </div>
 </div>
-<p>Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R<sup>2</sup> y el p del R<sup>2</sup>. En nuestro caso el modelo obtenido será <em>y= -8,43 + 0,51 x</em> y explica el 65% de la variabilidad.</p>
-<p>El modelo de regresión también puede ser aplicado a una variable <em>x</em> discreta, donde para cada valor de <em>x</em> se encuentren varios valores de <em>y</em> . Para ejemplificar vamos a discretizar nuestra variable SPAD:</p>
+<p>Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R<sup>2</sup> y el p del R<sup>2</sup>. En nuestro caso el modelo obtenido será <em>y= -3,81 + 1,06 x</em> y explica el 91% de la variabilidad.</p>
+<p>El modelo de regresión también puede ser aplicado a una variable <em>x</em> discreta, donde para cada valor de <em>x</em> se encuentren varios valores de <em>y</em> . Para ejemplificar vamos a discretizar nuestra variable <code>longitud_cm</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una nueva columna</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>HOJA<span class="sc">$</span>SPAD_cat <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(HOJA<span class="sc">$</span>SPAD, <span class="at">digits =</span> <span class="dv">0</span>))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(HOJA<span class="sc">$</span>SPAD_cat, HOJA<span class="sc">$</span>Pb, <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una nueva columna</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>JENYNSIA<span class="sc">$</span>long_cat <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(JENYNSIA<span class="sc">$</span>longitud_cm, <span class="at">digits =</span> <span class="dv">0</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># otra forma de hacerlo</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>JENYNSIA <span class="ot">&lt;-</span> JENYNSIA <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">long_cat2 =</span> <span class="fu">round</span>(longitud_cm, <span class="at">digits =</span> <span class="dv">0</span>))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(JENYNSIA<span class="sc">$</span>long_cat, JENYNSIA<span class="sc">$</span>peso_g, <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Y corremos nuevamente el modelo, ahora sí podemos hacer un test para homogeneidad de varianzas y un boxplot de los residuos (errores):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span><span class="fu">lm</span>(Pb <span class="sc">~</span> SPAD_cat, <span class="at">data =</span> HOJA)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit2) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fit_Jenysia_3 <span class="ot">&lt;-</span><span class="fu">lm</span>(peso_g <span class="sc">~</span> long_cat, <span class="at">data =</span> JENYNSIA)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit_Jenysia_3) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit_Jenysia_3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  resid(fit2)
-W = 0.98305, p-value = 0.8429</code></pre>
+data:  resid(fit_Jenysia_3)
+W = 0.95853, p-value = 0.3217</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit2)<span class="sc">~</span>HOJA<span class="sc">$</span>SPAD_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit_Jenysia_3)<span class="sc">~</span>JENYNSIA<span class="sc">$</span>long_cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Bartlett test of homogeneity of variances
 
-data:  resid(fit2) by HOJA$SPAD_cat
-Bartlett's K-squared = 13.039, df = 10, p-value = 0.2215</code></pre>
+data:  resid(fit_Jenysia_3) by JENYNSIA$long_cat
+Bartlett's K-squared = 7.7318, df = 3, p-value = 0.05189</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit2,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>HOJA<span class="sc">$</span>SPAD_cat,</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit_Jenysia_3,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>JENYNSIA<span class="sc">$</span>long_cat, </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tablas</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tablas</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_Jenysia_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = Pb ~ SPAD_cat, data = HOJA)
+lm(formula = peso_g ~ long_cat, data = JENYNSIA)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--2.8450 -0.6495 -0.0374  0.6626  3.2119 
+     Min       1Q   Median       3Q      Max 
+-0.67326 -0.36308  0.00711  0.21269  0.94982 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -8.17737    1.63362  -5.006 1.69e-05 ***
-SPAD_cat     0.50105    0.06273   7.988 2.62e-09 ***
+(Intercept) -2.92822    0.51349  -5.703 5.32e-06 ***
+long_cat     0.89691    0.09518   9.424 7.19e-10 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.24 on 34 degrees of freedom
-Multiple R-squared:  0.6524,    Adjusted R-squared:  0.6421 
-F-statistic:  63.8 on 1 and 34 DF,  p-value: 2.623e-09</code></pre>
+Residual standard error: 0.4475 on 26 degrees of freedom
+Multiple R-squared:  0.7735,    Adjusted R-squared:  0.7648 
+F-statistic:  88.8 on 1 and 26 DF,  p-value: 7.192e-10</code></pre>
 </div>
 </div>
 <p>Vemos que el resultado es muy similar al de antes, por supuesto.</p>
-<p>El modelo de regresión lineal puede ser complejizado agregando más variables regresoras. El planteo del modelo es muy similar, agregando las nuevas variables y su interacción, por ejemplo para dos regresoras: lm(y~ x<sub>1</sub> + x<sub>2</sub> + x<sub>1</sub>*x<sub>2</sub>). Este tipo de modelos exceden los alcances de este taller.</p>
-</section>
-<section id="actividad-2" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="actividad-2"><span class="header-section-number">1.3</span> Actividad 2</h2>
+<p>El modelo de regresión lineal puede ser complejizado agregando más variables regresoras. El planteo del modelo es muy similar, agregando las nuevas variables y su interacción, por ejemplo para dos regresoras: <code>lm(y~ x1 + x2 + x1*x2)</code>. Este tipo de modelos exceden los alcances de este curso.</p>
+<section id="actividad-2.b" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="actividad-2.b"><span class="header-section-number">1.2.1</span> Actividad 2.b</h3>
 <ol type="1">
-<li>A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el PS con la acumulación de Zn en tallos.</li>
+<li>A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el peso con la longitud de peces de las especies seleccionadas.</li>
 <li>Ponga a prueba los supuestos y concluya.</li>
 </ol>
 <hr>
 </section>
-<section id="gráficos-de-puntos" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="gráficos-de-puntos"><span class="header-section-number">1.4</span> Gráficos de puntos</h2>
+</section>
+<section id="gráficos-de-puntos" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="gráficos-de-puntos"><span class="header-section-number">1.3</span> Gráficos de puntos</h2>
 <p>En este apartado veremos cómo una vez que tengamos una correlación o regresión lineal hecha visualizarla gráficamente de un modo agradable.</p>
-<section id="función-plot" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="función-plot"><span class="header-section-number">1.4.1</span> Función plot</h3>
+<section id="función-plot" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="función-plot"><span class="header-section-number">1.3.1</span> Función plot</h3>
 <p>La forma más rápida es mediante la función <code>plot</code> de Rbase</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Pb<span class="sc">~</span>SPAD, <span class="at">data =</span> HOJA, <span class="at">pch=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> JENYNSIA<span class="sc">$</span>peso_g,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> JENYNSIA<span class="sc">$</span>longitud_cm,  <span class="co"># explicito la y </span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"#8B2323"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="función-lineplot.ci-paquete-sciplot" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="función-lineplot.ci-paquete-sciplot"><span class="header-section-number">1.3.2</span> Función lineplot.CI (paquete sciplot)</h3>
+<p>Con el paquete <strong>sciplot</strong>, podemos crear gráficos de manera rápida y estéticamente más trabajada con la función <code>lineplot.CI</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> longitud_cm, </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> peso_g, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> JENYNSIA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># para eje x discreto</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> long_cat, </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> peso_g, </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> JENYNSIA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Si queremos ver qué otras opciones ofrece la función, podemos ir a buscar la ayuda de la misma. Para ver la ayuda de la función ejecutamos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>?lineplot.CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Y se nos abrirá la ayuda en la ventana 4 de RStudio. Allí vemos una serie de parámetros que podemos modificar. A su vez podemos subdividir en grupos, veamos un ejemplo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> long_cat,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> peso_g,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> JENYNSIA, <span class="co"># dataset</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">group =</span> temporada, <span class="co"># criterio de agrupamiento</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">col=</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"blue"</span>), <span class="co"># color</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">las=</span><span class="dv">1</span>, <span class="co"># cambia la inclinación de los números de eje</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="co"># establece los límites del eje y</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="dv">7</span>),</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.cont =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlab=</span><span class="st">"Longitud en peces"</span>, </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab=</span><span class="st">" "</span>, </span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">cex.axis=</span><span class="fl">1.2</span>, </span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">main=</span> <span class="st">"Peso vs Longitud"</span>,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend =</span> T,</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.leg =</span> <span class="dv">4</span>,</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg.lab =</span> <span class="fu">c</span>(<span class="st">"Invierno"</span>, <span class="st">"Verano"</span>),</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">err.width =</span> .<span class="dv">05</span>, </span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -632,14 +671,33 @@ F-statistic:  63.8 on 1 and 34 DF,  p-value: 2.623e-09</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="función-lineplot.ci-paquete-sciplot" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="función-lineplot.ci-paquete-sciplot"><span class="header-section-number">1.4.2</span> Función lineplot.CI (paquete sciplot)</h3>
-<p>Con el paquete <strong>sciplot</strong>, podemos crear gráficos de manera rápida y estéticamente más trabajada con la función <code>lineplot.CI</code>:</p>
+<p>Todo lo que creamos con la función se denominan parámetros primarios del gráfico. Luego se le pueden modificar parámetros secundarios como</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> SPAD,</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> Pb,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> HOJA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> long_cat,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> peso_g,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> JENYNSIA, <span class="co"># dataset</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">group =</span> temporada, <span class="co"># criterio de agrupamiento</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">col=</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"blue"</span>), <span class="co"># color</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">las=</span><span class="dv">1</span>, <span class="co"># cambia la inclinación de los números de eje</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>), <span class="co"># establece los límites del eje y</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="dv">7</span>),</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.cont =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlab=</span><span class="st">"Longitud en peces"</span>, </span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab=</span><span class="st">" "</span>, </span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">cex.axis=</span><span class="fl">1.2</span>, </span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">main=</span> <span class="st">"Peso vs Longitud"</span>,</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend =</span> T,</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.leg =</span> <span class="dv">4</span>,</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">leg.lab =</span> <span class="fu">c</span>(<span class="st">"Invierno"</span>, <span class="st">"Verano"</span>),</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">err.width =</span> .<span class="dv">05</span>, </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co"># parámetros gráficos secundarios, nos sirven para agregar cosas a un gráfico</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab=</span> <span class="st">"Peso (g)"</span>, <span class="at">line =</span> <span class="fl">2.5</span>) <span class="co"># título del eje eligiendo la distancia</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fl">1.5</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># línea horizontal</span></span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">5</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># línea vertical</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -648,58 +706,99 @@ F-statistic:  63.8 on 1 and 34 DF,  p-value: 2.623e-09</code></pre>
 </div>
 </div>
 </div>
-<p>Si queremos ver qué otras opciones ofrece la función, podemos ir a buscar la ayuda de la misma. Para ver la ayuda de la función ejecutamos:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>?lineplot.CI</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Y se nos abrirá la ayuda en la ventana 4 de RStudio. Allí vemos una serie de parámetros que podemos modificar. A su vez podemos subdividir en grupos, veamos un ejemplo:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> SPAD,</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> Pb,</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> HOJA, <span class="co"># dataset</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">group =</span> ET, <span class="co"># criterio de agrupamiento</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">col=</span> <span class="fu">c</span>(<span class="st">"seagreen"</span>,<span class="st">"orange1"</span>), <span class="co"># color</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">las=</span><span class="dv">1</span>,  <span class="co"># cambia la inclinación de los números de eje</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">12</span>)) <span class="co"># establece los límites del eje y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Todo lo que creamos con la función se denominan parámetros primarios del gráfico. Luego se le pueden modificar parámetros secundarios como</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lineplot.CI</span>(<span class="at">x.factor =</span> SPAD,</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> Pb,</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> HOJA,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab =</span> <span class="st">""</span>)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># aquí agregamos los parámetros secundarios</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab=</span> <span class="st">"Pb"</span>, <span class="at">line =</span> <span class="fl">2.5</span>) <span class="co"># título del eje eligiendo la distancia</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># línea horizontal</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">25</span>, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lty=</span><span class="dv">2</span>) <span class="co"># línea vertical</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
-<section id="función-ggplot-paquete-ggplot2" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="función-ggplot-paquete-ggplot2"><span class="header-section-number">1.4.3</span> Función ggplot (paquete ggplot2)</h3>
-<p>Finalmente introduciremos el paquete gráfico <strong>ggplot2</strong>. Si bien es un poco más complicado de aprender y cada gráfico puede requerirnos más tiempo, es súper versátil y permite hacer infinidad de cosas. La lógica de trabajo es un poco diferente a las anteriores, ya que aquí se trabaja en capas que se van separando por el signo +. Todo lo que veamos en este apartado se aplica a casi cualquier tipo de gráfico con <code>ggplot</code>, por lo que nos servirá también para variables categóricas.</p>
+<section id="función-ggplot-paquete-ggplot2" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="función-ggplot-paquete-ggplot2"><span class="header-section-number">1.3.3</span> Función ggplot (paquete ggplot2)</h3>
+<p>Finalmente introduciremos el paquete gráfico <strong>ggplot2</strong>. Si bien es un poco más complicado de aprender y cada gráfico puede requerirnos más tiempo, es súper versátil y permite hacer infinidad de cosas. La lógica de trabajo es un poco diferente a las anteriores, ya que aquí se trabaja en capas que se van separando por el signo <strong>+</strong>. Todo lo que veamos en este apartado se aplica a casi cualquier tipo de gráfico con <code>ggplot</code>, por lo que nos servirá también para variables categóricas.</p>
 <p><strong>ggplot2</strong> maneja una composición por capas. En la primera capa debemos especificar primero la base de datos a utilizar, y luego el <em>aesthetic</em>, es decir, la estructura que tendrán nuestros datos. En una segunda capa elegiremos el <em>geom</em> que dirá la forma que tomará nuestro gráfico. Con estas capas mínimas podemos obtener un gráfico.</p>
 <p>Por ejemplo creamos el gráfico de puntos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>G1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> HOJA, <span class="co"># el data set</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> SPAD, <span class="at">y =</span> Pb)) <span class="sc">+</span> <span class="co"># x e y dentro de aes</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="co"># indica que el gráfico es de puntos</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>G1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>G1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA, <span class="co"># el data set</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> longitud_cm, <span class="at">y =</span> peso_g)) <span class="sc">+</span> <span class="co"># x e y dentro de aes</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="co"># indica que el gráfico es de puntos</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>G1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A partir de acá, podemos ir agregando en sucesivas líneas y separados por signo + las características que queramos modificar. Por ejemplo, podemos cambiar el tema general del gráfico (veremos mucho más detalle más adelante) o modificar el aspecto de los puntos dentro del <em>geom</em>:</p>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> longitud_cm, <span class="at">y =</span> peso_g)) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA, </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> longitud_cm, <span class="at">y =</span> peso_g)) <span class="sc">+</span> </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"yellow"</span>) <span class="sc">+</span>  <span class="co"># cambiamos tamaño y color</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>()</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA,</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(longitud_cm, peso_g))<span class="sc">+</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span> <span class="dv">21</span>, <span class="co"># cambiamos forma</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">5</span>, <span class="co"># cambiamos tamaño</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"violetred4"</span>, <span class="co"># cambiamos borde</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill=</span> <span class="st">"violetred2"</span>) <span class="sc">+</span> <span class="co"># cambiamos relleno</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Podemos agregar nuevas capas con otros <em>geoms</em> al mismo gráfico. Así se puede agregar una línea que una los puntos (con un <em>geom_line</em>) o una línea de regresión con su intervalo de confianza (<strong>geom_smooth</strong>). Es importante mencionar que el orden en el que incluyamos las capas afecta al resultado, la última aparecerá más arriba:</p>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>G1 <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">col=</span><span class="st">"deeppink3"</span>) <span class="co"># cambiamos el color en los parámetros del geom</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>G1 <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2" data-layout-align="center">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-27-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Al igual que hicimos con <code>lineplot.CI</code>, podemos agrupar los datos por algún factor según alguna característica que elijamos (color, forma, relleno, tamaño, etc.). Por ejemplo si queremos distinguir los puntos por color según la temporada:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>G2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(JENYNSIA, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(longitud_cm, peso_g, </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> temporada)) <span class="sc">+</span> <span class="co"># agregamos en el aes por qué parámetro dividir </span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>G2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -708,98 +807,54 @@ F-statistic:  63.8 on 1 and 34 DF,  p-value: 2.623e-09</code></pre>
 </div>
 </div>
 </div>
-<p>A partir de acá, podemos ir agregando en sucesivas líneas y separados por signo + las características que queramos modificar. Por ejemplo, podemos cambiar el tema general del gráfico (veremos mucho más detalle más adelante) o modificar el aspecto de los puntos dentro del <em>geom</em>:</p>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(HOJA, <span class="fu">aes</span>(SPAD, Pb)) <span class="sc">+</span> </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(HOJA, <span class="fu">aes</span>(SPAD, Pb)) <span class="sc">+</span> </span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"yellow"</span>) <span class="sc">+</span>  <span class="co"># cambiamos tamaño y color</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-29-2.png" class="img-fluid"></p>
-</div>
-</div>
-</div>
-<p>Podemos agregar nuevas capas con otros <em>geoms</em> al mismo gráfico. Así se puede agregar una línea que una los puntos (con un <em>geom_line</em>) o una línea de regresión con su intervalo de confianza (<strong>geom_smooth</strong>). Es importante mencionar que el orden en el que incluyamos las capas afecta al resultado, la última aparecerá más arriba:</p>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>G1 <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">col=</span><span class="st">"deeppink3"</span>) <span class="co"># cambiamos el color en los parámetros del geom</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>G1 <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
-<div class="cell quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid"></p>
-</div>
-</div>
-</div>
-<p>Al igual que hicimos con <code>lineplot.CI</code>, podemos agrupar los datos por algún factor según alguna característica que elijamos (color, forma, relleno, tamaño, etc.). Por ejemplo si queremos distinguir los puntos por color según el estrés térmico:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>G2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(HOJA,</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(SPAD, Pb,</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col =</span> ET)) <span class="sc">+</span> <span class="co"># agregamos en el aes por qué parámetro dividir</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>()</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>G2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>Ahora si queremos graficar la variable discreta donde para cada valor del eje <em>x</em> tenemos varios valores de <em>y</em>, por defecto <em>geom_point</em> grafica los puntos individualizados, a diferencia de lo que hacía <em>lineplot.CI</em></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(HOJA, <span class="fu">aes</span>(SPAD_cat, Pb)) <span class="sc">+</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(JENYNSIA, <span class="fu">aes</span>(long_cat, peso_g)) <span class="sc">+</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Entonces para graficar la media y el error estándar, incluimos una capa de <em>stat</em>, que realiza cálculos con la variable respuesta. En este caso, <strong>stat_summary</strong> nos permite graficar el valor medio:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> HOJA,</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(SPAD_cat, Pb))<span class="sc">+</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data=</span>mean_se, <span class="at">geom =</span><span class="st">'errorbar'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA,</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(long_cat, peso_g))<span class="sc">+</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom=</span><span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom=</span><span class="st">"errorbar"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos mejorar un poco la estética</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> HOJA,</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(SPAD_cat, Pb))<span class="sc">+</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">5</span>, <span class="at">col =</span> <span class="st">"azure4"</span>) <span class="sc">+</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data=</span>mean_se, <span class="at">geom =</span><span class="st">'errorbar'</span>, <span class="at">width=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos mejorar un poco la estética</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> JENYNSIA,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(long_cat, peso_g))<span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom=</span><span class="st">"errorbar"</span>, </span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom=</span><span class="st">"point"</span>,</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">size=</span> <span class="dv">4</span>, <span class="at">col =</span><span class="st">"violetred3"</span>) <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_2_q_files/figure-html/unnamed-chunk-30-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="actividad-3" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="actividad-3"><span class="header-section-number">1.4.4</span> Actividad 3</h3>
+<section id="actividad-2.c" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="actividad-2.c"><span class="header-section-number">1.3.4</span> Actividad 2.c</h3>
 <ol type="1">
-<li>Realice una representación gráfica del modelo de regresión realizado en la actividad 2. Incorpore en la gráfica una clasificación por estrés térmico por color.</li>
+<li>Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point.</li>
 </ol>
 <div style="text-align: right;">
 <p><a href="../">Volver al inicio</a></p>

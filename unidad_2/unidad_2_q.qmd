@@ -20,20 +20,17 @@ library(agricolae);library(tidyverse);library(car)
 library(sciplot);library(patchwork); library(gridExtra)
 library(viridis)
 
-#setwd("D:/OneDrive/R/Taller R 2025 Doctorado/")
+datos_peces <- read_csv("data/peces_morfometria.csv")
 
-metales <- read_csv2("data/metales.csv")
+JENYNSIA <- subset(datos_peces, datos_peces$especie == "Jenynsia multidentata") 
 
-ALIM <- subset(metales, metales$GT=="Alim 3,14")
-ALIM_VyS <- metales %>%
-                    filter(GT == "Alim 3,14") %>% # se agrega a lo anterior
-                    filter(Organo =="Vaina"| Organo =="Semilla")
-metales <- metales %>%
-  mutate("Pb_total" = Pb*PS)
-ALIM %>% select(CO2, ET, PS) %>%
-  mutate(ET = fct_recode(ET,
-                         "Control"  = "No",
-                         "Estrés térmico" = "Si")) 
+datos_peces <- datos_peces %>% 
+  mutate("peso_relativo" = peso_g/longitud_cm)
+
+datos_peces <- datos_peces %>% 
+  mutate(sexo = fct_recode(sexo,
+                           "Macho" = "M",
+                           "Hembra" = "F"))
 
 ```
 
@@ -45,34 +42,31 @@ Veremos los análisis a realizar para procesar variables continuas (correlación
 
 Cuando queremos evaluar la relación entre 2 variables continuas, sin establecer relaciones de dependencia, el análisis que debemos hacer es un análisis de correlación lineal. El test de correlación lineal más utilizado es el de correlación de Pearson, que nos arroja el coeficiente de Pearson, que toma valores entre -1 y 1, según la relación sea inversa o directa. Valores cercanos a cero indican falta de relación entre las variables. La correlación de Pearson tiene como supuestos la distribución normal de las variables (entre otros). Debemos poner a prueba esos supuestos para poder realizar este tipo de análisis.
 
-Comenzaremos creando una base de datos de las semillas:
+Comenzaremos creando una base de datos de los individuos de *Odontesthes bonariensis*:
 
 ```{r warning=FALSE }
-SEM <- metales %>% filter(Organo == "Semilla")
+PEJERREY <- datos_peces %>% filter(especie == "Odontesthes bonariensis")
 ```
 
-Veremos primero como analizar de a pares de variables. Lo recomendable es iniciar con una exploración gráfica de los datos, en este caso vamos a relacionar la acumulación de Cu y Zn en semillas.
+Veremos primero como analizar de a pares de variables. Lo recomendable es iniciar con una exploración gráfica de los datos, en este caso vamos a relacionar la longitud con el peso de los individuos.
 
 ```{r, out.width='50%'}
 #| layout-ncol: 2
 # Exploración gráfica
 
-plot(SEM$Cu, pch = 19)
-plot(SEM$Zn, pch = 17)
-plot(SEM$Cu, SEM$Zn)
-```
+plot(PEJERREY$longitud_cm, pch = 19)
 
-Vemos que hay un valor extremo en el gráfico de Cu, para identificarlo podemos correr *identify*:
+plot(PEJERREY$peso_g, pch = 17)
 
-```{r eval=FALSE}
-plot(SEM$Cu)
-identify(SEM$Cu)
+plot(PEJERREY$longitud_cm, PEJERREY$peso_g)
+
+plot(PEJERREY$longitud_cm)
 ```
 
 Ahora veremos cómo hacer la correlación de pearson, de momento ignorando los supuestos:
 
 ```{r warning=FALSE}
-cor.test(SEM$Cu, SEM$Zn, method = "pearson")
+cor.test(PEJERREY$longitud_cm, PEJERREY$peso_g, method = "pearson")
 ```
 
 Vemos que nos arroja los resultados del valor del coeficiente lineal de pearson y su valor p asociado.
@@ -85,44 +79,30 @@ En esta sección veremos cómo poner a prueba la normalidad de nuestros datos co
 #| layout-ncol: 2
 # Forma analítica
 
-shapiro.test(SEM$Cu)
-shapiro.test(SEM$Zn)
+shapiro.test(PEJERREY$longitud_cm)
+shapiro.test(PEJERREY$peso_g)
 
 # Forma gráfica
-qqnorm(SEM$Cu)
-qqline(SEM$Cu, col="red", lwd=2)
+qqnorm(PEJERREY$longitud_cm)
+qqline(PEJERREY$longitud_cm, col="red", lwd=2)
 
-qqnorm(SEM$Zn)
-qqline(SEM$Zn, col="red", lwd=2)
+qqnorm(PEJERREY$peso_g)
+qqline(PEJERREY$peso_g, col="red", lwd=2)
 ```
 
-Vemos que para el caso del Cu no son normales los datos de acuerdo con el test analítico, aunque el gráfico muestra un valor extremo. En una primera instancia podemos transformar las variables, que en R lo podemos hacer directamente:
+Vemos que para el caso del peso_g no son normales los datos de acuerdo con el test analítico, y el gráfico muestra una curva sigmoidea. En una primera instancia podemos transformar las variables, que en R lo podemos hacer directamente:
 
 ```{r out.width="50%", fig.align='center'}
-shapiro.test(log(SEM$Cu)) # convertimos al logaritmo en base 10
+shapiro.test(log(PEJERREY$peso_g+1)) # convertimos al logaritmo en base 10
 
-qqnorm(log(SEM$Cu))
-qqline(log(SEM$Cu), col="red", lwd=2)
-```
-
-Sigue sin mostrar normalidad. Como vimos antes, el primer valor es mucho más alto que sus réplicas, si tomáramos la decisión de extraerlo hacemos el test sin él:
-
-```{r out.width="50%", fig.align='center'}
-shapiro.test(SEM[-1,]$Cu)
-qqnorm(SEM[-1,]$Cu)
-qqline(SEM[-1,]$Cu, col="red", lwd=2)
-```
-
-Podemos conformarnos con la eliminación, y correr el test así (no olvidar eliminar el valor en ambas bases de datos):
-
-```{r}
-cor.test(SEM[-1,]$Cu, SEM[-1,]$Zn, method = "pearson")
+qqnorm(log(PEJERREY$peso_g+1))
+qqline(log(PEJERREY$peso_g+1), col="red", lwd=2)
 ```
 
 Si no logramos de ninguna manera corregir la normalidad, podemos también correr el test no paramétrico de Spearman que no tiene supuestos asociados, aunque también presenta menor potencia. En este caso el coeficiente es el coeficiente de Spearman (*rho*):
 
 ```{r warning=FALSE}
-cor.test(SEM$Cu, SEM$Zn,
+cor.test(PEJERREY$longitud_cm, PEJERREY$peso_g, 
          alternative = "two.sided",
          method = "spearman", exact = TRUE)
 ```
@@ -132,41 +112,45 @@ cor.test(SEM$Cu, SEM$Zn,
 Existen otros test que permiten correlacionar pares de variables pero correrlas todas a la vez. A diferencia de la función `cor.test` que solo admite 2 variables, la función `cor` permite cargar una serie de columnas y luego podemos ver los coeficientes en forma matricial:
 
 ```{r}
-CORR <- cor(SEM[, c("Pb", "Cd", "Mn", "Cu", "Zn")],
+CORR <- cor(PEJERREY[, c("longitud_cm", "peso_g", "temperatura_C", "transparencia_cm")],
             use = "complete.obs", method = "pearson")
 CORR # obtenemos los coeficientes
 ```
 
-Otra función de utilidad que nos permite ver los coeficientes y los valores p al mismo tiempo es la función `rcorr` del paquete **Hmisc**:
+Otra función de utilidad que nos permite ver los coeficientes y los valores *p* al mismo tiempo es la función `rcorr` del paquete **Hmisc**:
 
 ```{r, message=FALSE}
 library(Hmisc)
-CORR.Sem <- rcorr(as.matrix(SEM[,7:11])) #argumento matricial
-CORR.Sem # aquí observamos primero los valores de coeficientes y luego el valor p
+CORR_Pejerrey <- rcorr(as.matrix(PEJERREY[,6:9]))
+CORR_Pejerrey # aquí observamos primero los valores de coeficientes y luego el valor p
 ```
 
 Ahora veremos dos paquetes que nos permiten ver en forma gráfica el resultado de nuestra correlación. El primero es el paquete **corrplot** del cual usaremos las funciones `cor.mtest` y `corrplot`:
 
 ```{r, message=FALSE, fig.align='center'}
 library(corrplot)
-pValues <- cor.mtest(SEM[,7:11]) # generamos un objeto de los valores p
+corrplot(CORR_Pejerrey$r)
 
-corrplot(CORR.Sem$r,
-         type = "upper",
-         tl.col = "black",
-         addCoef.col = 'grey20',
-         p.mat = pValues$p, # para ver los valores p
-         sig.level = 0.05,
-         insig = 'blank',
-         tl.srt = 45)
+
+pValues <- cor.mtest(PEJERREY[,6:9]) # generamos un objeto de los valores p
+
+corrplot(CORR_Pejerrey$r, 
+         type = "upper",  # solo mitad de arriba 
+         tl.col = "black",  # color letras
+         addCoef.col = 'grey20', # color números
+         p.mat = CORR_Pejerrey$P, # valores p
+         sig.level = 0.05,  
+         insig = 'blank',   # qué hacer con los no significativos
+         tl.srt = 45,     # ángulo de títulos
+         diag = FALSE)
 ```
 
 Finalmente, introduciré la función `chart.Correlation` del paquete **PerformanceAnalytics**, que permite visualizar interacciones, gráficos de dispersión, coeficientes de correlación y significancia todo al mismo tiempo:
 
 ```{r, warning=FALSE, message=FALSE}
 library("PerformanceAnalytics")
-chart.Correlation(SEM[,9:11],
-                  histogram=TRUE,
+chart.Correlation(PEJERREY[,6:8], 
+                  histogram=TRUE, 
                   method = "pearson",
                   pch=19)
 
@@ -174,37 +158,39 @@ chart.Correlation(SEM[,9:11],
 
 Los invito a profundizar más en el uso de los paquetes por su propia cuenta.
 
+### Actividad 2.a
+
+Genere bases de datos para cada una de las especies y analice si existe una correlación entre longitud_cm, peso_g, cortisol en sangre, temperatura y transparencia. Realice un gráfico con corrplot y otro con chart.Correlation, explore posibilidades de las funciones en la sección ayuda.
+
 ## Regresión lineal simple
 
 El análisis de regresión lineal tiene algunos parecidos con el de correlación, pero en este caso hay una de la variables que consideramos que influye en la otra. Es decir, que hay una variable *x* independiente (regresora) y una *y* dependiente. Ambas variables deben ser numéricas. El modelo plantea el ajuste lineal de los datos, por lo tanto hay pruebas de hipótesis para la ordenada al origen y la pendiente de la recta de ajuste. Los supuestos del modelo son la distribución normal de las variables y la homogeneidad de los errores. Un detalle importante, es que el modelo solo es válido en el rango de nuestra *x*.
 
 Por otro lado, existe un parámetro llamado el coeficiente de determinación (R^2^) que nos da una idea de qué porcentaje de variabilidad de *y* está siendo explicado con *x*. Este coeficiente toma valores entre 0 y 1, cuanto mayor es mejor es el ajuste de nuestra nube de puntos a la recta.
 
-En nuestro ejemplo para desarrollar una regresión lineal simple, relacionaremos el verdor de las hojas (a través de la medición SPAD) con el Pb acumulado en las mismas. Para ello generaremos una base de datos para las hojas, y haremos un gráfico rápido para ver esa relación:
+Para analizar una regresión lineal en nuestra base datos, retomaremos la relación entre largo y peso de los peces, aunque en este caso entendiendo que el peso depende del largo del pez. Así por ejemplo, para la especie *Jenynsia multidentata*:
 
 ```{r, out.width="60%", fig.align='center'}
-HOJA <- metales %>% filter(Organo == "Hoja")
-
-plot(HOJA$SPAD, HOJA$Pb, pch= 19)
+plot(JENYNSIA$longitud_cm, JENYNSIA$peso_g, pch=19)
 ```
 
-Para realizar una regresión lineal (y que en realidad será de la misma manera para un ANOVA), se debe plantear un modelo lineal mediante la función `lm` de la forma lm(y\~x):
+Para realizar una regresión lineal (y que en realidad será de la misma manera para un ANOVA), se debe plantear un modelo lineal mediante la función `lm` de la forma `lm(y~x)`:
 
 ```{r}
-fit1 <-lm(Pb ~ SPAD, data = HOJA)
+fit_Jenysia <-lm(peso_g ~ longitud_cm, data = JENYNSIA)
 ```
 
 Una vez creado el objeto, vamos a poner a prueba los supuestos, tanto de forma gráfica como analítica. Al someter nuestro modelo a la función `plot`, se nos crean 4 gráficos para poner a prueba los supuestos. Para verlos todos juntos dividiremos la ventana gráfica con la función `layout`:
 
 ```{r fig.width=7, fig.height=7}
 # Gráfico de supuestos
-layout(matrix(1:4, 2, 2)); plot(fit1) ;layout(1)
+layout(matrix(1:4, 2, 2)); plot(fit_Jenysia) ;layout(1)
 ```
 
-Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la derecha nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la izquierda el gráfico de *residuos vs leverage* que nos permite visualizar la distancia de Cook's. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 17 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:
+Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la derecha nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la izquierda el gráfico de *residuos vs leverage* que nos permite visualizar la distancia de Cook's. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 23 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:
 
 ```{r}
-shapiro.test(resid(fit1))
+shapiro.test(resid(fit_Jenysia))
 ```
 
 Como no se rechaza la hipótesis nula (p\>0,05), no tenemos evidencia para decir que la distribución no sea normal.
@@ -212,46 +198,50 @@ Como no se rechaza la hipótesis nula (p\>0,05), no tenemos evidencia para decir
 Una vez puestos a prueba los supuestos, procedemos a ver la tabla de regresión:
 
 ```{r}
-summary(fit1)
+summary(fit_Jenysia)
 ```
 
-Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R^2^ y el p del R^2^. En nuestro caso el modelo obtenido será *y= -8,43 + 0,51 x* y explica el 65% de la variabilidad.
+Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R^2^ y el p del R^2^. En nuestro caso el modelo obtenido será *y= -3,81 + 1,06 x* y explica el 91% de la variabilidad.
 
-El modelo de regresión también puede ser aplicado a una variable *x* discreta, donde para cada valor de *x* se encuentren varios valores de *y* . Para ejemplificar vamos a discretizar nuestra variable SPAD:
+El modelo de regresión también puede ser aplicado a una variable *x* discreta, donde para cada valor de *x* se encuentren varios valores de *y* . Para ejemplificar vamos a discretizar nuestra variable `longitud_cm`:
 
 ```{r, out.width="75%", fig.align='center'}
 # creamos una nueva columna
-HOJA$SPAD_cat <- as.integer(round(HOJA$SPAD, digits = 0))
+JENYNSIA$long_cat <- as.integer(round(JENYNSIA$longitud_cm, digits = 0))
 
-plot(HOJA$SPAD_cat, HOJA$Pb, pch=19)
+# otra forma de hacerlo
+JENYNSIA <- JENYNSIA %>% 
+  mutate(long_cat2 = round(longitud_cm, digits = 0))
+
+plot(JENYNSIA$long_cat, JENYNSIA$peso_g, pch=19)
 ```
 
 Y corremos nuevamente el modelo, ahora sí podemos hacer un test para homogeneidad de varianzas y un boxplot de los residuos (errores):
 
 ```{r, fig.width=7, fig.height=7, warning=FALSE}
-fit2 <-lm(Pb ~ SPAD_cat, data = HOJA)
+fit_Jenysia_3 <-lm(peso_g ~ long_cat, data = JENYNSIA)
 
 # Gráfico de supuestos
-layout(matrix(1:4, 2, 2)); plot(fit2) ;layout(1)
+layout(matrix(1:4, 2, 2)); plot(fit_Jenysia_3) ;layout(1)
 ```
 
 ```{r, out.width="75%", fig.align='center', warning=FALSE}
-shapiro.test(resid(fit2))
-bartlett.test(resid(fit2)~HOJA$SPAD_cat)
-boxplot(residuals(fit2,type="pearson")~HOJA$SPAD_cat,
+shapiro.test(resid(fit_Jenysia_3))
+bartlett.test(resid(fit_Jenysia_3)~JENYNSIA$long_cat)
+boxplot(residuals(fit_Jenysia_3,type="pearson")~JENYNSIA$long_cat, 
         ylab="Pearson standarized residuals")
 
 # Tablas
-summary(fit2)
+summary(fit_Jenysia_3)
 ```
 
 Vemos que el resultado es muy similar al de antes, por supuesto.
 
-El modelo de regresión lineal puede ser complejizado agregando más variables regresoras. El planteo del modelo es muy similar, agregando las nuevas variables y su interacción, por ejemplo para dos regresoras: lm(y\~ x~1~ + x~2~ + x~1~\*x~2~). Este tipo de modelos exceden los alcances de este taller.
+El modelo de regresión lineal puede ser complejizado agregando más variables regresoras. El planteo del modelo es muy similar, agregando las nuevas variables y su interacción, por ejemplo para dos regresoras: `lm(y~ x1 + x2 + x1*x2)`. Este tipo de modelos exceden los alcances de este curso.
 
-## Actividad 2
+### Actividad 2.b
 
-1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el PS con la acumulación de Zn en tallos.
+1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el peso con la longitud de peces de las especies seleccionadas.
 2.  Ponga a prueba los supuestos y concluya.
 
 ------------------------------------------------------------------------
@@ -265,7 +255,10 @@ En este apartado veremos cómo una vez que tengamos una correlación o regresió
 La forma más rápida es mediante la función `plot` de Rbase
 
 ```{r, out.width="100%", fig.align='center'}
-plot(Pb~SPAD, data = HOJA, pch=15)
+plot(x = JENYNSIA$peso_g,
+     y = JENYNSIA$longitud_cm,  # explicito la y 
+     col = "#8B2323",
+     pch=15)
 ```
 
 ### Función lineplot.CI (paquete sciplot)
@@ -273,9 +266,14 @@ plot(Pb~SPAD, data = HOJA, pch=15)
 Con el paquete **sciplot**, podemos crear gráficos de manera rápida y estéticamente más trabajada con la función `lineplot.CI`:
 
 ```{r, out.width="100%", fig.align='center'}
-lineplot.CI(x.factor = SPAD,
-            response = Pb,
-            data = HOJA)
+lineplot.CI(x.factor = longitud_cm, 
+            response = peso_g, 
+            data = JENYNSIA)
+
+# para eje x discreto
+lineplot.CI(x.factor = long_cat, 
+            response = peso_g, 
+            data = JENYNSIA)
 ```
 
 Si queremos ver qué otras opciones ofrece la función, podemos ir a buscar la ayuda de la misma. Para ver la ayuda de la función ejecutamos:
@@ -287,101 +285,144 @@ Si queremos ver qué otras opciones ofrece la función, podemos ir a buscar la a
 Y se nos abrirá la ayuda en la ventana 4 de RStudio. Allí vemos una serie de parámetros que podemos modificar. A su vez podemos subdividir en grupos, veamos un ejemplo:
 
 ```{r, out.width="100%", fig.align='center'}
-lineplot.CI(x.factor = SPAD,
-            response = Pb,
-            data = HOJA, # dataset
-            group = ET, # criterio de agrupamiento
-            col= c("seagreen","orange1"), # color
-            las=1,  # cambia la inclinación de los números de eje
-            ylim = c(0,12)) # establece los límites del eje y
+lineplot.CI(x.factor = long_cat,
+            response = peso_g,
+            data = JENYNSIA, # dataset
+            group = temporada, # criterio de agrupamiento
+            col= c("darkorange","blue"), # color
+            las=1, # cambia la inclinación de los números de eje
+            ylim = c(0,5), # establece los límites del eje y
+            xlim = c(3.5,7),
+            x.cont = TRUE,
+            xlab="Longitud en peces", 
+            ylab=" ", 
+            cex.axis=1.2, 
+            main= "Peso vs Longitud",
+            legend = T,
+            x.leg = 4,
+            leg.lab = c("Invierno", "Verano"),
+            err.width = .05, 
+            lwd = 1.5)
+
 ```
 
 Todo lo que creamos con la función se denominan parámetros primarios del gráfico. Luego se le pueden modificar parámetros secundarios como
 
 ```{r, out.width="100%", fig.align='center'}
-lineplot.CI(x.factor = SPAD,
-            response = Pb,
-            data = HOJA,
-            ylab = "")
+lineplot.CI(x.factor = long_cat,
+            response = peso_g,
+            data = JENYNSIA, # dataset
+            group = temporada, # criterio de agrupamiento
+            col= c("darkorange","blue"), # color
+            las=1, # cambia la inclinación de los números de eje
+            ylim = c(0,5), # establece los límites del eje y
+            xlim = c(3.5,7),
+            x.cont = TRUE,
+            xlab="Longitud en peces", 
+            ylab=" ", 
+            cex.axis=1.2, 
+            main= "Peso vs Longitud",
+            legend = T,
+            x.leg = 4,
+            leg.lab = c("Invierno", "Verano"),
+            err.width = .05, 
+            lwd = 1.5)
 
-# aquí agregamos los parámetros secundarios
-title(ylab= "Pb", line = 2.5) # título del eje eligiendo la distancia
 
-abline(h=2, col="red", lty=2) # línea horizontal
-abline(v=25, col="red", lty=2) # línea vertical
+# parámetros gráficos secundarios, nos sirven para agregar cosas a un gráfico
+title(ylab= "Peso (g)", line = 2.5) # título del eje eligiendo la distancia
+
+abline(h=1.5, col="red", lty=2) # línea horizontal
+abline(v=5, col="red", lty=2) # línea vertical
 ```
 
 ### Función ggplot (paquete ggplot2)
 
-Finalmente introduciremos el paquete gráfico **ggplot2**. Si bien es un poco más complicado de aprender y cada gráfico puede requerirnos más tiempo, es súper versátil y permite hacer infinidad de cosas. La lógica de trabajo es un poco diferente a las anteriores, ya que aquí se trabaja en capas que se van separando por el signo +. Todo lo que veamos en este apartado se aplica a casi cualquier tipo de gráfico con `ggplot`, por lo que nos servirá también para variables categóricas.
+Finalmente introduciremos el paquete gráfico **ggplot2**. Si bien es un poco más complicado de aprender y cada gráfico puede requerirnos más tiempo, es súper versátil y permite hacer infinidad de cosas. La lógica de trabajo es un poco diferente a las anteriores, ya que aquí se trabaja en capas que se van separando por el signo **+**. Todo lo que veamos en este apartado se aplica a casi cualquier tipo de gráfico con `ggplot`, por lo que nos servirá también para variables categóricas.
 
 **ggplot2** maneja una composición por capas. En la primera capa debemos especificar primero la base de datos a utilizar, y luego el *aesthetic*, es decir, la estructura que tendrán nuestros datos. En una segunda capa elegiremos el *geom* que dirá la forma que tomará nuestro gráfico. Con estas capas mínimas podemos obtener un gráfico.
 
 Por ejemplo creamos el gráfico de puntos:
 
 ```{r, out.width="100%", fig.align='center'}
-G1 <- ggplot(data = HOJA, # el data set
-       aes(x = SPAD, y = Pb)) + # x e y dentro de aes
-      geom_point() # indica que el gráfico es de puntos
+G1 <- ggplot(data = JENYNSIA, # el data set
+             aes(x = longitud_cm, y = peso_g)) + # x e y dentro de aes
+  geom_point() # indica que el gráfico es de puntos
 G1
 ```
 
 A partir de acá, podemos ir agregando en sucesivas líneas y separados por signo + las características que queramos modificar. Por ejemplo, podemos cambiar el tema general del gráfico (veremos mucho más detalle más adelante) o modificar el aspecto de los puntos dentro del *geom*:
 
-```{r, fig.show='hold', out.width="50%"}
+```{r, out.width="100%", fig.align='center'}
 #| layout-ncol: 2
-ggplot(HOJA, aes(SPAD, Pb)) + 
-  geom_point() + 
+
+ggplot(data = JENYNSIA, 
+       aes(x = longitud_cm, y = peso_g)) + 
+  geom_point() +
   theme_bw()
 
-ggplot(HOJA, aes(SPAD, Pb)) + 
+ggplot(data = JENYNSIA, 
+       aes(x = longitud_cm, y = peso_g)) + 
   geom_point(size = 3, col = "yellow") +  # cambiamos tamaño y color
   theme_dark()
+
+ggplot(data = JENYNSIA,
+       aes(longitud_cm, peso_g))+
+  geom_point(shape= 21, # cambiamos forma
+             size = 5, # cambiamos tamaño
+             col = "violetred4", # cambiamos borde
+             fill= "violetred2") + # cambiamos relleno
+  theme_minimal()
 ```
 
 Podemos agregar nuevas capas con otros *geoms* al mismo gráfico. Así se puede agregar una línea que una los puntos (con un *geom_line*) o una línea de regresión con su intervalo de confianza (**geom_smooth**). Es importante mencionar que el orden en el que incluyamos las capas afecta al resultado, la última aparecerá más arriba:
 
-```{r, fig.show='hold', out.width="50%"}
+```{r, out.width="100%", fig.align='center'}
 #| layout-ncol: 2
 G1 + geom_line(col="deeppink3") # cambiamos el color en los parámetros del geom
 G1 + geom_smooth(method = "lm")
 ```
 
-Al igual que hicimos con `lineplot.CI`, podemos agrupar los datos por algún factor según alguna característica que elijamos (color, forma, relleno, tamaño, etc.). Por ejemplo si queremos distinguir los puntos por color según el estrés térmico:
+Al igual que hicimos con `lineplot.CI`, podemos agrupar los datos por algún factor según alguna característica que elijamos (color, forma, relleno, tamaño, etc.). Por ejemplo si queremos distinguir los puntos por color según la temporada:
 
 ```{r out.width="100%", fig.align='center'}
-G2 <- ggplot(HOJA,
-             aes(SPAD, Pb,
-                 col = ET)) + # agregamos en el aes por qué parámetro dividir
-      geom_point()
+G2 <- ggplot(JENYNSIA, 
+             aes(longitud_cm, peso_g, 
+                 col = temporada)) + # agregamos en el aes por qué parámetro dividir 
+  geom_point(size = 3)
 G2
 ```
 
 Ahora si queremos graficar la variable discreta donde para cada valor del eje *x* tenemos varios valores de *y*, por defecto *geom_point* grafica los puntos individualizados, a diferencia de lo que hacía *lineplot.CI*
 
 ```{r out.width="100%", fig.align='center'}
-ggplot(HOJA, aes(SPAD_cat, Pb)) +
-      geom_point()
+ggplot(JENYNSIA, aes(long_cat, peso_g)) +
+  geom_point()
 ```
 
 Entonces para graficar la media y el error estándar, incluimos una capa de *stat*, que realiza cálculos con la variable respuesta. En este caso, **stat_summary** nos permite graficar el valor medio:
 
 ```{r out.width="100%", fig.align='center'}
-ggplot(data = HOJA,
-       aes(SPAD_cat, Pb))+
-  stat_summary(fun=mean, geom="point") +
-  stat_summary(fun.data=mean_se, geom ='errorbar')
+ggplot(data = JENYNSIA,
+       aes(long_cat, peso_g))+
+  stat_summary(fun = mean, geom="point") +
+  stat_summary(fun.data = mean_se,
+               geom="errorbar")
 
 # podemos mejorar un poco la estética
-ggplot(data = HOJA,
-       aes(SPAD_cat, Pb))+
-  stat_summary(fun=mean, geom="point", size=5, col = "azure4") +
-  stat_summary(fun.data=mean_se, geom ='errorbar', width=0.2)
+ggplot(data = JENYNSIA,
+       aes(long_cat, peso_g))+
+  stat_summary(fun.data = mean_se,
+               geom="errorbar", 
+               width = 0.1) +
+  stat_summary(fun = mean, geom="point",
+               size= 4, col ="violetred3") +
+  theme_bw()
 ```
 
-### Actividad 3
+### Actividad 2.c
 
-1.  Realice una representación gráfica del modelo de regresión realizado en la actividad 2. Incorpore en la gráfica una clasificación por estrés térmico por color.
+1.  Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point.
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)

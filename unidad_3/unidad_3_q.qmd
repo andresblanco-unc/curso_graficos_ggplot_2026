@@ -1,6 +1,6 @@
 ---
 author: "Andrés Blanco"
-date: "2025-03-12"
+date: "2026-03-16"
 format:
   html:
     theme: cosmo
@@ -20,31 +20,30 @@ library(agricolae);library(tidyverse);library(car)
 library(sciplot);library(patchwork); library(gridExtra)
 library(viridis)
 
-metales <- read_csv2("data/metales.csv")
+datos_peces <- read_csv("data/peces_morfometria.csv")
 
-ALIM <- subset(metales, metales$GT=="Alim 3,14")
-ALIM_VyS <- metales %>%
-                    filter(GT == "Alim 3,14") %>% # se agrega a lo anterior
-                    filter(Organo =="Vaina"| Organo =="Semilla")
-metales <- metales %>%
-  mutate("Pb_total" = Pb*PS)
-ALIM %>% select(CO2, ET, PS) %>%
-  mutate(ET = fct_recode(ET,
-                         "Control"  = "No",
-                         "Estrés térmico" = "Si")) 
-SEM <- metales %>% filter(Organo == "Semilla")
-HOJA <- metales %>% filter(Organo == "Hoja")
-HOJA$SPAD_cat <- as.integer(round(HOJA$SPAD, digits = 0))
+JENYNSIA <- subset(datos_peces, datos_peces$especie == "Jenynsia multidentata") 
 
-G1 <- ggplot(data = HOJA, # el data set
-       aes(x = SPAD, y = Pb)) + # x e y dentro de aes
-      geom_point()
+datos_peces <- datos_peces %>% 
+  mutate("peso_relativo" = peso_g/longitud_cm)
 
-G2 <- ggplot(HOJA,
-             aes(SPAD, Pb,
-                 col = ET)) + # agregamos en el aes por qué parámetro dividir
-      geom_point()
+datos_peces <- datos_peces %>% 
+  mutate(sexo = fct_recode(sexo,
+                           "Macho" = "M",
+                           "Hembra" = "F"))
 
+PEJERREY <- datos_peces %>% filter(especie == "Odontesthes bonariensis")
+
+JENYNSIA$long_cat <- as.integer(round(JENYNSIA$longitud_cm, digits = 0))
+
+G1 <- ggplot(data = JENYNSIA, 
+             aes(x = longitud_cm, y = peso_g)) + 
+  geom_point()
+
+G2 <- ggplot(JENYNSIA, 
+             aes(longitud_cm, peso_g, 
+                 col = temporada)) + 
+  geom_point(size = 3)
 ```
 
 # Unidad 3. Análisis y representación de datos categóricos
@@ -55,44 +54,21 @@ Ahora vamos a trabajar con los datos con variables categóricas. Cuando incorpor
 
 Este análisis plantea la comparación de medias muestrales a partir de la varianza que presentan los datos dentro de cada grupo (de allí su nombre). Al igual que el modelo de regresión, presenta supuestos a cumplirse (normalidad de la variable y homogeneidad de las varianzas).
 
-El planteo del modelo en R será de la misma manera que la regresión, ya que se trata de otro modelo lineal. En nuestro ejemplo trabajaremos evaluando el efecto del estrés térmico (inicialmente) en el peso seco de semillas de la variedad Alim 3,14. Para ello armaremos la base de datos (doy como ejemplo algunas formas de armarla en base a las que ya tenemos):
-
-```{r}
-SEM_Alim <- SEM %>% filter(GT == "Alim 3,14")
-SEM_Alim <- ALIM %>% filter(Organo == "Semilla")
-SEM_Alim <- ALIM_VyS %>% filter(Organo == "Semilla")
-SEM_Alim <- ALIM_VyS %>% filter(Organo != "Vaina") # signo diferente a
-```
-
-Y ahora sí corremos el modelo y ponemos a prueba los supuestos de igual manera que hiciéramos anteriormente:
+El planteo del modelo en R será de la misma manera que la regresión, ya que se trata de otro modelo lineal. En nuestro ejemplo trabajaremos evaluando el efecto del sitio en la concentración de cortisol en sangre de ejemplares de pejerrey. Corremos el modelo y ponemos a prueba los supuestos de igual manera que hiciéramos anteriormente:
 
 ```{r, fig.width=7, fig.height=7, fig.align='center'}
-fit3 <-lm(PS ~ ET, data = SEM_Alim)
+fit3 <- lm(cortisol_ugdL ~ sitio, data = PEJERREY)
 
-# Gráfico de supuestos
-layout(matrix(1:4, 2, 2)); plot(fit3) ;layout(1)
-
-shapiro.test(resid(fit3))
-bartlett.test(resid(fit3)~SEM_Alim$ET) # no hay homogeneidad
-```
-
-Como vemos hay normalidad de errores pero no homogeneidad de varianza. Si bien esto pudiera no ser un problema muy grande (el modelo sobreestimará la varianza general y tendrá menos potencia), podemos transformar la variable respuesta:
-
-```{r, fig.width=7, fig.height=7, fig.align='center'}
-# Probamos transformando por el logaritmo
-fit3 <-lm(log(PS) ~ ET, data = SEM_Alim)
-
-layout(matrix(1:4, 2, 2)); plot(fit3) ;layout(1)
+# Gráfico de Supuestos
+layout(matrix(1:4, 2, 2)); plot(fit3) ; layout(1)
 
 shapiro.test(resid(fit3))
+bartlett.test(resid(fit3) ~ PEJERREY$sitio)
+boxplot(residuals(fit3, type = "pearson") ~ PEJERREY$sitio,
+        ylab = "Pearson standarized residuals")
 ```
 
-```{r, out.width="50%", fig.align='center'}
-bartlett.test(resid(fit3)~SEM_Alim$ET)
-boxplot(residuals(fit3,type="pearson")~SEM_Alim$ET,
-      ylab="Pearson standarized residuals")
-# ahora sí se cumple
-```
+Como vemos hay normalidad de errores y homogeneidad de varianza, aunque pareciera que la Laguna Sur presenta una variabilidad mayor. Esto no es un problema muy grande, el modelo sobreestimará la varianza general y tendrá menos potencia, pero si igual encuentra diferencias podemos ignorarlo.
 
 Entonces ahora que ya sabemos de la validez del modelo, pediremos la tabla del ANOVA para ver si existen o no diferencias significativas:
 
@@ -100,23 +76,22 @@ Entonces ahora que ya sabemos de la validez del modelo, pediremos la tabla del A
 anova(fit3)
 ```
 
-Vemos que arroja un p mucho menor a 0,05, por lo que diremos que al menos una media es diferente de las otras (como en este caso son dos niveles, una de la otra). Para saber cuál es diferente de cuál, como test a posteriori podemos correr el test de Tukey. Para ello utilizamos la función `HSD.test` del paquete **agricolae**:
+Vemos que arroja un p mucho menor a 0,05, por lo que diremos que al menos una media es diferente de las otras. Para saber cuál es diferente de cuál, como test a posteriori podemos correr el test de Tukey. Para ello utilizamos la función `HSD.test` del paquete **agricolae**:
 
 ```{r}
 # Tukey
-tukey1 <- HSD.test(fit3,"ET")
+tukey1 <- HSD.test(fit3,"sitio")
 tukey1$groups
 ```
 
-Vemos que sin estrés térmico las semillas tenían mayor peso seco.
+Vemos que en la Laguna Sur los peces acumularon más cortisol que en la Laguna Central y más que en la Laguna Norte.
 
 ## ANOVA bifactorial
 
-Para correr un modelo de ANOVA con 2 factores diferentes y evaluar su interacción debemos poner ambas variables separadas por \*. Analizaremos el mismo modelo de antes pero incorporando además el efecto del CO~2~ atmosférico:
+Para correr un modelo de ANOVA con 2 factores diferentes y evaluar su interacción debemos poner ambas variables separadas por \*. Analizaremos el mismo modelo de antes pero incorporando además el efecto del sexo de los animales:
 
 ```{r}
-SEM_Alim$CO2 <- as.factor(SEM_Alim$CO2) # convertimos a factor
-fit4 <-lm(PS ~ ET*CO2, data = SEM_Alim)
+fit4 <- lm(cortisol_ugdL ~ sitio * sexo, data = PEJERREY)
 ```
 
 De la misma manera que antes, probamos los supuestos:
@@ -129,12 +104,12 @@ layout(matrix(1:4, 2, 2)); plot(fit4) ;layout(1)
 ```{r out.width="50%", fig.show='hold'}
 #| layout-ncol: 2
 # la homogeneidad se prueba para cada factor
-bartlett.test(resid(fit4)~SEM_Alim$ET)
-bartlett.test(resid(fit4)~SEM_Alim$CO2)
-boxplot(residuals(fit4,type="pearson")~SEM_Alim$ET,
-        ylab="Pearson standarized residuals")
-boxplot(residuals(fit4,type="pearson")~SEM_Alim$CO2,
-        ylab="Pearson standarized residuals")
+bartlett.test(resid(fit4) ~ PEJERREY$sitio)
+bartlett.test(resid(fit4) ~ PEJERREY$sexo)
+boxplot(residuals(fit4, type = "pearson") ~ PEJERREY$sitio,
+        ylab = "Pearson standarized residuals")
+boxplot(residuals(fit4, type = "pearson") ~ PEJERREY$sexo,
+        ylab = "Pearson standarized residuals")
 ```
 
 Una vez comprobados los supuestos, para ver los resultados debemos ejecutar el comando anova. También podemos ejecutar el summary, que nos permitirá ver contrastes con respecto al primer nivel del factor:
@@ -145,22 +120,22 @@ anova(fit4)
 summary(fit4)
 ```
 
-Vemos que el resultado del ANOVA es significativo únicamente para el factor ET, por lo que el modelo correcto sería el unifactorial. Sin embargo mostraremos los test a posteriori para el caso bifactorial:
+Vemos que el resultado del ANOVA es significativo para los dos factores y la interacción. Esto quiere decir que los machos y hembras no se comportan de igual manera en todos los sitios. Si bien correspondería únicamente ver el Tukey para la interacción, miremos todos:
 
 ```{r}
-tukey1 <- HSD.test(fit4,"ET")
+tukey1 <- HSD.test(fit4, "sitio")
 tukey1$groups
 
-tukey2 <- HSD.test(fit4,"CO2")
+tukey2 <- HSD.test(fit4, "sexo")
 tukey2$groups
 
-tukey3 <- HSD.test(fit4,c("ET","CO2"))
+tukey3 <- HSD.test(fit4, c("sitio", "sexo"))
 tukey3$groups
 ```
 
-## Actividad 4
+## Actividad 3.a
 
-Realice un ANOVA bifactorial con los factores ET y CO2 pero para el peso seco de semillas de los cultivares ES Mentor y Sigalia. ¿Se observa la misma respuesta que para el cultivar Alim 3,14?
+Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
 
 ## Gráficos de barras
 
@@ -171,12 +146,25 @@ Nuevamente, veremos varias formas de hacerlos empleando tanto **sciplot** como *
 Al igual que para los gráficos de puntos, el paquete **sciplot** nos brinda una función para realizar rápidamente un gráfico de barras, sin necesidad de ejecutar ningún cálculo previo. Por ejemplo:
 
 ```{r, out.width="100%", fig.align='center'}
-bargraph.CI(x.factor = ET, response = PS, group = CO2,
-            ylim = c(0,12), legend = T,
-            data = SEM_Alim,  col= c("honeydew","honeydew4"),
-            las=1, xlab="Estrés térmico",
-            ylab= "Peso seco",
-            cex.axis=0.8);abline(h=0)
+bargraph.CI(data = PEJERREY,
+            x.factor = sitio,
+            response = cortisol_ugdL,
+            group = sexo)
+
+
+bargraph.CI(data = PEJERREY,
+            x.factor = sitio,
+            response = cortisol_ugdL,
+            group = sexo,
+            ylim = c(0, 8),
+            legend = T,
+            col = c("honeydew",
+                    "honeydew4"),
+            las = 1,
+            xlab = "Sitio de muestreo",
+            ylab = "Cortisol (µg/dL)",
+            cex.axis = 0.8,
+            lc = F); abline(h = 0)
 ```
 
 Los parámetros a modificar son los mismos que vimos anteriormente para los gráficos de puntos.
@@ -185,105 +173,86 @@ Los parámetros a modificar son los mismos que vimos anteriormente para los grá
 
 **Ggplot2** nos ofrece dos geoms para hacer gráficos de barras (`geom_col` y `geom_bar`). Utilizaremos en este taller únicamente geom_col.
 
-Un inconveniente al realizar estos gráficos, es que por defecto el geom no nos calcula la media y los desvíos de la variable a graficar, sino que nos representa directamente los datos que le demos. Sin embargo, una de las principales virtudes de `ggplot` y del entorno **tidyverse** es la posibilidad realizar todos los cambios que creamos convenientes a nuestro database y luego graficar la base modificada sin necesidad de haber creado explícitamente un objeto nuevo. ¿Qué ventaja presenta esto? Nos permite manipular fácilmente la base de datos sin crear una lista muy larga de objetos que luego se nos complique identificar cuál es cuál. Así, a modo de ejemplo,
-
-Entonces, para realizar el mismo gráfico que hicimos con `bargraph.CI`, debemos calcular la media y el error estándar de la variable PS de semillas:
+Un inconveniente al realizar estos gráficos, es que por defecto el geom no nos calcula la media y los desvíos de la variable a graficar, sino que nos representa directamente los datos que le demos. Sin embargo, una de las principales virtudes de `ggplot` y del entorno **tidyverse** es la posibilidad realizar todos los cambios que creamos convenientes a nuestro database y luego graficar la base modificada sin necesidad de haber creado explícitamente un objeto nuevo. ¿Qué ventaja presenta esto? Nos permite manipular fácilmente la base de datos sin crear una lista muy larga de objetos que luego se nos complique identificar cuál es cuál. Entonces, para realizar el mismo gráfico que hicimos con `bargraph.CI`, debemos calcular la media y el error estándar de la variable cortisol:
 
 ```{r}
-SEM_Alim %>% select(CO2, ET, PS) %>% # seleccionamos las columnas involucradas
-  group_by(CO2, ET) %>% # definimos criterios de agrupamiento
-  summarise_all(list(mean,se)) # pedimos media y error estándar
+PEJERREY %>% select(sitio, cortisol_ugdL) %>% # seleccionamos las columnas involucradas
+  group_by(sitio) %>% # definimos criterios de agrupamiento
+  summarise_all(list(mean_se)) # pedimos media y error estándar
 ```
 
-Vemos que incorpora las columnas *fn1* (que tiene los valores de las medias) y *fn2* (con los errores estándares). A estos comandos creados se les anexa el gráfico:
+Vemos que crea las columnas **cortisol_ugdL\$y** que tiene los valores de las medias, **cortisol_ugdL\$min** con el valor de la media menos el error estándar y **cortisol_ugdL\$max** con el valor de la media más el error estándar. A estos comandos creados se les anexa el gráfico:
 
 ```{r, out.width="100%", fig.align='center'}
-SEM_Alim %>% select(CO2, ET, PS) %>%
-  group_by(CO2, ET) %>%
-  summarise_all(list(mean,se)) %>%
-  ggplot(aes(ET, fn1, 
-             fill=CO2))+ # en este caso el parámetro de color lo define fill
+PEJERREY %>% select(sitio, cortisol_ugdL) %>%
+  group_by(sitio) %>%
+  summarise_all(list(mean_se)) %>%
+  ggplot(aes(x = sitio, y = cortisol_ugdL$y)) +
   geom_col()
 ```
 
-Como vemos, la barras se apilan. Para que vaya una al lado de la otra, debemos cambiar el parámetro *position= "dodge"* dentro del geom (por defecto está en *identity*). Además agregaremos las barras de error:
+Para agregar las barras de error incorporaremos otro **geom**, el `geom_errorbar`, para el cual debemos definir un nuevo aestetic particular que en lugar de los clásicos *x* e *y*, incorpora *ymin* y *ymax*, donde debemos aclarar el valor inferior y superior de nuestras barras:
+
+```{r, out.width="100%", fig.align='center'}
+PEJERREY %>% select(sitio, cortisol_ugdL) %>%
+  group_by(sitio) %>%
+  summarise_all(list(mean_se)) %>%
+  ggplot(aes(x = sitio, y = cortisol_ugdL$y)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = cortisol_ugdL$ymin,
+                    ymax = cortisol_ugdL$ymax),
+                width = .1) # ancho del tope de la barra
+```
+
+Supongamos ahora que queremos visualizar la diferencia entre los sexos de los peces en cada sitio. Para ello, al igual que hicimos para los gráficos de puntos, debemos incorporar la clasificación por sexo en nuestro aestetic. Sin embargo, para que el color que genere la diferenciación sea del relleno de la barra, habrá que agregar el parámetro *fill* en lugar de *col*:
+
+```{r, out.width="100%", fig.align='center'}
+PEJERREY %>% select(sexo, sitio, cortisol_ugdL) %>%
+  group_by(sexo, sitio) %>% # agregamos sexo al agrupamiento
+  summarise_all(list(mean_se)) %>%
+  ggplot(aes(sitio, cortisol_ugdL$y, fill = sexo)) + 
+  geom_col()
+```
+
+Como vemos, la barras se apilan. Para que vaya una al lado de la otra, debemos cambiar el parámetro **position**a *"position_dodge"* dentro del geom (por defecto está en *identity*). Además agregaremos las barras de error y a este gráfico lo llamaremos G3:
 
 ```{r out.width="100%", fig.align='center'}
-G3 <- SEM_Alim %>% select(CO2, ET, PS) %>%
-  group_by(CO2, ET) %>%
-  summarise_all(list(mean,se)) %>%
-  ggplot(aes(ET, fn1, fill=CO2))+
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(ymin=fn1-fn2, ymax=fn1+fn2), width=.1,
+G3 <- PEJERREY %>% select(sexo, sitio, cortisol_ugdL) %>%
+  group_by(sexo, sitio) %>%
+  summarise_all(list(mean_se)) %>%
+  ggplot(aes(sitio, cortisol_ugdL$y, fill = sexo)) +
+  geom_col(position = position_dodge(.9)) + # el .9 especifica la separación
+  geom_errorbar(aes(ymin = cortisol_ugdL$ymin, ymax = cortisol_ugdL$ymax),
+                width = .1,
                 position = position_dodge(.9))
 G3
 ```
 
-Una alternativa para no tener que realizar manualmente la transformación de la base de datos cuando queremos graficar medias y desvíos es usar `stat_summary`. Esta función tiene una nomenclatura algo distinta a las otras y permite especificar diferentes geoms. Veamos para realizar el último gráfico:
+Una alternativa para no tener que realizar manualmente la transformación de la base de datos cuando queremos graficar medias y desvíos es agregar, como vimos para los gráficos de puntos, un `stat_summary`. Esta función tiene una nomenclatura algo distinta a las otras y permite especificar diferentes geoms. Veamos para realizar el último gráfico:
 
 ```{r eval=FALSE}
-ggplot(SEM_Alim, aes(ET, PS, fill=CO2))+
-  stat_summary(fun=mean, geom="col",
+ggplot(PEJERREY, aes(sitio, cortisol_ugdL, fill = sexo)) +
+  stat_summary(fun = mean, geom = "col",
                position = position_dodge(0.9)) +
-  stat_summary(fun.data=mean_se, geom ='errorbar', width=0.2,
+  stat_summary(fun.data = mean_se, geom = "errorbar",
+               width = 0.1,
                position = position_dodge(0.9))
 ```
 
 Sin embargo, si queremos agregar las letras del Tukey realizado, será más adecuado hacerlo con el cálculo previo de medias y error estándar. Esto es así ya que nos permite ubicar adecuadamente las letras en la altura correspondiente a cada columna. Las letras las incorporaremos de forma manual con un nuevo geom, el *geom_text*:
 
 ```{r out.width="100%", fig.align='center'}
-G3 + geom_text(aes(y = fn1 + fn2,
-                label= c("ab", "b", "a", "b")),
-                position=position_dodge(0.9),
-                vjust=-.5) # ajuste vertical de la posición
+G3 <- G3 + geom_text(aes(y = cortisol_ugdL$ymax,
+                         label = c("bc", "c", "b", "b", "bc", "a")),
+                     position = position_dodge(0.9),
+                     vjust = -.5) # ajuste vertical de la posición
+G3
 ```
 
-### Gráfico de barras apiladas y apilado porcentual
+## Actividad 3.b
 
-Veremos ahora cómo realizar un gráfico de barras apilado y un apilado porcentual. Supongamos como ejemplo que queremos graficar el peso seco de los órganos evaluados en plantas de soja de la variedad Alim 3,14. Para ello, lo primero que debemos hacer es "ordenar" los niveles del factor como los queramos mostrar. En nuestro caso, iremos de abajo hacia arriba de la planta:
-
-```{r echo=TRUE, message=FALSE}
-ALIM$Organo <- factor(ALIM$Organo, 
-                        levels = c("Tallo","Hoja","Vaina","Semilla")) 
-```
-
-Una vez hecho esto, vamos a transformar nuestra base de datos utilizando la función `ddply`del paquete **plyr**. Esta función tiene un uso particular que excede el contenido de este curso, veremos simplemente cómo utilizarla con el ejemplo:
-
-```{r echo: TRUE, message=FALSE, warning=FALSE}
-library(plyr)
-ALIM_apilado <- ALIM %>% select(Organo, ET, PS) %>% 
-  group_by(ET, Organo) %>% 
-  summarise_all(funs(mean,se)) %>% 
-  ddply(c("ET"), transform,
-        percent_PS =  mean/ sum(mean) * 100) %>% 
-  ddply(c("ET"), transform, label_y=cumsum(mean)) %>% 
-  ddply(c("ET"), transform, label_y_perc=cumsum(percent_PS)) %>% 
-  mutate(Organo=factor(Organo, 
-                       levels=c("Semilla", "Vaina",
-                                             "Hoja", "Tallo")))
-# notar que volvemos a invertir el orden  
-```
-
-```{r echo=FALSE}
-knitr::kable(ALIM_apilado[1:4,])
-```
-
-Como se puede ver, además de calcular media y error estándar, se crearon las variables label_y (que nos da el acumulado parcial, nos servirá como posición para poner una etiqueta) y label_y_perc para el acumulado porcentual. Ahora podemos ejecutar los gráficos y agregar además el valor de cada columna apilada:
-
-```{r warning=FALSE}
-G4 <- ALIM_apilado %>%   
-ggplot(aes(ET, mean, fill=Organo))+
-  geom_col() +
-  geom_text(aes(label=round(mean, 2), # agregamos el valor
-                y = label_y))  # indica la posición
-G4
-
-G5 <- ALIM_apilado %>%   
-  ggplot(aes(ET, percent_PS, fill=Organo))+
-  geom_col() +
-  geom_text(aes(label=round(percent_PS, 2), y = label_y_perc), vjust=2)
-G5
-```
+1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.
+2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.
 
 ## Boxplot
 
@@ -294,11 +263,13 @@ Los gráficos tipo boxplot también son formas frecuentes de presentar variables
 La función derivada de `plot` para hacer gráficos de barras es `boxplot`. Se utiliza de forma similar a los gráficos ya vistos:
 
 ```{r out.width="100%", fig.align='center'}
-boxplot(PS~ET, data = SEM_Alim,
-        ylim = c(0,12),
-        xlab="Estrés térmico",
-        ylab= "Peso seco",
-        las=1, cex.axis=0.8)
+boxplot(data = PEJERREY,
+        cortisol_ugdL ~ sitio,
+        ylim = c(0, 10),
+        las = 1,
+        xlab = "Sitio de muestreo",
+        ylab = "Cortisol (µg/dL)",
+        cex.axis = 0.8)
 ```
 
 ### geom_boxplot
@@ -306,22 +277,43 @@ boxplot(PS~ET, data = SEM_Alim,
 El paquete **ggplot2** nos ofrece una vez maś una forma muy versátil de crear gráficos de cajas. La función en cuestión es `geom_boxplot` que, a diferencias de `geom_col`, no requiere que realicemos ningún cálculo previo. De esta manera podemos generar un gráfico con un par de líneas de código:
 
 ```{r out.width="100%", fig.align='center'}
-ggplot(SEM_Alim, aes(ET, PS))+
+ggplot(PEJERREY,
+       aes(sitio, cortisol_ugdL)) +
   geom_boxplot()
 ```
 
 Si vemos con atención a este gráfico le faltan una serie de cosas que podrían mejorarlo. Por un lado, los extremos de los cuartiles no tienen la marca de final, sino que simplemente termina la línea. Sumado a esto, podría interesarnos agregar el valor de la media, que no figura en el gráfico. Veamos como incorporarlos con la función ya vista `stat_summary`:
 
 ```{r out.width="100%", fig.align='center'}
-ggplot(SEM_Alim, aes(ET, PS))+
-  stat_boxplot(geom ='errorbar', width=0.2)+ #debemos colocarlo primero para que quede al fondo
+ggplot(PEJERREY, aes(sitio, cortisol_ugdL)) +
+  stat_boxplot(geom = "errorbar", width = 0.2) +
   geom_boxplot() +
-  stat_summary(fun=mean, geom="point")
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 4, colour = "red")
 ```
 
-## Actividad 5
+El stat_summary para el cálculo de la media hereda las clasificaciones que tengamos definidas en nuestro aestetic general:
 
-Realice un gráfico de barras y un gráfico de cajas donde demuestre los resultados de los ANOVA realizados en la actividad 4.
+```{r out.width="100%", fig.align='center'}
+ggplot(PEJERREY,
+       aes(sitio, cortisol_ugdL, col = sexo)) +
+  stat_boxplot(geom = "errorbar",
+               width = 0.2,
+               position =
+                 position_dodge(.8)) +
+  geom_boxplot(position =
+                 position_dodge(.8)) +
+  stat_summary(fun = mean,
+               geom = "point",
+               shape = 18,
+               size = 3,
+               position =
+                 position_dodge(.8)) +
+  theme_classic() 
+```
+
+## Actividad 3.c
+
+Realice gráficos de cajas para representar los resultados de la actividad 3.a.
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)

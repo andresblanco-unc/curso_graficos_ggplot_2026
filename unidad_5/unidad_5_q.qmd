@@ -104,6 +104,53 @@ theme(plot.caption = element_text(hjust = 0, vjust=.5),
 
 # Unidad 5. Otros tipos y parámetros gráficos
 
+## Gráfico de barras apiladas y apilado porcentual
+
+Veremos ahora cómo realizar un gráfico de barras apilado y un apilado porcentual. Supongamos como ejemplo que queremos graficar el peso seco de los órganos evaluados en plantas de soja de la variedad Alim 3,14. Para ello, lo primero que debemos hacer es "ordenar" los niveles del factor como los queramos mostrar. En nuestro caso, iremos de abajo hacia arriba de la planta:
+
+```{r echo=TRUE, message=FALSE}
+ALIM$Organo <- factor(ALIM$Organo, 
+                        levels = c("Tallo","Hoja","Vaina","Semilla")) 
+```
+
+Una vez hecho esto, vamos a transformar nuestra base de datos utilizando la función ddplydel paquete plyr. Esta función tiene un uso particular que excede el contenido de este curso, veremos simplemente cómo utilizarla con el ejemplo:
+
+```{r echo: TRUE, message=FALSE, warning=FALSE}
+library(plyr)
+ALIM_apilado <- ALIM %>% select(Organo, ET, PS) %>% 
+  group_by(ET, Organo) %>% 
+  summarise_all(funs(mean,se)) %>% 
+  ddply(c("ET"), transform,
+        percent_PS =  mean/ sum(mean) * 100) %>% 
+  ddply(c("ET"), transform, label_y=cumsum(mean)) %>% 
+  ddply(c("ET"), transform, label_y_perc=cumsum(percent_PS)) %>% 
+  mutate(Organo=factor(Organo, 
+                       levels=c("Semilla", "Vaina",
+                                             "Hoja", "Tallo")))
+# notar que volvemos a invertir el orden  
+```
+
+```{r echo=FALSE}
+knitr::kable(ALIM_apilado[1:4,])
+```
+
+Como se puede ver, además de calcular media y error estándar, se crearon las variables label_y (que nos da el acumulado parcial, nos servirá como posición para poner una etiqueta) y label_y_perc para el acumulado porcentual. Ahora podemos ejecutar los gráficos y agregar además el valor de cada columna apilada:
+
+```{r warning=FALSE}
+G4 <- ALIM_apilado %>%   
+ggplot(aes(ET, mean, fill=Organo))+
+  geom_col() +
+  geom_text(aes(label=round(mean, 2), # agregamos el valor
+                y = label_y))  # indica la posición
+G4
+
+G5 <- ALIM_apilado %>%   
+  ggplot(aes(ET, percent_PS, fill=Organo))+
+  geom_col() +
+  geom_text(aes(label=round(percent_PS, 2), y = label_y_perc), vjust=2)
+G5
+```
+
 ## Gráficos de área
 
 Para trabajar en de aquí en adelante utilizaremos otra base de datos. La misma la armé en base a los datos de superficie cultivada, producción y rendimiento de soja en Argentina y el mundo (extraída de informes de la FAO[^1]) desde 1960 hasta 2023.

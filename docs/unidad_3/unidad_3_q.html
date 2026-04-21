@@ -132,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../curso_completo/curso_completo.qmd"> 
+    <a class="nav-link" href="../curso_completo/curso_completo.html"> 
 <span class="menu-text">Curso completo</span></a>
   </li>  
 </ul>
@@ -154,19 +154,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#anova-a-1-factor" id="toc-anova-a-1-factor" class="nav-link" data-scroll-target="#anova-a-1-factor"><span class="header-section-number">1.1</span> ANOVA a 1 factor</a></li>
   <li><a href="#anova-bifactorial" id="toc-anova-bifactorial" class="nav-link" data-scroll-target="#anova-bifactorial"><span class="header-section-number">1.2</span> ANOVA bifactorial</a></li>
-  <li><a href="#actividad-4" id="toc-actividad-4" class="nav-link" data-scroll-target="#actividad-4"><span class="header-section-number">1.3</span> Actividad 4</a></li>
+  <li><a href="#actividad-3.a" id="toc-actividad-3.a" class="nav-link" data-scroll-target="#actividad-3.a"><span class="header-section-number">1.3</span> Actividad 3.a</a></li>
   <li><a href="#gráficos-de-barras" id="toc-gráficos-de-barras" class="nav-link" data-scroll-target="#gráficos-de-barras"><span class="header-section-number">1.4</span> Gráficos de barras</a>
   <ul class="collapse">
   <li><a href="#bargraph.ci-sciplot" id="toc-bargraph.ci-sciplot" class="nav-link" data-scroll-target="#bargraph.ci-sciplot"><span class="header-section-number">1.4.1</span> bargraph.CI (sciplot)</a></li>
   <li><a href="#geom_col-ggplot2" id="toc-geom_col-ggplot2" class="nav-link" data-scroll-target="#geom_col-ggplot2"><span class="header-section-number">1.4.2</span> geom_col (ggplot2)</a></li>
-  <li><a href="#gráfico-de-barras-apiladas-y-apilado-porcentual" id="toc-gráfico-de-barras-apiladas-y-apilado-porcentual" class="nav-link" data-scroll-target="#gráfico-de-barras-apiladas-y-apilado-porcentual"><span class="header-section-number">1.4.3</span> Gráfico de barras apiladas y apilado porcentual</a></li>
   </ul></li>
-  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot"><span class="header-section-number">1.5</span> Boxplot</a>
+  <li><a href="#actividad-3.b" id="toc-actividad-3.b" class="nav-link" data-scroll-target="#actividad-3.b"><span class="header-section-number">1.5</span> Actividad 3.b</a></li>
+  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot"><span class="header-section-number">1.6</span> Boxplot</a>
   <ul class="collapse">
-  <li><a href="#función-boxplot" id="toc-función-boxplot" class="nav-link" data-scroll-target="#función-boxplot"><span class="header-section-number">1.5.1</span> Función boxplot</a></li>
-  <li><a href="#geom_boxplot" id="toc-geom_boxplot" class="nav-link" data-scroll-target="#geom_boxplot"><span class="header-section-number">1.5.2</span> geom_boxplot</a></li>
+  <li><a href="#función-boxplot" id="toc-función-boxplot" class="nav-link" data-scroll-target="#función-boxplot"><span class="header-section-number">1.6.1</span> Función boxplot</a></li>
+  <li><a href="#geom_boxplot" id="toc-geom_boxplot" class="nav-link" data-scroll-target="#geom_boxplot"><span class="header-section-number">1.6.2</span> geom_boxplot</a></li>
   </ul></li>
-  <li><a href="#actividad-5" id="toc-actividad-5" class="nav-link" data-scroll-target="#actividad-5"><span class="header-section-number">1.6</span> Actividad 5</a></li>
+  <li><a href="#actividad-3.c" id="toc-actividad-3.c" class="nav-link" data-scroll-target="#actividad-3.c"><span class="header-section-number">1.7</span> Actividad 3.c</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -217,234 +217,200 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.1" class="anchored" data-anchor-id="anova-a-1-factor"><span class="header-section-number">1.1</span> ANOVA a 1 factor</h2>
 <p>Ahora vamos a trabajar con los datos con variables categóricas. Cuando incorporamos un factor con diferentes niveles y nos interesa comparar si hay diferencias entre los efectos de los distintos niveles de uno o más factores uno de los análisis más utilizados es el análisis de la varianza. Comenzaremos con el caso de un único factor.</p>
 <p>Este análisis plantea la comparación de medias muestrales a partir de la varianza que presentan los datos dentro de cada grupo (de allí su nombre). Al igual que el modelo de regresión, presenta supuestos a cumplirse (normalidad de la variable y homogeneidad de las varianzas).</p>
-<p>El planteo del modelo en R será de la misma manera que la regresión, ya que se trata de otro modelo lineal. En nuestro ejemplo trabajaremos evaluando el efecto del estrés térmico (inicialmente) en el peso seco de semillas de la variedad Alim 3,14. Para ello armaremos la base de datos (doy como ejemplo algunas formas de armarla en base a las que ya tenemos):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="ot">&lt;-</span> SEM <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GT <span class="sc">==</span> <span class="st">"Alim 3,14"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="ot">&lt;-</span> ALIM <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Organo <span class="sc">==</span> <span class="st">"Semilla"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="ot">&lt;-</span> ALIM_VyS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Organo <span class="sc">==</span> <span class="st">"Semilla"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="ot">&lt;-</span> ALIM_VyS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Organo <span class="sc">!=</span> <span class="st">"Vaina"</span>) <span class="co"># signo diferente a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Y ahora sí corremos el modelo y ponemos a prueba los supuestos de igual manera que hiciéramos anteriormente:</p>
+<p>El planteo del modelo en R será de la misma manera que la regresión, ya que se trata de otro modelo lineal. En nuestro ejemplo trabajaremos evaluando el efecto del sitio en la concentración de cortisol en sangre de ejemplares de pejerrey. Corremos el modelo y ponemos a prueba los supuestos de igual manera que hiciéramos anteriormente:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span><span class="fu">lm</span>(PS <span class="sc">~</span> ET, <span class="at">data =</span> SEM_Alim)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit3) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cortisol_ugdL <span class="sc">~</span> sitio, <span class="at">data =</span> PEJERREY)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de Supuestos</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit3) ; <span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
 data:  resid(fit3)
-W = 0.92632, p-value = 0.3428</code></pre>
+W = 0.96136, p-value = 0.1652</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit3)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>ET) <span class="co"># no hay homogeneidad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit3) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sitio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Bartlett test of homogeneity of variances
 
-data:  resid(fit3) by SEM_Alim$ET
-Bartlett's K-squared = 8.139, df = 1, p-value = 0.004332</code></pre>
+data:  resid(fit3) by PEJERREY$sitio
+Bartlett's K-squared = 2.3873, df = 2, p-value = 0.3031</code></pre>
 </div>
-</div>
-<p>Como vemos hay normalidad de errores pero no homogeneidad de varianza. Si bien esto pudiera no ser un problema muy grande (el modelo sobreestimará la varianza general y tendrá menos potencia), podemos transformar la variable respuesta:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probamos transformando por el logaritmo</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(PS) <span class="sc">~</span> ET, <span class="at">data =</span> SEM_Alim)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit3) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit3, <span class="at">type =</span> <span class="st">"pearson"</span>) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sitio,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">resid</span>(fit3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  resid(fit3)
-W = 0.91186, p-value = 0.2254</code></pre>
 </div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit3)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>ET)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Bartlett test of homogeneity of variances
-
-data:  resid(fit3) by SEM_Alim$ET
-Bartlett's K-squared = 0.41623, df = 1, p-value = 0.5188</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit3,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>ET,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ahora sí se cumple</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Como vemos hay normalidad de errores y homogeneidad de varianza, aunque pareciera que la Laguna Sur presenta una variabilidad mayor. Esto no es un problema muy grande, el modelo sobreestimará la varianza general y tendrá menos potencia, pero si igual encuentra diferencias podemos ignorarlo.</p>
 <p>Entonces ahora que ya sabemos de la validez del modelo, pediremos la tabla del ANOVA para ver si existen o no diferencias significativas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
-Response: log(PS)
+Response: cortisol_ugdL
           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-ET         1 5.5709  5.5709  26.502 0.0004327 ***
-Residuals 10 2.1020  0.2102                      
+sitio      2 60.132 30.0658  17.858 3.121e-06 ***
+Residuals 39 65.661  1.6836                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Vemos que arroja un p mucho menor a 0,05, por lo que diremos que al menos una media es diferente de las otras (como en este caso son dos niveles, una de la otra). Para saber cuál es diferente de cuál, como test a posteriori podemos correr el test de Tukey. Para ello utilizamos la función <code>HSD.test</code> del paquete <strong>agricolae</strong>:</p>
+<p>Vemos que arroja un p mucho menor a 0,05, por lo que diremos que al menos una media es diferente de las otras. Para saber cuál es diferente de cuál, como test a posteriori podemos correr el test de Tukey. Para ello utilizamos la función <code>HSD.test</code> del paquete <strong>agricolae</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tukey1 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit3,<span class="st">"ET"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tukey1<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tukey1 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit3,<span class="st">"sitio"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tukey1<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     log(PS) groups
-No 2.0346143      a
-Si 0.6719101      b</code></pre>
+<pre><code>               cortisol_ugdL groups
+Laguna Sur          5.998571      a
+Laguna Central      4.294286      b
+Laguna Norte        3.081429      c</code></pre>
 </div>
 </div>
-<p>Vemos que sin estrés térmico las semillas tenían mayor peso seco.</p>
+<p>Vemos que en la Laguna Sur los peces acumularon más cortisol que en la Laguna Central y más que en la Laguna Norte.</p>
 </section>
 <section id="anova-bifactorial" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="anova-bifactorial"><span class="header-section-number">1.2</span> ANOVA bifactorial</h2>
-<p>Para correr un modelo de ANOVA con 2 factores diferentes y evaluar su interacción debemos poner ambas variables separadas por *. Analizaremos el mismo modelo de antes pero incorporando además el efecto del CO<sub>2</sub> atmosférico:</p>
+<p>Para correr un modelo de ANOVA con 2 factores diferentes y evaluar su interacción debemos poner ambas variables separadas por *. Analizaremos el mismo modelo de antes pero incorporando además el efecto del sexo de los animales:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>SEM_Alim<span class="sc">$</span>CO2 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(SEM_Alim<span class="sc">$</span>CO2) <span class="co"># convertimos a factor</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span><span class="fu">lm</span>(PS <span class="sc">~</span> ET<span class="sc">*</span>CO2, <span class="at">data =</span> SEM_Alim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(cortisol_ugdL <span class="sc">~</span> sitio <span class="sc">*</span> sexo, <span class="at">data =</span> PEJERREY)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>De la misma manera que antes, probamos los supuestos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit4) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de supuestos</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>)); <span class="fu">plot</span>(fit4) ;<span class="fu">layout</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la homogeneidad se prueba para cada factor</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit4)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>ET)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit4)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>CO2)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit4,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>ET,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit4,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">~</span>SEM_Alim<span class="sc">$</span>CO2,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la homogeneidad se prueba para cada factor</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit4) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sitio)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">resid</span>(fit4) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sexo)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit4, <span class="at">type =</span> <span class="st">"pearson"</span>) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sitio,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Pearson standarized residuals"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">residuals</span>(fit4, <span class="at">type =</span> <span class="st">"pearson"</span>) <span class="sc">~</span> PEJERREY<span class="sc">$</span>sexo,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Pearson standarized residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code>
     Bartlett test of homogeneity of variances
 
-data:  resid(fit4) by SEM_Alim$ET
-Bartlett's K-squared = 7.6109, df = 1, p-value = 0.005802</code></pre>
+data:  resid(fit4) by PEJERREY$sitio
+Bartlett's K-squared = 2.671, df = 2, p-value = 0.263</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <pre><code>
     Bartlett test of homogeneity of variances
 
-data:  resid(fit4) by SEM_Alim$CO2
-Bartlett's K-squared = 4.1568, df = 1, p-value = 0.04147</code></pre>
+data:  resid(fit4) by PEJERREY$sexo
+Bartlett's K-squared = 9.2102e-06, df = 1, p-value = 0.9976</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <p>Una vez comprobados los supuestos, para ver los resultados debemos ejecutar el comando anova. También podemos ejecutar el summary, que nos permitirá ver contrastes con respecto al primer nivel del factor:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tablas</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tablas</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
-Response: PS
-          Df Sum Sq Mean Sq F value   Pr(&gt;F)   
-ET         1 121.73 121.731 23.9217 0.001207 **
-CO2        1   8.30   8.300  1.6311 0.237373   
-ET:CO2     1  17.91  17.910  3.5195 0.097500 . 
-Residuals  8  40.71   5.089                    
+Response: cortisol_ugdL
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+sitio       2 60.132 30.0658 30.7285 1.640e-08 ***
+sexo        1 20.720 20.7202 21.1769 5.038e-05 ***
+sitio:sexo  2  9.718  4.8588  4.9659   0.01246 *  
+Residuals  36 35.224  0.9784                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = PS ~ ET * CO2, data = SEM_Alim)
+lm(formula = cortisol_ugdL ~ sitio * sexo, data = PEJERREY)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--2.9033 -0.8675 -0.1083  0.5008  4.7767 
+-2.1300 -0.5836 -0.1521  0.5636  2.0600 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)   
-(Intercept)    6.393      1.302   4.909  0.00118 **
-ETSi          -3.927      1.842  -2.132  0.06560 . 
-CO2550         4.107      1.842   2.230  0.05633 . 
-ETSi:CO2550   -4.887      2.605  -1.876  0.09750 . 
+                            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                   3.9943     0.3739  10.684 1.03e-12 ***
+sitioLaguna Norte            -1.3414     0.5287  -2.537  0.01565 *  
+sitioLaguna Sur               0.6257     0.5287   1.183  0.24439    
+sexoMacho                     0.6000     0.5287   1.135  0.26396    
+sitioLaguna Norte:sexoMacho   0.2571     0.7477   0.344  0.73292    
+sitioLaguna Sur:sexoMacho     2.1571     0.7477   2.885  0.00657 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 2.256 on 8 degrees of freedom
-Multiple R-squared:  0.7842,    Adjusted R-squared:  0.7033 
-F-statistic: 9.691 on 3 and 8 DF,  p-value: 0.004853</code></pre>
+Residual standard error: 0.9892 on 36 degrees of freedom
+Multiple R-squared:   0.72, Adjusted R-squared:  0.6811 
+F-statistic: 18.51 on 5 and 36 DF,  p-value: 4.481e-09</code></pre>
 </div>
 </div>
-<p>Vemos que el resultado del ANOVA es significativo únicamente para el factor ET, por lo que el modelo correcto sería el unifactorial. Sin embargo mostraremos los test a posteriori para el caso bifactorial:</p>
+<p>Vemos que el resultado del ANOVA es significativo para los dos factores y la interacción. Esto quiere decir que los machos y hembras no se comportan de igual manera en todos los sitios. Si bien correspondería únicamente ver el Tukey para la interacción, miremos todos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tukey1 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4,<span class="st">"ET"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>tukey1<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tukey1 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4, <span class="st">"sitio"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>tukey1<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         PS groups
-No 8.446667      a
-Si 2.076667      b</code></pre>
+<pre><code>               cortisol_ugdL groups
+Laguna Sur          5.998571      a
+Laguna Central      4.294286      b
+Laguna Norte        3.081429      c</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tukey2 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4,<span class="st">"CO2"</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tukey2<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tukey2 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4, <span class="st">"sexo"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>tukey2<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          PS groups
-550 6.093333      a
-400 4.430000      a</code></pre>
+<pre><code>       cortisol_ugdL groups
+Macho       5.160476      a
+Hembra      3.755714      b</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tukey3 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4,<span class="fu">c</span>(<span class="st">"ET"</span>,<span class="st">"CO2"</span>))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>tukey3<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tukey3 <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(fit4, <span class="fu">c</span>(<span class="st">"sitio"</span>, <span class="st">"sexo"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tukey3<span class="sc">$</span>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              PS groups
-No:550 10.500000      a
-No:400  6.393333     ab
-Si:400  2.466667      b
-Si:550  1.686667      b</code></pre>
+<pre><code>                      cortisol_ugdL groups
+Laguna Sur:Macho           7.377143      a
+Laguna Sur:Hembra          4.620000      b
+Laguna Central:Macho       4.594286      b
+Laguna Central:Hembra      3.994286     bc
+Laguna Norte:Macho         3.510000     bc
+Laguna Norte:Hembra        2.652857      c</code></pre>
 </div>
 </div>
 </section>
-<section id="actividad-4" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="actividad-4"><span class="header-section-number">1.3</span> Actividad 4</h2>
-<p>Realice un ANOVA bifactorial con los factores ET y CO2 pero para el peso seco de semillas de los cultivares ES Mentor y Sigalia. ¿Se observa la misma respuesta que para el cultivar Alim 3,14?</p>
+<section id="actividad-3.a" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="actividad-3.a"><span class="header-section-number">1.3</span> Actividad 3.a</h2>
+<p>Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de <em>Cichlasoma dimerus</em>. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.</p>
 </section>
 <section id="gráficos-de-barras" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="gráficos-de-barras"><span class="header-section-number">1.4</span> Gráficos de barras</h2>
@@ -453,16 +419,34 @@ Si:550  1.686667      b</code></pre>
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="bargraph.ci-sciplot"><span class="header-section-number">1.4.1</span> bargraph.CI (sciplot)</h3>
 <p>Al igual que para los gráficos de puntos, el paquete <strong>sciplot</strong> nos brinda una función para realizar rápidamente un gráfico de barras, sin necesidad de ejecutar ningún cálculo previo. Por ejemplo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bargraph.CI</span>(<span class="at">x.factor =</span> ET, <span class="at">response =</span> PS, <span class="at">group =</span> CO2,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">12</span>), <span class="at">legend =</span> T,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> SEM_Alim,  <span class="at">col=</span> <span class="fu">c</span>(<span class="st">"honeydew"</span>,<span class="st">"honeydew4"</span>),</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">"Estrés térmico"</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab=</span> <span class="st">"Peso seco"</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">cex.axis=</span><span class="fl">0.8</span>);<span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bargraph.CI</span>(<span class="at">data =</span> PEJERREY,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.factor =</span> sitio,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> cortisol_ugdL,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">group =</span> sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bargraph.CI</span>(<span class="at">data =</span> PEJERREY,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">x.factor =</span> sitio,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">response =</span> cortisol_ugdL,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">group =</span> sexo,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend =</span> T,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"honeydew"</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"honeydew4"</span>),</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlab =</span> <span class="st">"Sitio de muestreo"</span>,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab =</span> <span class="st">"Cortisol (µg/dL)"</span>,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">cex.axis =</span> <span class="fl">0.8</span>,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">lc =</span> F); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -472,31 +456,79 @@ Si:550  1.686667      b</code></pre>
 <section id="geom_col-ggplot2" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="geom_col-ggplot2"><span class="header-section-number">1.4.2</span> geom_col (ggplot2)</h3>
 <p><strong>Ggplot2</strong> nos ofrece dos geoms para hacer gráficos de barras (<code>geom_col</code> y <code>geom_bar</code>). Utilizaremos en este taller únicamente geom_col.</p>
-<p>Un inconveniente al realizar estos gráficos, es que por defecto el geom no nos calcula la media y los desvíos de la variable a graficar, sino que nos representa directamente los datos que le demos. Sin embargo, una de las principales virtudes de <code>ggplot</code> y del entorno <strong>tidyverse</strong> es la posibilidad realizar todos los cambios que creamos convenientes a nuestro database y luego graficar la base modificada sin necesidad de haber creado explícitamente un objeto nuevo. ¿Qué ventaja presenta esto? Nos permite manipular fácilmente la base de datos sin crear una lista muy larga de objetos que luego se nos complique identificar cuál es cuál. Así, a modo de ejemplo,</p>
-<p>Entonces, para realizar el mismo gráfico que hicimos con <code>bargraph.CI</code>, debemos calcular la media y el error estándar de la variable PS de semillas:</p>
+<p>Un inconveniente al realizar estos gráficos, es que por defecto el geom no nos calcula la media y los desvíos de la variable a graficar, sino que nos representa directamente los datos que le demos. Sin embargo, una de las principales virtudes de <code>ggplot</code> y del entorno <strong>tidyverse</strong> es la posibilidad realizar todos los cambios que creamos convenientes a nuestro database y luego graficar la base modificada sin necesidad de haber creado explícitamente un objeto nuevo. ¿Qué ventaja presenta esto? Nos permite manipular fácilmente la base de datos sin crear una lista muy larga de objetos que luego se nos complique identificar cuál es cuál. Entonces, para realizar el mismo gráfico que hicimos con <code>bargraph.CI</code>, debemos calcular la media y el error estándar de la variable cortisol:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="sc">%&gt;%</span> <span class="fu">select</span>(CO2, ET, PS) <span class="sc">%&gt;%</span> <span class="co"># seleccionamos las columnas involucradas</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CO2, ET) <span class="sc">%&gt;%</span> <span class="co"># definimos criterios de agrupamiento</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean,se)) <span class="co"># pedimos media y error estándar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>PEJERREY <span class="sc">%&gt;%</span> <span class="fu">select</span>(sitio, cortisol_ugdL) <span class="sc">%&gt;%</span> <span class="co"># seleccionamos las columnas involucradas</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sitio) <span class="sc">%&gt;%</span> <span class="co"># definimos criterios de agrupamiento</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean_se)) <span class="co"># pedimos media y error estándar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
-# Groups:   CO2 [2]
-  CO2   ET      fn1   fn2
-  &lt;fct&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 400   No     6.39 2.41 
-2 400   Si     2.47 0.476
-3 550   No    10.5  0.811
-4 550   Si     1.69 0.329</code></pre>
+<pre><code># A tibble: 3 × 2
+  sitio          cortisol_ugdL$y $ymin $ymax
+  &lt;chr&gt;                    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Laguna Central            4.29  4.01  4.57
+2 Laguna Norte              3.08  2.76  3.40
+3 Laguna Sur                6.00  5.57  6.42</code></pre>
 </div>
 </div>
-<p>Vemos que incorpora las columnas <em>fn1</em> (que tiene los valores de las medias) y <em>fn2</em> (con los errores estándares). A estos comandos creados se les anexa el gráfico:</p>
+<p>Vemos que crea las columnas <strong>cortisol_ugdL$y</strong> que tiene los valores de las medias, <strong>cortisol_ugdL$min</strong> con el valor de la media menos el error estándar y <strong>cortisol_ugdL$max</strong> con el valor de la media más el error estándar. A estos comandos creados se les anexa el gráfico:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>SEM_Alim <span class="sc">%&gt;%</span> <span class="fu">select</span>(CO2, ET, PS) <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CO2, ET) <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean,se)) <span class="sc">%&gt;%</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ET, fn1, </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill=</span>CO2))<span class="sc">+</span> <span class="co"># en este caso el parámetro de color lo define fill</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>PEJERREY <span class="sc">%&gt;%</span> <span class="fu">select</span>(sitio, cortisol_ugdL) <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sitio) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean_se)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sitio, <span class="at">y =</span> cortisol_ugdL<span class="sc">$</span>y)) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Para agregar las barras de error incorporaremos otro <strong>geom</strong>, el <code>geom_errorbar</code>, para el cual debemos definir un nuevo aestetic particular que en lugar de los clásicos <em>x</em> e <em>y</em>, incorpora <em>ymin</em> y <em>ymax</em>, donde debemos aclarar el valor inferior y superior de nuestras barras:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>PEJERREY <span class="sc">%&gt;%</span> <span class="fu">select</span>(sitio, cortisol_ugdL) <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sitio) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean_se)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sitio, <span class="at">y =</span> cortisol_ugdL<span class="sc">$</span>y)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> cortisol_ugdL<span class="sc">$</span>ymin,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> cortisol_ugdL<span class="sc">$</span>ymax),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">1</span>) <span class="co"># ancho del tope de la barra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Supongamos ahora que queremos visualizar la diferencia entre los sexos de los peces en cada sitio. Para ello, al igual que hicimos para los gráficos de puntos, debemos incorporar la clasificación por sexo en nuestro aestetic. Sin embargo, para que el color que genere la diferenciación sea del relleno de la barra, habrá que agregar el parámetro <em>fill</em> en lugar de <em>col</em>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>PEJERREY <span class="sc">%&gt;%</span> <span class="fu">select</span>(sexo, sitio, cortisol_ugdL) <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sexo, sitio) <span class="sc">%&gt;%</span> <span class="co"># agregamos sexo al agrupamiento</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean_se)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sitio, cortisol_ugdL<span class="sc">$</span>y, <span class="at">fill =</span> sexo)) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como vemos, la barras se apilan. Para que vaya una al lado de la otra, debemos cambiar el parámetro <strong>position</strong>a <em>“position_dodge”</em> dentro del geom (por defecto está en <em>identity</em>). Además agregaremos las barras de error y a este gráfico lo llamaremos G3:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>G3 <span class="ot">&lt;-</span> PEJERREY <span class="sc">%&gt;%</span> <span class="fu">select</span>(sexo, sitio, cortisol_ugdL) <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sexo, sitio) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean_se)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sitio, cortisol_ugdL<span class="sc">$</span>y, <span class="at">fill =</span> sexo)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span> <span class="co"># el .9 especifica la separación</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> cortisol_ugdL<span class="sc">$</span>ymin, <span class="at">ymax =</span> cortisol_ugdL<span class="sc">$</span>ymax),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">1</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>))</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>G3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -505,38 +537,53 @@ Si:550  1.686667      b</code></pre>
 </div>
 </div>
 </div>
-<p>Como vemos, la barras se apilan. Para que vaya una al lado de la otra, debemos cambiar el parámetro <em>position= “dodge”</em> dentro del geom (por defecto está en <em>identity</em>). Además agregaremos las barras de error:</p>
+<p>Una alternativa para no tener que realizar manualmente la transformación de la base de datos cuando queremos graficar medias y desvíos es agregar, como vimos para los gráficos de puntos, un <code>stat_summary</code>. Esta función tiene una nomenclatura algo distinta a las otras y permite especificar diferentes geoms. Veamos para realizar el último gráfico:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PEJERREY, <span class="fu">aes</span>(sitio, cortisol_ugdL, <span class="at">fill =</span> sexo)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"col"</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_se, <span class="at">geom =</span> <span class="st">"errorbar"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Sin embargo, si queremos agregar las letras del Tukey realizado, será más adecuado hacerlo con el cálculo previo de medias y error estándar. Esto es así ya que nos permite ubicar adecuadamente las letras en la altura correspondiente a cada columna. Las letras las incorporaremos de forma manual con un nuevo geom, el <em>geom_text</em>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>G3 <span class="ot">&lt;-</span> SEM_Alim <span class="sc">%&gt;%</span> <span class="fu">select</span>(CO2, ET, PS) <span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CO2, ET) <span class="sc">%&gt;%</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">list</span>(mean,se)) <span class="sc">%&gt;%</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ET, fn1, <span class="at">fill=</span>CO2))<span class="sc">+</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>fn1<span class="sc">-</span>fn2, <span class="at">ymax=</span>fn1<span class="sc">+</span>fn2), <span class="at">width=</span>.<span class="dv">1</span>,</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>))</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>G3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>G3 <span class="ot">&lt;-</span> G3 <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> cortisol_ugdL<span class="sc">$</span>ymax,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"bc"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"bc"</span>, <span class="st">"a"</span>)),</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">vjust =</span> <span class="sc">-</span>.<span class="dv">5</span>) <span class="co"># ajuste vertical de la posición</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>G3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Una alternativa para no tener que realizar manualmente la transformación de la base de datos cuando queremos graficar medias y desvíos es usar <code>stat_summary</code>. Esta función tiene una nomenclatura algo distinta a las otras y permite especificar diferentes geoms. Veamos para realizar el último gráfico:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SEM_Alim, <span class="fu">aes</span>(ET, PS, <span class="at">fill=</span>CO2))<span class="sc">+</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">"col"</span>,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>)) <span class="sc">+</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data=</span>mean_se, <span class="at">geom =</span><span class="st">'errorbar'</span>, <span class="at">width=</span><span class="fl">0.2</span>,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Sin embargo, si queremos agregar las letras del Tukey realizado, será más adecuado hacerlo con el cálculo previo de medias y error estándar. Esto es así ya que nos permite ubicar adecuadamente las letras en la altura correspondiente a cada columna. Las letras las incorporaremos de forma manual con un nuevo geom, el <em>geom_text</em>:</p>
+</section>
+</section>
+<section id="actividad-3.b" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="actividad-3.b"><span class="header-section-number">1.5</span> Actividad 3.b</h2>
+<ol type="1">
+<li>Realice un gráfico de barras con <code>bargraph.CI</code> donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.</li>
+<li>Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.</li>
+</ol>
+</section>
+<section id="boxplot" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="boxplot"><span class="header-section-number">1.6</span> Boxplot</h2>
+<p>Los gráficos tipo boxplot también son formas frecuentes de presentar variables numéricas con distintos factores de clasificación. Veremos algunas formas de hacerlo.</p>
+<section id="función-boxplot" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="función-boxplot"><span class="header-section-number">1.6.1</span> Función boxplot</h3>
+<p>La función derivada de <code>plot</code> para hacer gráficos de barras es <code>boxplot</code>. Se utiliza de forma similar a los gráficos ya vistos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>G3 <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> fn1 <span class="sc">+</span> fn2,</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">label=</span> <span class="fu">c</span>(<span class="st">"ab"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>)),</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.9</span>),</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">vjust=</span><span class="sc">-</span>.<span class="dv">5</span>) <span class="co"># ajuste vertical de la posición</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="at">data =</span> PEJERREY,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>        cortisol_ugdL <span class="sc">~</span> sitio,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Sitio de muestreo"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Cortisol (µg/dL)"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -546,167 +593,65 @@ Si:550  1.686667      b</code></pre>
 </div>
 </div>
 </section>
-<section id="gráfico-de-barras-apiladas-y-apilado-porcentual" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="gráfico-de-barras-apiladas-y-apilado-porcentual"><span class="header-section-number">1.4.3</span> Gráfico de barras apiladas y apilado porcentual</h3>
-<p>Veremos ahora cómo realizar un gráfico de barras apilado y un apilado porcentual. Supongamos como ejemplo que queremos graficar el peso seco de los órganos evaluados en plantas de soja de la variedad Alim 3,14. Para ello, lo primero que debemos hacer es “ordenar” los niveles del factor como los queramos mostrar. En nuestro caso, iremos de abajo hacia arriba de la planta:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ALIM<span class="sc">$</span>Organo <span class="ot">&lt;-</span> <span class="fu">factor</span>(ALIM<span class="sc">$</span>Organo, </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Tallo"</span>,<span class="st">"Hoja"</span>,<span class="st">"Vaina"</span>,<span class="st">"Semilla"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Una vez hecho esto, vamos a transformar nuestra base de datos utilizando la función <code>ddply</code>del paquete <strong>plyr</strong>. Esta función tiene un uso particular que excede el contenido de este curso, veremos simplemente cómo utilizarla con el ejemplo:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>ALIM_apilado <span class="ot">&lt;-</span> ALIM <span class="sc">%&gt;%</span> <span class="fu">select</span>(Organo, ET, PS) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ET, Organo) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="fu">funs</span>(mean,se)) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ddply</span>(<span class="fu">c</span>(<span class="st">"ET"</span>), transform,</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">percent_PS =</span>  mean<span class="sc">/</span> <span class="fu">sum</span>(mean) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ddply</span>(<span class="fu">c</span>(<span class="st">"ET"</span>), transform, <span class="at">label_y=</span><span class="fu">cumsum</span>(mean)) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ddply</span>(<span class="fu">c</span>(<span class="st">"ET"</span>), transform, <span class="at">label_y_perc=</span><span class="fu">cumsum</span>(percent_PS)) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Organo=</span><span class="fu">factor</span>(Organo, </span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Semilla"</span>, <span class="st">"Vaina"</span>,</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>                                             <span class="st">"Hoja"</span>, <span class="st">"Tallo"</span>)))</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># notar que volvemos a invertir el orden  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: left;">ET</th>
-<th style="text-align: left;">Organo</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">se</th>
-<th style="text-align: right;">percent_PS</th>
-<th style="text-align: right;">label_y</th>
-<th style="text-align: right;">label_y_perc</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Tallo</td>
-<td style="text-align: right;">4.680000</td>
-<td style="text-align: right;">0.5586889</td>
-<td style="text-align: right;">17.18587</td>
-<td style="text-align: right;">4.68000</td>
-<td style="text-align: right;">17.18587</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Hoja</td>
-<td style="text-align: right;">9.740000</td>
-<td style="text-align: right;">0.9862048</td>
-<td style="text-align: right;">35.76718</td>
-<td style="text-align: right;">14.42000</td>
-<td style="text-align: right;">52.95306</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Vaina</td>
-<td style="text-align: right;">4.365000</td>
-<td style="text-align: right;">0.7491584</td>
-<td style="text-align: right;">16.02913</td>
-<td style="text-align: right;">18.78500</td>
-<td style="text-align: right;">68.98219</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">No</td>
-<td style="text-align: left;">Semilla</td>
-<td style="text-align: right;">8.446667</td>
-<td style="text-align: right;">1.4605996</td>
-<td style="text-align: right;">31.01781</td>
-<td style="text-align: right;">27.23167</td>
-<td style="text-align: right;">100.00000</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Como se puede ver, además de calcular media y error estándar, se crearon las variables label_y (que nos da el acumulado parcial, nos servirá como posición para poner una etiqueta) y label_y_perc para el acumulado porcentual. Ahora podemos ejecutar los gráficos y agregar además el valor de cada columna apilada:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>G4 <span class="ot">&lt;-</span> ALIM_apilado <span class="sc">%&gt;%</span>   </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(ET, mean, <span class="at">fill=</span>Organo))<span class="sc">+</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(mean, <span class="dv">2</span>), <span class="co"># agregamos el valor</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> label_y))  <span class="co"># indica la posición</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>G4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>G5 <span class="ot">&lt;-</span> ALIM_apilado <span class="sc">%&gt;%</span>   </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ET, percent_PS, <span class="at">fill=</span>Organo))<span class="sc">+</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(percent_PS, <span class="dv">2</span>), <span class="at">y =</span> label_y_perc), <span class="at">vjust=</span><span class="dv">2</span>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>G5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="boxplot" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="boxplot"><span class="header-section-number">1.5</span> Boxplot</h2>
-<p>Los gráficos tipo boxplot también son formas frecuentes de presentar variables numéricas con distintos factores de clasificación. Veremos algunas formas de hacerlo.</p>
-<section id="función-boxplot" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="función-boxplot"><span class="header-section-number">1.5.1</span> Función boxplot</h3>
-<p>La función derivada de <code>plot</code> para hacer gráficos de barras es <code>boxplot</code>. Se utiliza de forma similar a los gráficos ya vistos:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(PS<span class="sc">~</span>ET, <span class="at">data =</span> SEM_Alim,</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">12</span>),</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab=</span><span class="st">"Estrés térmico"</span>,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span> <span class="st">"Peso seco"</span>,</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex.axis=</span><span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="geom_boxplot" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="geom_boxplot"><span class="header-section-number">1.5.2</span> geom_boxplot</h3>
+<section id="geom_boxplot" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="geom_boxplot"><span class="header-section-number">1.6.2</span> geom_boxplot</h3>
 <p>El paquete <strong>ggplot2</strong> nos ofrece una vez maś una forma muy versátil de crear gráficos de cajas. La función en cuestión es <code>geom_boxplot</code> que, a diferencias de <code>geom_col</code>, no requiere que realicemos ningún cálculo previo. De esta manera podemos generar un gráfico con un par de líneas de código:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SEM_Alim, <span class="fu">aes</span>(ET, PS))<span class="sc">+</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PEJERREY,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(sitio, cortisol_ugdL)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Si vemos con atención a este gráfico le faltan una serie de cosas que podrían mejorarlo. Por un lado, los extremos de los cuartiles no tienen la marca de final, sino que simplemente termina la línea. Sumado a esto, podría interesarnos agregar el valor de la media, que no figura en el gráfico. Veamos como incorporarlos con la función ya vista <code>stat_summary</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SEM_Alim, <span class="fu">aes</span>(ET, PS))<span class="sc">+</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span><span class="st">'errorbar'</span>, <span class="at">width=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#debemos colocarlo primero para que quede al fondo</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">"point"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PEJERREY, <span class="fu">aes</span>(sitio, cortisol_ugdL)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">colour =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El stat_summary para el cálculo de la media hereda las clasificaciones que tengamos definidas en nuestro aestetic general:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(PEJERREY,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(sitio, cortisol_ugdL, <span class="at">col =</span> sexo)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">position_dodge</span>(.<span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">position =</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">position_dodge</span>(.<span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">18</span>,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">position =</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">position_dodge</span>(.<span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="unidad_3_q_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="actividad-5" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="actividad-5"><span class="header-section-number">1.6</span> Actividad 5</h2>
-<p>Realice un gráfico de barras y un gráfico de cajas donde demuestre los resultados de los ANOVA realizados en la actividad 4.</p>
+<section id="actividad-3.c" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="actividad-3.c"><span class="header-section-number">1.7</span> Actividad 3.c</h2>
+<p>Realice gráficos de cajas para representar los resultados de la actividad 3.a.</p>
 <div style="text-align: right;">
 <p><a href="../">Volver al inicio</a></p>
 </div>

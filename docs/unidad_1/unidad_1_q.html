@@ -240,6 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>La esencia de R es la capacidad de repetición. Retomando lo que mencioné como una supuesta desventaja (pero que no lo era), una vez que logramos un gráfico (puede ser también un comando, pero vale el ejemplo) que estéticamente nos agrada, es muy sencillo extrapolar esa apariencia a otro gráfico, aún de diferente tipo. Por lo tanto, todo ese tiempo que nos llevó armarlo, es inversión y aprendizaje para que la siguiente vez todo sea más rápido.</li>
 <li>El uso de funciones: relacionado al ítem anterior, y una vez que tengamos algo de manejo, podemos armar las funciones que nosotros queramos reuniendo los análisis que queramos ver y simplificar los comandos para que en una sola línea generemos mucha información.</li>
 </ul>
+<p>Por supuesto que todas estas ventajas y desventajas han sufrido grandes modificaciones desde la irrupción de la inteligencia artificial. Hoy en día es muy fácil armar funciones complejas, gráficos muy avanzados y scripts infinitos sin tener grandes conocimientos. El objetivo de este curso es sentar las bases para que dicho uso sea medido y comprendido, además de poder realizar modificaciones manuales que creamos convenientes. En este sentido, es una invitación de este curso intentar trabajarlo sin la ayuda de la IA, aunque más no sea la última vez que trabajemos de esta forma.</p>
 </section>
 <section id="instalación-de-r" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="instalación-de-r"><span class="header-section-number">1.3</span> Instalación de R</h2>
@@ -248,8 +249,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="rstudio" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.4</span> RStudio</h2>
 <p>RStudio es un software que nos va a permitir trabajar de un modo más amigable con R (que de forma nativa se utiliza en un entorno tipo terminal de programación). El programa es de uso libre y se descarga desde la web oficial (<a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>). Una vez que instalamos el programa y lo abrimos, nos ofrece muchísimas posibilidades. En este taller simplemente vamos a ver su uso básico.</p>
+<p>Actualmente otros softwares están irrumpiendo en escena con bastante más soporte para inteligencia artificial (como es el caso de <a href="https://code.visualstudio.com/">Visual Code Studio</a>, o la versión de Posit llamada <a href="https://posit.co/products/ide/positron/">Positron</a>). Sin embargo, considero que RStudio es una herramienta algo más amigable para una iniciación al software.</p>
 <p>Al abrir el programa lo primero que destaca es que se encuentra dividido en 4 ventanas:</p>
-<p><img src="images/rstudio.png" class="img-fluid"></p>
+<p><img src="imgs/rstudio.png" class="img-fluid"></p>
 <ol type="1">
 <li><p>Ventana 1 - Script de trabajo: arriba a la izquierda. En ella abriremos y editaremos nuestros scripts de trabajo. A medida que se escriben las líneas para ejecutarlas debemos posicionarnos en ella (o seleccionarla) y correrlas (Run, arriba a la derecha, o más fácil <em>Ctrl + r</em>).</p></li>
 <li><p>Ventana 2 - consola: se ubica abajo a la izquierda. En ella se nos muestra el R propiamente dicho. Todo lo que nosotros ejecutamos en la ventana 1 se corre en esta segunda ventana, donde se nos muestra el resultado de nuestra corrida. Si se quiere se puede escribir directamente en ella, pero lo que hagamos no quedará guardado en nuestro script de trabajo.</p></li>
@@ -299,11 +301,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Así podemos cargarlos todos de la siguiente manera:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae);<span class="fu">library</span>(tidyverse);<span class="fu">library</span>(car)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sciplot);<span class="fu">library</span>(patchwork); <span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'patchwork' was built under R version 4.4.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sciplot);<span class="fu">library</span>(patchwork); <span class="fu">library</span>(gridExtra)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="carga-de-nuestros-datos" class="level2" data-number="1.7">
@@ -314,186 +313,184 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="1.7.1" class="anchored" data-anchor-id="establecer-el-directorio-de-trabajo"><span class="header-section-number">1.7.1</span> Establecer el directorio de trabajo</h3>
 <p>Lo primero que debemos hacer es establecer el directorio de trabajo. Para ello corremos el comando (con un directorio ejemplo):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"D:/DATOS/R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"D:/DATOS/R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si queremos revisar en qué directorio nos encontramos, ejecutamos</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "D:/OneDrive/R/Taller R 2026 Doctorado/curso_graficos_ggplot_2026"</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora antes de ver cómo cargar la base de datos, haremos una breve explicación de como crear la base de datos.</p>
 </section>
 <section id="armado-de-la-base-de-datos" class="level3" data-number="1.7.2">
 <h3 data-number="1.7.2" class="anchored" data-anchor-id="armado-de-la-base-de-datos"><span class="header-section-number">1.7.2</span> Armado de la base de datos</h3>
-<p>Una vez más, aquí mostraré mi forma de armar las bases de datos, hay muchas..</p>
+<p>Una vez más, aquí mostraré mi forma de armar las bases de datos, hay muchas…</p>
 <p>La forma de la base de datos es la misma que se utiliza en otros software como Infostat. Debemos crear una columna por cada factor o variable que tengamos, y repetir el nivel del factor para cada unidad experimental (cada fila).</p>
-<p>El formato en el que yo creo mis bases de datos es csv (archivo separado por comas). Para ello se exporta desde excel o calc el archivo en ese formato. El documento debe tener una única hoja con las base de datos limpia, es decir sin columnas o filas extras con comentarios, datos extra, etc. Por otro lado, es recomendable que los nombres de las columnas sean lo más cortos posibles, y que no tengan espacios. Otra recomendación es omitir el uso de tildes u otros caracteres especiales en cualquier parte del documento puede llegar a tener problemas según la codificación que usemos en RStudio. La más compatible es la UTF-8, que no suele generar problemas.</p>
-<p>Resumiendo, la recomendación es que una vez que tenemos nuestra tabla (en excel por ejemplo) con los datos listos, copiarla y pegarla en un documento nuevo. Allí ver de simplificar los nombres de las columnas, también de los niveles de factores a utilizar. Guardar este nuevo documento como csv, si estamos en idioma español establecer para la separación de columnas “;”. Por supuesto, guardamos el archivo en el directorio de trabajo.</p>
+<p>El formato en el que yo creo mis bases de datos es csv (archivo separado por comas). Para ello se exporta desde Excel o Calc el archivo en ese formato. El documento debe tener una única hoja con las base de datos limpia, es decir sin columnas o filas extras con comentarios, datos extra, etc. Por otro lado, es recomendable que los nombres de las columnas sean lo más cortos posibles, y que no tengan espacios. Otra recomendación es omitir el uso de tildes u otros caracteres especiales en cualquier parte del documento puede llegar a tener problemas según la codificación que usemos en RStudio. La más compatible es la UTF-8, que no suele generar problemas.</p>
+<p>Resumiendo, la recomendación es que una vez que tenemos nuestra tabla (en Excel por ejemplo) con los datos listos, copiarla y pegarla en un documento nuevo. Allí ver de simplificar los nombres de las columnas, también de los niveles de factores a utilizar. Guardar este nuevo documento como csv, si estamos en idioma español establecer para la separación de columnas “;”. Por supuesto, guardamos el archivo en el directorio de trabajo.</p>
 <p>Para este curso utilizaremos inicialmente la base de datos “metals.csv”.</p>
 </section>
 <section id="cargando-la-base-de-datos" class="level3" data-number="1.7.3">
 <h3 data-number="1.7.3" class="anchored" data-anchor-id="cargando-la-base-de-datos"><span class="header-section-number">1.7.3</span> Cargando la base de datos</h3>
-<p>En este aparto, cabe destacar que R es un lenguaje orientado a objetos. Cargaremos nuestra base de datos como un “objeto” de R, al cual debemos asignarle un nombre. De ahí en más, cualquier acción que modifique nuestro “objeto” quedará guardada en el objeto mismo, pero no modificará nuestro archivo original (el csv en este caso). Para crear un objeto lo asignamos con “&lt;-” (de forma rápida se escribe con Alt + -) o con el signo “=”.</p>
-<p>Una primera forma de cargarla es mediante la función read.csv, por ejemplo:</p>
+<p>R es un lenguaje orientado a objetos. Por lo tanto, cargaremos nuestra base de datos como un “objeto” de R, al cual debemos asignarle un nombre. De ahí en más, cualquier acción que modifique nuestro “objeto” quedará guardada en el objeto mismo, pero no modificará nuestro archivo original (el csv en este caso). Para crear un objeto lo asignamos con “<strong>&lt;-</strong>” (de forma rápida se escribe con <em>Alt + -</em>) o con el signo “<strong>=</strong>”.</p>
+<p>Una primera forma de cargarla es mediante la función read.csv, y se pueden establecer un par de parámetros:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metales <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"metales.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Como la base está en español, no se carga correctamente. Debemos corregir un par de parámetros:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>metales <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/metales.csv"</span>, <span class="at">dec=</span><span class="st">","</span>, <span class="at">sep=</span><span class="st">";"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(metales, class) <span class="co"># vemos que crea factores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/peces_morfometria.csv"</span>, <span class="at">dec=</span><span class="st">"."</span>, <span class="at">sep=</span><span class="st">","</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(datos_peces, class) <span class="co"># vemos que crea factores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>$Pote
+<pre><code>$id
 [1] "integer"
 
-$GT
+$especie
 [1] "character"
 
-$CO2
+$sitio
+[1] "character"
+
+$sexo
+[1] "character"
+
+$temporada
+[1] "character"
+
+$longitud_cm
+[1] "numeric"
+
+$peso_g
+[1] "numeric"
+
+$temperatura_C
+[1] "numeric"
+
+$transparencia_cm
 [1] "integer"
 
-$ET
-[1] "character"
-
-$Organo
-[1] "character"
-
-$PS
-[1] "numeric"
-
-$Mn
-[1] "numeric"
-
-$Cu
-[1] "numeric"
-
-$Zn
-[1] "numeric"
-
-$Cd
-[1] "numeric"
-
-$Pb
-[1] "numeric"
-
-$SPAD
+$cortisol_ugdL
 [1] "numeric"</code></pre>
 </div>
 </div>
-<p>La función que yo más utilizo es la que viene con el paquete tidyverse, llamada <code>read_csv</code>. Si usamos <code>read_csv2</code>, toma la coma como separador decimal:</p>
+<p>La función que yo más utilizo es la que viene con el paquete <strong>tidyverse</strong>, llamada <code>read_csv</code>. Si usamos <code>read_csv2</code>, toma la coma como separador decimal:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>metales <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"data/metales.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/peces_morfometria.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Using "','" as decimal and "'.'" as grouping mark. Use `read_delim()` for more control.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 142 Columns: 12
+<pre><code>Rows: 126 Columns: 10
 ── Column specification ────────────────────────────────────────────────────────
-Delimiter: ";"
-chr (3): GT, ET, Organo
-dbl (9): Pote, CO2, PS, Mn, Cu, Zn, Cd, Pb, SPAD
+Delimiter: ","
+chr (4): especie, sitio, sexo, temporada
+dbl (6): id, longitud_cm, peso_g, temperatura_C, transparencia_cm, cortisol_...
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Vemos que en este caso nos mostró directamente la clase de cada columna, y que crea objetos tipo character en vez de factor.</p>
+<p>Vemos que en este caso nos mostró directamente la clase de cada columna, y que crea objetos tipo <em>character</em> en vez de <em>factor</em>.</p>
 <p>En la ventana 3, nos aparecerán los objetos que incorporemos.</p>
 </section>
 </section>
 <section id="caracterización-de-la-base-de-datos" class="level2" data-number="1.8">
 <h2 data-number="1.8" class="anchored" data-anchor-id="caracterización-de-la-base-de-datos"><span class="header-section-number">1.8</span> Caracterización de la base de datos</h2>
-<p>Para ver primeros datos y los nombres de las columnas ejecutamos los comandos:</p>
+<p>Para ver los primeros 6 datos y los nombres de las columnas ejecutamos la función <code>head</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos_peces)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 12
-   Pote GT          CO2 ET    Organo    PS    Mn    Cu    Zn    Cd    Pb  SPAD
-  &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     1 ES Mentor   400 No    Hoja    4.58  53.9 10.3  103.  1.30   7.22  29.5
-2     2 ES Mentor   400 No    Hoja    3.61  51.1  7.36 149.  1.09   2.75  21.5
-3     3 ES Mentor   400 No    Hoja    4.27  41.7  6.90  96.9 0.956  2.53  24.7
-4     4 ES Mentor   400 Si    Hoja    4.62  54.0  8.77 119.  0.901  3.05  22.6
-5     5 ES Mentor   400 Si    Hoja    4.68  51.2  6.64 108.  1.16   3.21  25.6
-6     6 ES Mentor   400 Si    Hoja    4.38  50.3  8.16 111.  0.682  3.69  22.8</code></pre>
+<pre><code># A tibble: 6 × 10
+     id especie           sitio sexo  temporada longitud_cm peso_g temperatura_C
+  &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+1     1 Jenynsia multide… Lagu… F     Invierno          5.6   2.33          17.7
+2     2 Odontesthes bona… Lagu… M     Verano           31.4 333.            21.7
+3     3 Odontesthes bona… Lagu… M     Invierno         30.6 268.            15.7
+4     4 Odontesthes bona… Lagu… M     Invierno         32.2 304.            20.4
+5     5 Odontesthes bona… Lagu… F     Invierno         28.7 230.            20.5
+6     6 Odontesthes bona… Lagu… F     Invierno         27.9 176.            16.8
+# ℹ 2 more variables: transparencia_cm &lt;dbl&gt;, cortisol_ugdL &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Para ver la tabla completa, se debe tildar en el nombre del objeto en la ventana 3. Aprovechando que tenemos la tabla a nuestra vista, daré aquí una breve descripción de los datos. La tabla cargada cuenta con datos de plantas de soja de 3 cultivares (o genotipos) diferentes: Alim 3,14, ES Mentor y Sigalia (todos en la columna GT). Estas plantas crecieron en cámaras climáticas con condiciones controladas de luz, temperatura, humedad y concentración de CO<sub>2</sub>. Las siguientes columnas de la base de datos son las siguientes:</p>
+<p>Para ver la tabla completa, se debe tildar en el nombre del objeto en la ventana 3. Aprovechando que tenemos la tabla a nuestra vista, daré aquí una breve descripción de los datos. Esta base de datos contiene registros morfométricos, fisiológicos y ambientales de peces colectados en tres lagunas pampeanas de la región central de Argentina. Se incluyen tres especies nativas con rangos de talla muy distintos, lo que la hace especialmente útil para explorar relaciones alométricas, correlaciones entre variables continuas y comparaciones entre grupos. Las variables registradas son:</p>
 <ul>
-<li><p>CO<sub>2</sub>: es la concentración en la cual crecieron las plantas. Tiene dos niveles: 400 ppm y 550 ppm.</p></li>
-<li><p>ET: estrés térmico. Algunas de las plantas fueron sometidas a estrés térmico en el periodo crítico de llenado de grano. Tiene dos niveles: Sí o No.</p></li>
-<li><p>Órgano: refiere a si se trata de raíces, tallos, hojas, vainas o semillas.</p></li>
-<li><p>PS: peso seco del órgano correspondiente.</p></li>
-<li><p>Mn, Cu, Zn, Pb, Cd: concentración del metal en el órgano correspondiente en ppm.</p></li>
-<li><p>SPAD: medición promedio de SPAD (verdor) en hojas a lo largo del desarrollo. Valor sólo válido para las hojas.</p></li>
+<li><p><strong>id:</strong> Identificador numérico único de cada individuo.</p></li>
+<li><p><strong>especie:</strong> Especie a la que pertenece el individuo (<em>Odontesthes bonariensis</em>, <em>Jenynsia multidentata</em> o <em>Cichlasoma dimerus</em>).</p></li>
+<li><p><strong>sitio:</strong> Laguna de muestreo (Laguna Norte, Laguna Sur o Laguna Central).</p></li>
+<li><p><strong>sexo:</strong> Sexo del individuo (M/F).</p></li>
+<li><p><strong>temporada:</strong> Temporada de muestreo (Verano o Invierno).</p></li>
+<li><p><strong>longitud_cm:</strong> Longitud total del pez en centímetros.</p></li>
+<li><p><strong>peso_g:</strong> Peso corporal en gramos. Se relaciona con la longitud mediante una función alométrica (W = a·L^b).</p></li>
+<li><p><strong>temperatura_C:</strong> Temperatura del agua en el momento del muestreo, en °C.</p></li>
+<li><p><strong>transparencia_cm:</strong> Transparencia del agua medida con disco de Secchi, en centímetros.</p></li>
+<li><p><strong>cortisol_ugdL:</strong> Concentración plasmática de cortisol en µg/dL, utilizada como indicador de estrés fisiológico.</p></li>
 </ul>
-<p>Además podemos ver un resumen de nuestra base o hacerle “preguntas” a R sobre la base de datos. Al escribir “$” a continuación de un objeto podemos ver las columnas individuales. Por ejemplo:</p>
+<p>Siguiendo con el análisis de nuestra base de datos, podemos ver un resumen de nuestra base o hacerle “preguntas” a R sobre la base de datos. Al escribir “$” a continuación de un objeto podemos ver las columnas individuales. Por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metales) <span class="co"># resumen de la base</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(datos_peces) <span class="co"># resumen de la base</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Pote            GT                 CO2           ET           
- Min.   : 1.00   Length:142         Min.   :400   Length:142        
- 1st Qu.:10.00   Class :character   1st Qu.:400   Class :character  
- Median :18.50   Mode  :character   Median :475   Mode  :character  
- Mean   :18.46                      Mean   :475                     
- 3rd Qu.:27.00                      3rd Qu.:550                     
- Max.   :36.00                      Max.   :550                     
-    Organo                PS               Mn               Cu        
- Length:142         Min.   : 1.030   Min.   : 2.122   Min.   : 2.568  
- Class :character   1st Qu.: 1.875   1st Qu.: 7.952   1st Qu.: 5.899  
- Mode  :character   Median : 2.720   Median :20.450   Median : 7.272  
-                    Mean   : 3.561   Mean   :24.086   Mean   :10.582  
-                    3rd Qu.: 4.215   3rd Qu.:34.296   3rd Qu.:12.472  
-                    Max.   :12.330   Max.   :83.826   Max.   :38.300  
-       Zn               Cd              Pb               SPAD      
- Min.   : 13.41   Min.   :0.623   Min.   : 0.0340   Min.   :20.27  
- 1st Qu.: 43.06   1st Qu.:0.961   1st Qu.: 0.1308   1st Qu.:23.09  
- Median : 80.55   Median :1.207   Median : 2.1740   Median :25.84  
- Mean   : 91.42   Mean   :1.336   Mean   : 2.7108   Mean   :25.76  
- 3rd Qu.:103.41   3rd Qu.:1.667   3rd Qu.: 4.4465   3rd Qu.:27.69  
- Max.   :345.52   Max.   :2.849   Max.   :11.6470   Max.   :32.24  </code></pre>
+<pre><code>       id           especie             sitio               sexo          
+ Min.   :  1.00   Length:126         Length:126         Length:126        
+ 1st Qu.: 32.25   Class :character   Class :character   Class :character  
+ Median : 63.50   Mode  :character   Mode  :character   Mode  :character  
+ Mean   : 63.50                                                           
+ 3rd Qu.: 94.75                                                           
+ Max.   :126.00                                                           
+  temporada          longitud_cm        peso_g        temperatura_C  
+ Length:126         Min.   : 4.10   Min.   :  0.810   Min.   :14.90  
+ Class :character   1st Qu.: 6.30   1st Qu.:  2.835   1st Qu.:18.20  
+ Mode  :character   Median :11.85   Median : 15.810   Median :19.75  
+                    Mean   :15.33   Mean   : 84.458   Mean   :19.78  
+                    3rd Qu.:26.48   3rd Qu.:150.458   3rd Qu.:21.30  
+                    Max.   :36.20   Max.   :518.570   Max.   :24.40  
+ transparencia_cm cortisol_ugdL  
+ Min.   :11.00    Min.   :0.500  
+ 1st Qu.:36.00    1st Qu.:2.333  
+ Median :43.50    Median :3.650  
+ Mean   :44.12    Mean   :3.719  
+ 3rd Qu.:51.75    3rd Qu.:5.003  
+ Max.   :74.00    Max.   :7.950  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.double</span>(metales<span class="sc">$</span>PS) <span class="co"># double indica numérico continuo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.double</span>(datos_peces<span class="sc">$</span>temperatura_C) <span class="co"># double indica numérico continuo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(metales<span class="sc">$</span>GT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(datos_peces<span class="sc">$</span>longitud_cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
+<pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as.factor</span>(metales<span class="sc">$</span>GT)) <span class="co"># para ver los niveles de un factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as.factor</span>(datos_peces<span class="sc">$</span>especie)) <span class="co"># para ver los niveles de un factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Alim 3,14" "ES Mentor" "Sigalia"  </code></pre>
+<pre><code>[1] "Cichlasoma dimerus"      "Jenynsia multidentata"  
+[3] "Odontesthes bonariensis"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as.factor</span>(metales<span class="sc">$</span>Organo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(datos_peces<span class="sc">$</span>transparencia_cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hoja"    "Semilla" "Tallo"   "Vaina"  </code></pre>
+<pre><code>  [1] "48" "40" "47" "33" "34" "38" "35" "36" "41" "30" "42" "49" "16" "46" "34"
+ [16] "30" "27" "33" "34" "47" "28" "56" "33" "51" "56" "28" "56" "70" "38" "51"
+ [31] "42" "45" "42" "38" "53" "55" "44" "63" "58" "53" "36" "67" "61" "19" "31"
+ [46] "39" "56" "60" "41" "48" "53" "30" "52" "41" "47" "44" "31" "33" "45" "47"
+ [61] "42" "58" "41" "30" "41" "43" "43" "59" "51" "58" "52" "43" "57" "42" "48"
+ [76] "33" "46" "41" "50" "67" "74" "57" "45" "55" "48" "38" "44" "42" "38" "62"
+ [91] "39" "39" "54" "37" "31" "35" "51" "50" "49" "40" "34" "56" "28" "43" "29"
+[106] "40" "43" "60" "11" "62" "35" "49" "55" "36" "44" "51" "44" "36" "48" "47"
+[121] "27" "62" "48" "16" "35" "66"</code></pre>
 </div>
 </div>
 <section id="caracterización-gráfica" class="level3" data-number="1.8.1">
 <h3 data-number="1.8.1" class="anchored" data-anchor-id="caracterización-gráfica"><span class="header-section-number">1.8.1</span> Caracterización gráfica</h3>
 <p>En este caso haremos algunos gráficos sencillos para observar la distribución de nuestra base de datos. La función <code>plot</code> (y sus derivados, como en este caso <code>boxplot</code>) viene con R base y es la forma más rápida y sencilla de graficar.</p>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(metales<span class="sc">$</span>PS<span class="sc">~</span>metales<span class="sc">$</span>Organo)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(metales<span class="sc">$</span>Pb<span class="sc">~</span>metales<span class="sc">$</span>GT)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(metales<span class="sc">$</span>Cd)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(metales<span class="sc">$</span>Pb<span class="sc">~</span>metales<span class="sc">$</span>Cd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_peces<span class="sc">$</span>longitud_cm)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_peces<span class="sc">$</span>longitud_cm<span class="sc">~</span>datos_peces<span class="sc">$</span>temperatura_C)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(datos_peces<span class="sc">$</span>peso_g<span class="sc">~</span>datos_peces<span class="sc">$</span>especie)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(datos_peces<span class="sc">$</span>peso_g<span class="sc">~</span>datos_peces<span class="sc">$</span>sitio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid"></p>
+<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid"></p>
+<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid"></p>
+<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-11-4.png" class="img-fluid"></p>
+<p><img src="unidad_1_q_files/figure-html/unnamed-chunk-10-4.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
@@ -504,123 +501,104 @@ dbl (9): Pote, CO2, PS, Mn, Cu, Zn, Cd, Pb, SPAD
 <section id="subdividir-la-base-de-datos" class="level3" data-number="1.9.1">
 <h3 data-number="1.9.1" class="anchored" data-anchor-id="subdividir-la-base-de-datos"><span class="header-section-number">1.9.1</span> Subdividir la base de datos</h3>
 <p>Algo muy común en el trabajo en R, es la necesidad de subdividir la base de datos para utilizar únicamente una parte de ella. Veremos un par de formas de hacerlo.</p>
-<p>Con las funciones que incluye R base, utilizaremos <code>subset</code>. Por ejemplo para elegir solo las muestras del genotipo <em>Alim 3,14</em>:</p>
+<p>Con las funciones que incluye R base, utilizaremos <code>subset</code>. Por ejemplo para elegir solo las muestras de la especie <em>Jenynsia multidentata</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ALIM <span class="ot">&lt;-</span> <span class="fu">subset</span>(metales, metales<span class="sc">$</span>GT<span class="sc">==</span><span class="st">"Alim 3,14"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>JENYNSIA <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos_peces, datos_peces<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Jenynsia multidentata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Y creamos un objeto que se llama <em>ALIM</em>, nuevamente mediante <em>&lt;-</em>.</p>
-<p>Otra forma de hacerlo es mediante el uso de pipes (%&gt;%). Las pipes sirven para concatenar una serie de acciones para modificar una base de datos. En primer lugar se ubica la base a modificar y entre cada linea de comando %&gt;% (<em>Ctrl + Shift + m</em>). Así, podemos crear la misma base de antes con <code>filter</code>:</p>
+<p>Y creamos un objeto que se llama <em>JENYNSIA</em>, nuevamente mediante <em>&lt;-</em>.</p>
+<p>Otra forma de hacerlo es mediante el uso de pipes (<strong>%&gt;%</strong>). Las pipes sirven para concatenar una serie de acciones para modificar una base de datos. En primer lugar se ubica la base a modificar y entre cada linea de comando %&gt;% (<em>Ctrl + Shift + m</em>). Así, podemos filtrar una base de datos con <code>filter</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ALIM <span class="ot">&lt;-</span> metales <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GT <span class="sc">==</span> <span class="st">"Alim 3,14"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Laguna_Central <span class="ot">&lt;-</span> datos_peces <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sitio <span class="sc">==</span> <span class="st">"Laguna Central"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si queremos filtrar por más de un parámetro:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en dos pasos</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>ALIM_VyS <span class="ot">&lt;-</span> metales <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(GT <span class="sc">==</span> <span class="st">"Alim 3,14"</span>) <span class="sc">%&gt;%</span> <span class="co"># se agrega a lo anterior</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Organo <span class="sc">==</span><span class="st">"Vaina"</span><span class="sc">|</span> Organo <span class="sc">==</span><span class="st">"Semilla"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># en dos pasos</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Peces_Invierno <span class="ot">&lt;-</span> datos_peces <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(temporada <span class="sc">==</span> <span class="st">"Invierno"</span>) <span class="sc">%&gt;%</span> <span class="co"># se agrega a lo anterior</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(especie <span class="sc">==</span> <span class="st">"Cichlasoma dimerus"</span> <span class="sc">|</span> especie <span class="sc">==</span> <span class="st">"Odontesthes bonariensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="seleccionar-filas-o-columnas" class="level3" data-number="1.9.2">
 <h3 data-number="1.9.2" class="anchored" data-anchor-id="seleccionar-filas-o-columnas"><span class="header-section-number">1.9.2</span> Seleccionar filas o columnas</h3>
 <p>En R base, el uso de [ ] sirve para seleccionar filas o columnas de una database, tal que <code>data[filas,columnas]</code>. En el entorno de <em>dplyr</em> utilizaremos la función <code>select</code> para columnas:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar filas 1 a 3</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>metales[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar filas 1 a 3</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>datos_peces[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 12
-   Pote GT          CO2 ET    Organo    PS    Mn    Cu    Zn    Cd    Pb  SPAD
-  &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     1 ES Mentor   400 No    Hoja    4.58  53.9 10.3  103.  1.30   7.22  29.5
-2     2 ES Mentor   400 No    Hoja    3.61  51.1  7.36 149.  1.09   2.75  21.5
-3     3 ES Mentor   400 No    Hoja    4.27  41.7  6.90  96.9 0.956  2.53  24.7</code></pre>
+<pre><code># A tibble: 3 × 10
+     id especie           sitio sexo  temporada longitud_cm peso_g temperatura_C
+  &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+1     1 Jenynsia multide… Lagu… F     Invierno          5.6   2.33          17.7
+2     2 Odontesthes bona… Lagu… M     Verano           31.4 333.            21.7
+3     3 Odontesthes bona… Lagu… M     Invierno         30.6 268.            15.7
+# ℹ 2 more variables: transparencia_cm &lt;dbl&gt;, cortisol_ugdL &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar columnas 1 a 3</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>metales[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar columnas 1 a 3</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>datos_peces[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 142 × 3
-    Pote GT          CO2
-   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1     1 ES Mentor   400
- 2     2 ES Mentor   400
- 3     3 ES Mentor   400
- 4     4 ES Mentor   400
- 5     5 ES Mentor   400
- 6     6 ES Mentor   400
- 7     7 Sigalia     400
- 8     8 Sigalia     400
- 9     9 Sigalia     400
-10    10 Sigalia     400
-# ℹ 132 more rows</code></pre>
+<pre><code># A tibble: 126 × 3
+      id especie                 sitio         
+   &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;         
+ 1     1 Jenynsia multidentata   Laguna Central
+ 2     2 Odontesthes bonariensis Laguna Central
+ 3     3 Odontesthes bonariensis Laguna Norte  
+ 4     4 Odontesthes bonariensis Laguna Central
+ 5     5 Odontesthes bonariensis Laguna Sur    
+ 6     6 Odontesthes bonariensis Laguna Norte  
+ 7     7 Cichlasoma dimerus      Laguna Norte  
+ 8     8 Odontesthes bonariensis Laguna Central
+ 9     9 Odontesthes bonariensis Laguna Sur    
+10    10 Odontesthes bonariensis Laguna Central
+# ℹ 116 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>metales <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 142 × 3
-    Pote GT          CO2
-   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
- 1     1 ES Mentor   400
- 2     2 ES Mentor   400
- 3     3 ES Mentor   400
- 4     4 ES Mentor   400
- 5     5 ES Mentor   400
- 6     6 ES Mentor   400
- 7     7 Sigalia     400
- 8     8 Sigalia     400
- 9     9 Sigalia     400
-10    10 Sigalia     400
-# ℹ 132 more rows</code></pre>
+<pre><code># A tibble: 126 × 3
+      id especie                 sitio         
+   &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;         
+ 1     1 Jenynsia multidentata   Laguna Central
+ 2     2 Odontesthes bonariensis Laguna Central
+ 3     3 Odontesthes bonariensis Laguna Norte  
+ 4     4 Odontesthes bonariensis Laguna Central
+ 5     5 Odontesthes bonariensis Laguna Sur    
+ 6     6 Odontesthes bonariensis Laguna Norte  
+ 7     7 Cichlasoma dimerus      Laguna Norte  
+ 8     8 Odontesthes bonariensis Laguna Central
+ 9     9 Odontesthes bonariensis Laguna Sur    
+10    10 Odontesthes bonariensis Laguna Central
+# ℹ 116 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar por nombre de la columna</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>metales <span class="sc">%&gt;%</span> <span class="fu">select</span>(GT,CO2,Pb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccionar por nombre de la columna</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="sc">%&gt;%</span> <span class="fu">select</span>(sitio, especie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 142 × 3
-   GT          CO2    Pb
-   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
- 1 ES Mentor   400  7.22
- 2 ES Mentor   400  2.75
- 3 ES Mentor   400  2.53
- 4 ES Mentor   400  3.05
- 5 ES Mentor   400  3.21
- 6 ES Mentor   400  3.69
- 7 Sigalia     400  4.93
- 8 Sigalia     400  6.89
- 9 Sigalia     400  6.45
-10 Sigalia     400  4.06
-# ℹ 132 more rows</code></pre>
+<pre><code># A tibble: 126 × 2
+   sitio          especie                
+   &lt;chr&gt;          &lt;chr&gt;                  
+ 1 Laguna Central Jenynsia multidentata  
+ 2 Laguna Central Odontesthes bonariensis
+ 3 Laguna Norte   Odontesthes bonariensis
+ 4 Laguna Central Odontesthes bonariensis
+ 5 Laguna Sur     Odontesthes bonariensis
+ 6 Laguna Norte   Odontesthes bonariensis
+ 7 Laguna Norte   Cichlasoma dimerus     
+ 8 Laguna Central Odontesthes bonariensis
+ 9 Laguna Sur     Odontesthes bonariensis
+10 Laguna Central Odontesthes bonariensis
+# ℹ 116 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="creación-de-nuevas-variables" class="level3" data-number="1.9.3">
 <h3 data-number="1.9.3" class="anchored" data-anchor-id="creación-de-nuevas-variables"><span class="header-section-number">1.9.3</span> Creación de nuevas variables</h3>
-<p>Una opción muy útil ligada al paquete <strong>dplyr</strong> es la de transformar nuestras bases de datos para algún gráfico en particular, sin necesidad de cambiar la tabla original. Para ello utilizaremos la función <code>mutate</code>, que permite generar muchos cambios en la base de datos. Por ejemplo, en la base ALIM, si queremos agregar la cantidad absoluta de Pb extraída:</p>
+<p>Una opción muy útil ligada al paquete <strong>dplyr</strong> es la de transformar nuestras bases de datos para algún gráfico en particular, sin necesidad de cambiar la tabla original. Para ello utilizaremos la función <code>mutate</code>, que permite generar muchos cambios en la base de datos. Por ejemplo, en la base <code>datos_peces</code>, si queremos agregar la la variable peso por unidad de longitud:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>metales <span class="ot">&lt;-</span> metales <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"Pb_total"</span> <span class="ot">=</span> Pb<span class="sc">*</span>PS) <span class="co"># se crea una nueva columna</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># para ver la columna nueva</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>metales<span class="sc">$</span>Pb_total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="ot">&lt;-</span> datos_peces <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"peso_relativo"</span> <span class="ot">=</span> peso_g<span class="sc">/</span>longitud_cm) <span class="co"># se crea una nueva columna</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># para ver la columna nueva</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos_peces<span class="sc">$</span>peso_relativo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1]  33.06302   9.91306  10.79029  14.08638  15.00876  16.17096  20.29512
-  [8]  27.08556  26.89233  16.41048  21.13308  13.07837  90.21291  47.62605
- [15]  34.42750  32.72702 104.37124  60.83160  11.97888  18.05868  11.41854
- [22]   9.45945  26.60670  14.74590  15.39456  10.70520  26.29791  21.00659
- [29]  29.45446  26.90309  56.83056  71.08245  28.40670  20.39830  22.12022
- [36]  15.66058   0.53040   0.21148   0.35308   0.12864   0.18957   0.15876
- [43]   0.34568   0.16218   0.26832   0.16653   0.13771   0.20181   1.30689
- [50]   0.26668   0.24779   0.06052   0.11200   0.13858   0.17000   0.09720
- [57]   0.11232   0.15456   0.21060   0.17806   0.13260   0.18768   0.31376
- [64]   0.43420   0.10500   0.19250   1.15430   1.39783   0.68175   0.09020
- [71]   0.12669   0.09306  19.56636  12.97743  15.53136   8.62628  22.82812
- [78]   6.70020  11.51128   8.49915  10.31240  12.42600   6.58415   3.86750
- [85]  40.15790  17.30625   7.66112  11.69561  13.83342  14.11765   3.68520
- [92]   3.53430   3.21594   5.76495   5.95000   3.79984   8.42044   9.41645
- [99]  11.57807  12.14784   6.73466   7.59570  48.02186  35.38976  33.43392
-[106]  22.93984  10.68801   1.87756   0.12788   0.41223   3.65980   1.99801
-[113]   0.22490   1.61504   2.01480   4.27158   1.36136   0.36025   8.40807
-[120]   1.19240   0.75150   1.33900   1.48086   1.53242   0.71118   0.96642
-[127]   0.95130   1.18125   2.77965   2.02789   2.81808   2.32225   0.66102
-[134]   1.00975   1.17260   0.57710  12.66513  25.29600  14.93736   7.39102
-[141]   0.57288   1.09347</code></pre>
+<pre><code>[1]  0.4160714 10.6140127  8.7584967  9.4360248  8.0087108  6.3043011</code></pre>
 </div>
 </div>
 </section>
@@ -628,40 +606,24 @@ dbl (9): Pote, CO2, PS, Mn, Cu, Zn, Cd, Pb, SPAD
 <h3 data-number="1.9.4" class="anchored" data-anchor-id="cambio-en-los-niveles-de-un-factor"><span class="header-section-number">1.9.4</span> Cambio en los niveles de un factor</h3>
 <p>También podemos cambiar los niveles de una factor <code>mutate</code>, mediante la siguiente estructura:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>... <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nombre_factor =</span> <span class="fu">fct_recode</span>(nombre_factor,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"nombre nuevo"</span> <span class="ot">=</span> <span class="st">"nombre viejo"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>... <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nombre_factor =</span> <span class="fu">fct_recode</span>(nombre_factor,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"nombre nuevo"</span> <span class="ot">=</span> <span class="st">"nombre viejo"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Y podemos incluir una línea para cada nivel que queramos modificar. Por ejemplo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ALIM <span class="sc">%&gt;%</span> <span class="fu">select</span>(CO2, ET, PS) <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ET =</span> <span class="fu">fct_recode</span>(ET,</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Control"</span>  <span class="ot">=</span> <span class="st">"No"</span>,</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Estrés térmico"</span> <span class="ot">=</span> <span class="st">"Si"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 47 × 3
-     CO2 ET                PS
-   &lt;dbl&gt; &lt;fct&gt;          &lt;dbl&gt;
- 1   400 Control        10.7 
- 2   400 Control         8.29
- 3   400 Control         5.86
- 4   400 Estrés térmico  7.46
- 5   400 Estrés térmico  9.43
- 6   400 Estrés térmico  8.15
- 7   550 Control        11.8 
- 8   550 Control        12.3 
- 9   550 Control         9.45
-10   550 Estrés térmico  8.45
-# ℹ 37 more rows</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>datos_peces <span class="ot">&lt;-</span> datos_peces <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sexo =</span> <span class="fu">fct_recode</span>(sexo,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Macho"</span> <span class="ot">=</span> <span class="st">"M"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Hembra"</span> <span class="ot">=</span> <span class="st">"F"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="actividad-1" class="level2" data-number="1.10">
 <h2 data-number="1.10" class="anchored" data-anchor-id="actividad-1"><span class="header-section-number">1.10</span> Actividad 1</h2>
 <ol type="1">
-<li>Cree a partir de la base de datos original, una que contenga únicamente los tallos y hojas del cultivar ES Mentor, y las columnas de CO<sub>2</sub>, ET, Organo, PS, Zn y Pb.</li>
-<li>Filtre la base creada para obtener otra que solo tenga aquellos datos con más de 3 ppm de Pb.</li>
+<li>Cree a partir de la base de datos original, una que contenga únicamente los individuos de la especie <em>Cichlasoma dimerus y Odontesthes bonariensis</em> que se encuentran en la Laguna Norte en invierno.</li>
+<li>Filtre la base creada para obtener otra que solo tenga aquellos individuos con peso relativo mayor a 1.</li>
 </ol>
 <div style="text-align: right;">
 <p><a href="../">Volver al inicio</a></p>
