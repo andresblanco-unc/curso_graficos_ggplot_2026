@@ -331,7 +331,7 @@ pivot_wider(names_from = variable, # variable a dividir
 Entonces, a modo de ejemplo, supongamos que queremos comparar como se ha incrementado la producción de soja en cada país de nuestra base datos desde 1961 hasta 2023. Para ello podemos primero seleccionar las variables de interés (solo nos interesa la producción), después filtrar los años de interés y crear nuevas columnas que calculen la proporción de un año a otro.
 
 ```{r}
-soja %>% select(Area, Year, Production) %>% # seleccionamos
+soja_argentina %>% select(Area, Year, Production) %>% # seleccionamos
   filter(Year==1961 | Year==2023) %>%  # filtramos
   pivot_wider(names_from =  Year, values_from = Production) %>% # repartimos en columnas
   mutate(Prop= round(`2023`/`1961`, 0)) # transformamos con las variables entre ` `
