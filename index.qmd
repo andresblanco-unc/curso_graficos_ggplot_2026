@@ -8,7 +8,11 @@ author: "Andrés Blanco"
 <img src="imgs/flyer.png" width="100%"/>
 </p>
 
+## Acceso al curso
+
 **Accedé al curso completo [aquí](curso_completo/curso_completo.qmd)**
+
+## Descarga el material
 
 **Descargá todo el material del curso [aquí](https://github.com/andresblanco-unc/curso_graficos_ggplot_2026/raw/refs/heads/main/archivos_curso_ggplot_2026.rar)**
 
