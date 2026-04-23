@@ -17,6 +17,20 @@ website:
         text: Inicio
       - href: curso_completo/curso_completo.qmd
         text: Curso completo
+      - text: Recursos útiles
+        menu:
+          - text: R for Data Science
+            href: https://r4ds.had.co.nz/
+            target: "_blank"
+          - text: The R Graph Gallery
+            href: https://r-graph-gallery.com
+            target: "_blank"
+          - text: R Charts
+            href: https://r-charts.com/
+            target: "_blank"
+          - text: R Colors
+            href: https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf
+            target: "_blank"
 
 format:
   html:

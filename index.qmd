@@ -10,7 +10,7 @@ author: "Andrés Blanco"
 
 **Accedé al curso completo [aquí](curso_completo/curso_completo.qmd)**
 
-**Descargá todo el material del curso [aquí](https://github.com/andresblanco-unc/curso_graficos_ggplot_2026/blob/main/archivos_curso_ggplot_2026.rar)**
+**Descargá todo el material del curso [aquí](https://github.com/andresblanco-unc/curso_graficos_ggplot/raw/refs/heads/main/archivos_curso_ggplot2.zip)**
 
 ## Bibliografía recomendada
 
