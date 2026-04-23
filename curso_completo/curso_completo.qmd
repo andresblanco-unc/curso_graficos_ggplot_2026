@@ -1,5 +1,5 @@
 ---
-title: "Curso completo 2026"
+title: "Gráficos para publicaciones en R con énfasis en ggplot2 2026"
 author: "Andrés Blanco"
 date: "2026"
 format:
