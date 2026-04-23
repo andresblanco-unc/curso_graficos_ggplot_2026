@@ -1,6 +1,6 @@
 ---
 author: "Andrés Blanco"
-date: "2025-03-12"
+date: "2026-03-16"
 format:
   html:
     theme: cosmo
