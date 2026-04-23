@@ -420,8 +420,7 @@ ggsave("G3.pdf", device = cairo_pdf)
 
 ## Actividad 4.d
 
-Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la actividad 4.b y c. 
-
+Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la actividad 4.b y c.
 
 ## División de la ventana gráfica
 
@@ -579,12 +578,9 @@ ggplot(data = JENYNSIA,
 
 ## Actividad 4.e
 
-Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera:
-- En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
-- En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
 
 Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
-
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)
