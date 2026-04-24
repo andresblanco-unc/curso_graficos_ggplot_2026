@@ -8,15 +8,11 @@ author: "Andrés Blanco"
 <img src="imgs/flyer.png" width="100%"/>
 </p>
 
-## Acceso al curso
+## Accedé al curso completo [aquí](curso_completo/curso_completo.qmd) {.unnumbered}
 
-**Accedé al curso completo [aquí](curso_completo/curso_completo.qmd)**
+## Descarga el material del curso [aquí](https://github.com/andresblanco-unc/curso_graficos_ggplot_2026/raw/refs/heads/main/archivos_curso_ggplot_2026.rar) {.unnumbered}
 
-## Descarga el material
-
-**Descargá todo el material del curso [aquí](https://github.com/andresblanco-unc/curso_graficos_ggplot_2026/raw/refs/heads/main/archivos_curso_ggplot_2026.rar)**
-
-## Bibliografía recomendada
+## Bibliografía recomendada {.unnumbered}
 
 - Carmona, D.; Benitez-Vieyra, S. Guía de campo de R. [Link](https://wiki.imbiv.unc.edu.ar/index.php?title=Guía_de_campo_de_R){target="_blank"}
 - Chang, W. (2018). R graphics cookbook: practical recipes for visualizing data. O'Reilly Media. [Link](http://www.cookbook-r.com/){target="_blank"}
@@ -28,7 +24,7 @@ author: "Andrés Blanco"
 
 ---
 
-### Otros cursos orientados al uso de R
+### Otros cursos orientados al uso de R {.unnumbered}
 
 En el Doctorado de Ciencias Biológicas (FCEFyN, Universidad Nacional de Córdoba), se dictan con regularidad cursos introductorios y avanzados de modelos estadísticos en R:
 
@@ -38,7 +34,7 @@ En el Doctorado de Ciencias Biológicas (FCEFyN, Universidad Nacional de Córdob
 
 ---
 
-## Licencia
+## Licencia {.unnumbered}
 
 © 2026 Andrés Blanco. Bajo licencia [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/){target="_blank"}.
 

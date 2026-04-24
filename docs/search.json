@@ -115,15 +115,15 @@
     "objectID": "index.html#bibliografía-recomendada",
     "href": "index.html#bibliografía-recomendada",
     "title": "Gráficos para publicaciones en R con énfasis en ggplot2",
-    "section": "3 Bibliografía recomendada",
-    "text": "3 Bibliografía recomendada\n\nCarmona, D.; Benitez-Vieyra, S. Guía de campo de R. Link\nChang, W. (2018). R graphics cookbook: practical recipes for visualizing data. O’Reilly Media. Link\nGgplot2 Reference. Link\nMorales, J. Modelos estadísticos, una versión aplicada en R. Link\nR-Charts. Gráficos con el paquete ggplot2. Link\nTidyverse. Link\nWickham, H.; Çetinkaya-Rundel, M.; Grolemund, G. (2023). R for data science. O’Reilly Media. Link\n\n\n\n3.1 Otros cursos orientados al uso de R\nEn el Doctorado de Ciencias Biológicas (FCEFyN, Universidad Nacional de Córdoba), se dictan con regularidad cursos introductorios y avanzados de modelos estadísticos en R:\n\nIntroducción al lenguaje R. Modelos lineales y fundamentos de programación. Ver curso\nModelos Estadísticos Avanzados. Ver curso\nFundamentos básicos del lenguaje R. Ver curso"
+    "section": "Bibliografía recomendada",
+    "text": "Bibliografía recomendada\n\nCarmona, D.; Benitez-Vieyra, S. Guía de campo de R. Link\nChang, W. (2018). R graphics cookbook: practical recipes for visualizing data. O’Reilly Media. Link\nGgplot2 Reference. Link\nMorales, J. Modelos estadísticos, una versión aplicada en R. Link\nR-Charts. Gráficos con el paquete ggplot2. Link\nTidyverse. Link\nWickham, H.; Çetinkaya-Rundel, M.; Grolemund, G. (2023). R for data science. O’Reilly Media. Link\n\n\n\nOtros cursos orientados al uso de R\nEn el Doctorado de Ciencias Biológicas (FCEFyN, Universidad Nacional de Córdoba), se dictan con regularidad cursos introductorios y avanzados de modelos estadísticos en R:\n\nIntroducción al lenguaje R. Modelos lineales y fundamentos de programación. Ver curso\nModelos Estadísticos Avanzados. Ver curso\nFundamentos básicos del lenguaje R. Ver curso"
   },
   {
     "objectID": "index.html#licencia",
     "href": "index.html#licencia",
     "title": "Gráficos para publicaciones en R con énfasis en ggplot2",
-    "section": "4 Licencia",
-    "text": "4 Licencia\n© 2026 Andrés Blanco. Bajo licencia Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.\n\n\n\nCC BY-NC-SA 4.0"
+    "section": "Licencia",
+    "text": "Licencia\n© 2026 Andrés Blanco. Bajo licencia Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.\n\n\n\nCC BY-NC-SA 4.0"
   },
   {
     "objectID": "presentacion/presentacion_q.html",
@@ -789,5 +789,19 @@
     "title": "Gráficos para publicaciones en R con énfasis en ggplot2",
     "section": "2 Descarga el material",
     "text": "2 Descarga el material\nDescargá todo el material del curso aquí"
+  },
+  {
+    "objectID": "index.html#accedé-al-curso-completo-aquí",
+    "href": "index.html#accedé-al-curso-completo-aquí",
+    "title": "Gráficos para publicaciones en R con énfasis en ggplot2",
+    "section": "Accedé al curso completo aquí",
+    "text": "Accedé al curso completo aquí"
+  },
+  {
+    "objectID": "index.html#descarga-el-material-del-curso-aquí",
+    "href": "index.html#descarga-el-material-del-curso-aquí",
+    "title": "Gráficos para publicaciones en R con énfasis en ggplot2",
+    "section": "Descarga el material del curso aquí",
+    "text": "Descarga el material del curso aquí"
   }
 ]
