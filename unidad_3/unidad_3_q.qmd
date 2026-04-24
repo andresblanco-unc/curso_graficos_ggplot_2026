@@ -133,7 +133,7 @@ tukey3 <- HSD.test(fit4, c("sitio", "sexo"))
 tukey3$groups
 ```
 
-## Actividad 3.a
+### Actividad 3.a
 
 Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
 
@@ -265,7 +265,7 @@ G3 + geom_text(aes(y = cortisol_ugdL$ymax,
                      vjust = -.5) # ajuste vertical de la posición
 ```
 
-## Actividad 3.b
+### Actividad 3.b
 
 1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.
 2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.
@@ -327,7 +327,7 @@ ggplot(PEJERREY,
   theme_classic() 
 ```
 
-## Actividad 3.c
+### Actividad 3.c
 
 Realice gráficos de cajas para representar los resultados de la actividad 3.a.
 

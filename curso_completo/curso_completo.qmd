@@ -10,6 +10,7 @@ format:
     toc-title: "Contenidos"
     number-sections: true
     number-depth: 3
+    search: true
 ---
 
 {{< include ../presentacion/presentacion_q.qmd >}}
@@ -23,3 +24,5 @@ format:
 {{< include ../unidad_4/unidad_4_q.qmd >}}
 
 {{< include ../unidad_5/unidad_5_q.qmd >}}
+
+{{< include ../actividades/lista_actividades.qmd >}}

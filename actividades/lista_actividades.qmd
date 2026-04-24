@@ -1,0 +1,87 @@
+---
+author: "Andrés Blanco"
+date: "2026-03-16"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: left
+    #number-sections: true
+    toc-title: "Contenidos"
+---
+
+# Lista de actividades {.unnumbered}
+
+## Actividad 1 {.unnumbered}
+
+1.  Cree a partir de la base de datos original, una que contenga únicamente los individuos de la especie *Cichlasoma dimerus y Odontesthes bonariensis* que se encuentran en la Laguna Norte en invierno.
+2.  Filtre la base creada para obtener otra que solo tenga aquellos individuos con peso relativo mayor a 1.
+
+## Actividad 2.a {.unnumbered}
+
+Genere bases de datos para cada una de las especies y analice si existe una correlación entre longitud_cm, peso_g, cortisol en sangre, temperatura y transparencia. Realice un gráfico con corrplot y otro con chart.Correlation, explore posibilidades de las funciones en la sección ayuda.
+
+## Actividad 2.b {.unnumbered}
+
+1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el peso con la longitud de peces de las especies seleccionadas.
+2.  Ponga a prueba los supuestos y concluya.
+
+## Actividad 2.c {.unnumbered}
+
+Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point.
+
+## Actividad 3.a {.unnumbered}
+
+Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
+
+## Actividad 3.b {.unnumbered}
+
+1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.
+2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.
+
+## Actividad 3.c {.unnumbered}
+
+Realice gráficos de cajas para representar los resultados de la actividad 3.a.
+
+## Actividad 4.a {.unnumbered}
+
+Exporte en formato pdf el gráfico de barras que realizó en la actividad 3b para el invierno, y el boxplot de la actividad 3c para verano.
+
+## Actividad 4.b {.unnumbered}
+
+Modifique las escalas de los ejes y colores de los gráficos desarrollados con ggplot2 en las actividades 2c, 3b y 3c. Agregue títulos a los ejes y leyendas.
+
+## Actividad 4.c {.unnumbered}
+
+Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
+
+## Actividad 4.d {.unnumbered}
+
+Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la actividad 4.b y c.
+
+## Actividad 4.e {.unnumbered}
+
+Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+
+Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
+
+## Actividad 5.a {.unnumbered}
+
+Realice un gráfico de barras apiladas absoluto y porcentual donde se visualice la superficie cultivada en cada uno de los países de la base de datos soja_paises en los años 1965, 1985, 2005 y 2023.
+
+## Actividad 5.b {.unnumbered}
+
+Realice un gráfico en el que se observe qué porcentaje de la producción global y de la superficie global sembrada representa Argentina. Para ello:
+
+-   seleccione las columnas de interés
+-   una producción y superficie en una única columna
+-   divida Argentina y Mundo en dos columnas
+-   calcule la proporción que representa Argentina del global y con ella el porcentaje
+-   grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
+
+## Actividad 5.c {.unnumbered}
+
+Genere los mismos gráficos de barras apiladas de la sección 5.1, pero incorpore en ellos el nivel del factor "Otros" para representar la producción de global que no es abarcada por los países que presenta la base.
+
+**Ayuda:** genere el objeto `soja_apilado_otros` tomando como base el objeto `soja_apilado` en incorporando el cálculo para generar "Otros".

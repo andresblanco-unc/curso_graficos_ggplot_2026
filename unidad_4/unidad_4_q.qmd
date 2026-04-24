@@ -120,7 +120,7 @@ ggsave("mi gráfico.png", # nombre y formato
 
 Si se quiere exportar en formato SVG, es necesaria la instalación del paquete *svglite*.
 
-## Actividad 4.a
+### Actividad 4.a
 
 Exporte en formato pdf el gráfico de barras que realizó en la actividad 3b para el invierno, y el boxplot de la actividad 3c para verano.
 
@@ -292,7 +292,7 @@ paletteer_d("colorBlindness::Blue2DarkOrange12Steps", 2,
 
 Nos los da con el código RGB que podemos utilizar para otros gráficos.
 
-## Actividad 4.b
+### Actividad 4.b
 
 Modifique las escalas de los ejes y colores de los gráficos desarrollados con ggplot2 en las actividades 2c, 3b y 3c. Agregue títulos a los ejes y leyendas.
 
@@ -326,7 +326,7 @@ library(ggh4x)
 G2 + facet_nested(. ~ especie + sexo) # cada nivel de especie se divide por sexo
 ```
 
-## Actividad 4.c
+### Actividad 4.c
 
 Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
 
@@ -418,7 +418,7 @@ G3 +
 ggsave("G3.pdf", device = cairo_pdf)
 ```
 
-## Actividad 4.d
+### Actividad 4.d
 
 Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la actividad 4.b y c.
 
@@ -576,7 +576,7 @@ ggplot(data = JENYNSIA,
               axis = "collect") # unifica ejes, en este caso el y
 ```
 
-## Actividad 4.e
+### Actividad 4.e
 
 Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
 

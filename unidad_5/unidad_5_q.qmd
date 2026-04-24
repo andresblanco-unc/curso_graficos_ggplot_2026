@@ -195,7 +195,7 @@ G5 <- soja_apilado %>%
   scale_fill_viridis_d(); G5
 ```
 
-## Actividad 5.a
+### Actividad 5.a
 
 Realice un gráfico de barras apiladas absoluto y porcentual donde se visualice la superficie cultivada en cada uno de los países de la base de datos soja_paises en los años 1965, 1985, 2005 y 2023.
 
@@ -341,7 +341,7 @@ Podemos ver como en Argentina en el último medio siglo se incrementó la produc
 
 Estas funciones tienen diferentes usos. Como vimos, `pivot_wider` puede servirnos para convertir variables y comparar niveles de un factor. `pivot_longer` puede servir tanto para corregir bases mal armadas como para generar nuevos criterios de clasificación que pueden ser útiles en algunos gráficos.
 
-## Actividad 5.b
+### Actividad 5.b
 
 Realice un gráfico en el que se observe qué porcentaje de la producción global y de la superficie global sembrada representa Argentina. Para ello:
 
@@ -351,7 +351,7 @@ Realice un gráfico en el que se observe qué porcentaje de la producción globa
 -   calcule la proporción que representa Argentina del global y con ella el porcentaje
 -   grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
 
-## Actividad 5.c
+### Actividad 5.c
 
 Genere los mismos gráficos de barras apiladas de la sección 5.1, pero incorpore en ellos el nivel del factor "Otros" para representar la producción de global que no es abarcada por los países que presenta la base.
 

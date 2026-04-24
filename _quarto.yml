@@ -11,7 +11,7 @@ website:
   bread-crumbs: false
   page-footer: "<span class='footer-space'>Doctorado en Ciencias Biológicas | FCEFyN - UNC</span>"
   navbar:
-    background: "#375a7f"
+    background: "#53868B"
     left:
       - href: index.qmd
         text: Inicio
@@ -28,9 +28,10 @@ website:
           - text: R Charts
             href: https://r-charts.com/
             target: "_blank"
-          - text: R Colors
-            href: https://sites.stat.columbia.edu/tzheng/files/Rcolor.pdf
+          - text: R Charts Colors
+            href: https://r-charts.com/colors/
             target: "_blank"
+
 
 format:
   html:
@@ -43,6 +44,6 @@ format:
     toc-title: "Contenidos"
     number-sections: true
     number-depth: 3
+    
 
 editor: visual
-
