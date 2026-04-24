@@ -328,7 +328,7 @@ G2 + facet_nested(. ~ especie + sexo) # cada nivel de especie se divide por sexo
 
 ### Actividad 4.c
 
-Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
+Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por especie.
 
 ## Definiendo la estética de nuestros gráficos
 
@@ -578,7 +578,11 @@ ggplot(data = JENYNSIA,
 
 ### Actividad 4.e
 
-Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera:
+
+-    En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
+
+-   En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
 
 Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
 

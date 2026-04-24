@@ -420,7 +420,7 @@ ggplot(data = JENYNSIA,
 
 ### Actividad 2.c
 
-1.  Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point.
+1.  Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point. Incorpore a la gráfica una clasificación de color para cada especie.
 
 ::: {style="text-align: right;"}
 [Volver al inicio](../)

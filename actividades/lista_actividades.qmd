@@ -29,7 +29,7 @@ Genere bases de datos para cada una de las especies y analice si existe una corr
 
 ## Actividad 2.c {.unnumbered}
 
-Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point.
+Realice una representación gráfica del modelo de regresión realizado en la actividad 2b. Utilice lineplot.CI y geom_point. Incorpore a la gráfica una clasificación de color para cada especie
 
 ## Actividad 3.a {.unnumbered}
 
@@ -54,7 +54,7 @@ Modifique las escalas de los ejes y colores de los gráficos desarrollados con g
 
 ## Actividad 4.c {.unnumbered}
 
-Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
+Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por especie.
 
 ## Actividad 4.d {.unnumbered}
 
@@ -62,7 +62,11 @@ Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la act
 
 ## Actividad 4.e {.unnumbered}
 
-Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: 
+
+ En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
+
+En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
 
 Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
 
