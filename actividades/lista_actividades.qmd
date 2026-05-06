@@ -24,7 +24,7 @@ Genere bases de datos para cada una de las especies y analice si existe una corr
 
 ## Actividad 2.b {.unnumbered}
 
-1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el peso con la longitud de peces de las especies seleccionadas.
+1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relacione el peso con la longitud de peces de las especies seleccionadas.
 2.  Ponga a prueba los supuestos y concluya.
 
 ## Actividad 2.c {.unnumbered}
@@ -33,16 +33,18 @@ Realice una representación gráfica del modelo de regresión realizado en la ac
 
 ## Actividad 3.a {.unnumbered}
 
-Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
+1.  Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey?
+
+2.  ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
 
 ## Actividad 3.b {.unnumbered}
 
-1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.
-2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.
+1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a.2 para invierno.
+2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a.2 para verano.
 
 ## Actividad 3.c {.unnumbered}
 
-Realice gráficos de cajas para representar los resultados de la actividad 3.a.
+Realice gráficos de cajas para representar los resultados de la actividad 3.a.2
 
 ## Actividad 4.a {.unnumbered}
 
@@ -62,11 +64,11 @@ Desarrolle un tema propio y aplíquelo a todos los gráficos generados en la act
 
 ## Actividad 4.e {.unnumbered}
 
-Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: 
+Agrupe los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera:
 
- En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
+- En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c.
 
-En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+- En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
 
 Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
 
@@ -78,11 +80,11 @@ Realice un gráfico de barras apiladas absoluto y porcentual donde se visualice 
 
 Realice un gráfico en el que se observe qué porcentaje de la producción global y de la superficie global sembrada representa Argentina. Para ello:
 
--   seleccione las columnas de interés
--   una producción y superficie en una única columna
--   divida Argentina y Mundo en dos columnas
--   calcule la proporción que representa Argentina del global y con ella el porcentaje
--   grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
+- seleccione las columnas de interés
+- una producción y superficie en una única columna
+- divida Argentina y Mundo en dos columnas
+- calcule la proporción que representa Argentina del global y con ella el porcentaje
+- grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
 
 ## Actividad 5.c {.unnumbered}
 

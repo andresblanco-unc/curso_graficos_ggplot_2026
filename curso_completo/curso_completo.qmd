@@ -4,6 +4,8 @@ author: "Andrés Blanco"
 date: "2026"
 format:
   html:
+    embed-resources: true
+    self-contained: true
     toc: true
     toc-location: left
     toc-depth: 3

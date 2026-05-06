@@ -90,9 +90,11 @@ qqnorm(PEJERREY$peso_g)
 qqline(PEJERREY$peso_g, col="red", lwd=2)
 ```
 
-Vemos que para el caso del peso_g no son normales los datos de acuerdo con el test analítico, y el gráfico muestra una curva sigmoidea. En una primera instancia podemos transformar las variables, que en R lo podemos hacer directamente:
+Vemos que para ambos casos las variable presentan un comportamiento normal de acuerdo al test analítico y al gráfico.
 
-```{r out.width="50%", fig.align='center'}
+Si quisiéramos hacer una transformación de nuestros datos, en R lo podemos hacer directamente:
+
+```{r eval=FALSE out.width="50%", fig.align='center'}
 shapiro.test(log(PEJERREY$peso_g+1)) # convertimos al logaritmo en base 10
 
 qqnorm(log(PEJERREY$peso_g+1))
@@ -103,8 +105,7 @@ Si no logramos de ninguna manera corregir la normalidad, podemos también correr
 
 ```{r warning=FALSE}
 cor.test(PEJERREY$longitud_cm, PEJERREY$peso_g, 
-         alternative = "two.sided",
-         method = "spearman", exact = TRUE)
+        method = "spearman", exact = TRUE)
 ```
 
 ### Muchas columnas a la vez
@@ -113,7 +114,7 @@ Existen otros test que permiten correlacionar pares de variables pero correrlas 
 
 ```{r}
 CORR <- cor(PEJERREY[, c("longitud_cm", "peso_g", "temperatura_C", "transparencia_cm")],
-            use = "complete.obs", method = "pearson")
+            method = "pearson")
 CORR # obtenemos los coeficientes
 ```
 
@@ -185,7 +186,7 @@ Una vez creado el objeto, vamos a poner a prueba los supuestos, tanto de forma g
 layout(matrix(1:4, 2, 2)); plot(fit_Jenysia) ;layout(1)
 ```
 
-Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la derecha nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la izquierda el gráfico de *residuos vs leverage* que nos permite visualizar la distancia de Cook's. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 23 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:
+Vemos en los dos gráficos superiores la dispersión de los datos, debemos fijarnos que sea homogénea sin patrones claros. Luego abajo a la izquierda nos aparece en qqplot que ya viéramos anteriormente. Finalmente a la derecha el gráfico de *residuos vs leverage* que nos permite visualizar la distancia de Cook's. En forma resumida este parámetro nos permite detectar valores muy influyentes en nuestro resultado y que habría que revisarlos, especialmente si el valor de la distancia es mayor a 1. En nuestro ejemplo, el valor 3 presenta cierta influencia, pero no tanta como para concentrarnos en él. Además podemos poner a prueba de forma analítica la normalidad de los errores:
 
 ```{r}
 shapiro.test(resid(fit_Jenysia))
@@ -199,7 +200,7 @@ Una vez puestos a prueba los supuestos, procedemos a ver la tabla de regresión:
 summary(fit_Jenysia)
 ```
 
-Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R^2^ y el p del R^2^. En nuestro caso el modelo obtenido será *y= -3,81 + 1,06 x* y explica el 91% de la variabilidad.
+Allí podemos ver los resultados de la prueba de hipótesis para la ordenada al origen, la pendiente, el valor de R^2^ y el p del R^2^. En nuestro caso el modelo obtenido será *y= -4,35 + 1,15 x* y explica el 89,5% de la variabilidad.
 
 El modelo de regresión también puede ser aplicado a una variable *x* discreta, donde para cada valor de *x* se encuentren varios valores de *y* . Para ejemplificar vamos a discretizar nuestra variable `longitud_cm`:
 
@@ -239,7 +240,7 @@ El modelo de regresión lineal puede ser complejizado agregando más variables r
 
 ### Actividad 2.b
 
-1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relaciones el peso con la longitud de peces de las especies seleccionadas.
+1.  A partir de la base de datos creada en el punto 1 de la actividad 1, realice un modelo de regresión que relacione el peso con la longitud de peces de las especies seleccionadas.
 2.  Ponga a prueba los supuestos y concluya.
 
 ------------------------------------------------------------------------
@@ -253,8 +254,8 @@ En este apartado veremos cómo una vez que tengamos una correlación o regresió
 La forma más rápida es mediante la función `plot` de Rbase
 
 ```{r, out.width="100%", fig.align='center'}
-plot(x = JENYNSIA$peso_g,
-     y = JENYNSIA$longitud_cm,  # explicito la y 
+plot(x = JENYNSIA$longitud_cm,
+     y = JENYNSIA$peso_g,  # explicito la y 
      col = "#8B2323",
      pch=15)
 ```

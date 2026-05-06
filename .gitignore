@@ -3,3 +3,6 @@
 
 /.quarto/
 .Rproj.user
+.positai
+
+**/*.quarto_ipynb

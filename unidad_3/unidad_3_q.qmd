@@ -135,7 +135,9 @@ tukey3$groups
 
 ### Actividad 3.a
 
-Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey? ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
+1.  Realice un ANOVA bifactorial para evaluar el efecto del sitio y el sexo en la concentración de cortisol en sangre de individuos de *Cichlasoma dimerus*. ¿Se observa la misma respuesta que para el pejerrey?
+
+2.  ¿Hay una respuesta diferente según la estación del año? Realice los dos modelos y compárelos.
 
 ## Gráficos de barras
 
@@ -267,8 +269,8 @@ G3 + geom_text(aes(y = cortisol_ugdL$ymax,
 
 ### Actividad 3.b
 
-1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para invierno.
-2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a. para verano.
+1.  Realice un gráfico de barras con `bargraph.CI` donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a.2 para invierno.
+2.  Realice un gráfico de barras con ggplot2 donde se muestren los resultados del anova bifactorial realizado en la actividad 3.a.2 para verano.
 
 ## Boxplot
 

@@ -5,7 +5,9 @@ author: "Andrés Blanco"
 ---
 
 <p align="center">
+
 <img src="imgs/flyer.png" width="100%"/>
+
 </p>
 
 ## Accedé al curso completo [aquí](curso_completo/curso_completo.qmd) {.unnumbered}
@@ -22,7 +24,7 @@ author: "Andrés Blanco"
 - Tidyverse. [Link](https://www.tidyverse.org/){target="_blank"}
 - Wickham, H.; Çetinkaya-Rundel, M.; Grolemund, G. (2023). R for data science. O'Reilly Media. [Link](https://r4ds.hadley.nz/){target="_blank"}
 
----
+------------------------------------------------------------------------
 
 ### Otros cursos orientados al uso de R {.unnumbered}
 
@@ -32,7 +34,7 @@ En el Doctorado de Ciencias Biológicas (FCEFyN, Universidad Nacional de Córdob
 - **Modelos Estadísticos Avanzados**. [Ver curso](https://curso-statscba.github.io/modelos_avanzados/){target="_blank"}
 - **Fundamentos básicos del lenguaje R**. [Ver curso](https://pastornicolas.github.io/fundamentos_R/){target="_blank"}
 
----
+------------------------------------------------------------------------
 
 ## Licencia {.unnumbered}
 
