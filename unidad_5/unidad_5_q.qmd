@@ -405,7 +405,7 @@ Entonces ahora nos queda un idea mucho mejor de cómo a crecido la superficie se
 
 Esta sección tiene por objetivo mostrar que el conocimiento de los gráficos con ggplot2 sobrepasan al uso individual de este paquete, sino que hay mucho otros que se basan en él para generar gráficos. Un ejemplo de ello es el paquete *factoextra* para gráficos multivariados.
 
-Vamos a desarrollar un ejemplo donde armamos un biplot a partir de un análisis de componentes principales (PCA). Vamos a retomar a la base de datos ALIM, y haremos un PCA comparando la concentración de distintos metales en los órganos, su peso seco y verdor. Para ello ejecutamos:
+Vamos a desarrollar un ejemplo donde armamos un biplot a partir de un análisis de componentes principales (PCA). Vamos a retomar a la base de datos de peces, y haremos un PCA comparando las distintas variables numéricas. Para ello ejecutamos:
 
 ```{r}
 library(factoextra);library(FactoMineR);library(ggrepel)
