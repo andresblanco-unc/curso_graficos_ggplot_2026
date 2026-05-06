@@ -94,7 +94,7 @@ Vemos que para ambos casos las variable presentan un comportamiento normal de ac
 
 Si quisiéramos hacer una transformación de nuestros datos, en R lo podemos hacer directamente:
 
-```{r eval=FALSE out.width="50%", fig.align='center'}
+```{r eval=FALSE}
 shapiro.test(log(PEJERREY$peso_g+1)) # convertimos al logaritmo en base 10
 
 qqnorm(log(PEJERREY$peso_g+1))
