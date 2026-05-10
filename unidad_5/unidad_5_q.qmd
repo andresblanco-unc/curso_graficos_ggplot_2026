@@ -116,11 +116,11 @@ soja_paises %>%
 
 El desafío consiste en lograr graficos en los cuales:
 
-- Los elementos estén en un orden determinado que queramos.
+-   Los elementos estén en un orden determinado que queramos.
 
-- Se indique en cada rectángulo el valor parcial.
+-   Se indique en cada rectángulo el valor parcial.
 
-- Se visualice el acumulado porcentual.
+-   Se visualice el acumulado porcentual.
 
 Para ello vamos a hacer una serie de transformaciones de nuestra base de datos utilizando pipes (%\>%). Veamos cómo hacerlo y generar el objeto `soja_apilado`:
 
@@ -143,15 +143,15 @@ soja_apilado <- soja_paises %>%
 
 Repasemos qué hace cada línea de código:
 
-- `filter`: filtramos por los años que están en el objeto, y eliminamos World.
+-   `filter`: filtramos por los años que están en el objeto, y eliminamos World.
 
-- `mutate + factor` : permite reorganizar los niveles del factor como queramos. Luego se graficarán en ese orden.
+-   `mutate + factor` : permite reorganizar los niveles del factor como queramos. Luego se graficarán en ese orden.
 
-- `group_by` : criterio de agrupamiento para los cálculos.
+-   `group_by` : criterio de agrupamiento para los cálculos.
 
-- `arrange` : los datos se ordenarán por año y por la producción.
+-   `arrange` : los datos se ordenarán por año y por la producción.
 
-- 2° `mutate` : calcula el porcentaje de producción del total y luego los acumulados parciales donde irán las etiquetas en cada gráfico (por eso los llamo *label*). El cálculo lo hace siguiendo el criterio de agrupamiento de `group_by` .
+-   2° `mutate` : calcula el porcentaje de producción del total y luego los acumulados parciales donde irán las etiquetas en cada gráfico (por eso los llamo *label*). El cálculo lo hace siguiendo el criterio de agrupamiento de `group_by` .
 
 Repasemos como quedó la base de datos:
 
@@ -203,8 +203,8 @@ Realice un gráfico de barras apiladas absoluto y porcentual donde se visualice 
 
 También puede resultarnos de utilidad combinar gráficos de dos tipos diferentes en mismo gráfico utilizando diferentes bases de datos. Esta opción es muy útil y sencilla de utilizar, sin embargo hay un par de condiciones a cumplir:
 
-- el eje *x* debe ser el mismo.
-- el eje *y* también debe ser el mismo, o al menos ser "compatible" en escala, o involucrar un eje secundario. Veremos ambas variantes.
+-   el eje *x* debe ser el mismo.
+-   el eje *y* también debe ser el mismo, o al menos ser "compatible" en escala, o involucrar un eje secundario. Veremos ambas variantes.
 
 Una vez cumplidas estas condiciones, es solo cuestión de usar nuestra creatividad para crear el mejor gráfico. Supongamos como ejemplo que queremos comparar el rendimiento de la soja en Argentina contra el promedio mundial a lo largo de los años. Podemos hacer un gráfico de columnas clasificando por región:
 
@@ -345,11 +345,11 @@ Estas funciones tienen diferentes usos. Como vimos, `pivot_wider` puede servirno
 
 Realice un gráfico en el que se observe qué porcentaje de la producción global y de la superficie global sembrada representa Argentina. Para ello:
 
-- seleccione las columnas de interés
-- una producción y superficie en una única columna
-- divida Argentina y Mundo en dos columnas
-- calcule la proporción que representa Argentina del global y con ella el porcentaje
-- grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
+-   seleccione las columnas de interés
+-   una producción y superficie en una única columna
+-   divida Argentina y Mundo en dos columnas
+-   calcule la proporción que representa Argentina del global y con ella el porcentaje
+-   grafique aplicando como criterio de clasificación del color la columna que especifica si se trata de producción o superficie.
 
 ### Actividad 5.c
 

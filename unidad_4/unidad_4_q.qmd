@@ -98,6 +98,7 @@ Una segunda opción es el uso de Devices. Esta opción consiste en un código in
 
 ```{r eval=FALSE}
 jpeg(file = "mi_grafico.jpg",
+     units = "cm",
       width = 12, height = 10, #ancho y alto
      quality = 95, #grado de no-compresión
      res = 300) #resolución en puntos por pulgada
@@ -156,7 +157,7 @@ ggplot(datos_peces,
 
 Como vemos, como todos los parámetros de clasificación responden al mismo factor, la leyenda es una sola.
 
-También se puede clasificar por tamaño en el caso de una variable continua, generará una escala automática.
+También se puede clasificar por una variable continua, lo que generará una escala de intervalos automática.
 
 ```{r out.width="100%", fig.align='center'}
 # clasificación continua
@@ -248,9 +249,9 @@ G3
 
 R permite la utilización de una gran cantidad de colores diferentes (ver [Colors in R](https://r-charts.com/colors/)). Se pueden modificar los colores de casi todos los objetos en un gráfico, aquí nos centraremos en contornos y rellenos de nuestros elementos que representan los datos. Como regla general, si nuestro *geom* admite relleno este se modifica con el parámetro *fill*, mientras que *col* modificará el borde. Si no se admite relleno (gráficos de líneas o puntos), solo utilizaremos *col*. Cómo modificamos los colores varía un poco según diferentes casos:
 
-- Si el color es el mismo para todos, se modifica dentro de los parámetros del *geom*. Por ejemplo: `geom_col(col= "black", fill= "red")` (borde negro, relleno rojo para todas las columnas).
+-   Si el color es el mismo para todos, se modifica dentro de los parámetros del *geom*. Por ejemplo: `geom_col(col= "black", fill= "red")` (borde negro, relleno rojo para todas las columnas).
 
-- Si debemos modificar el color o el relleno según un criterio de clasificación (es decir que seteamos el parámetro que clasifica en el aes()) usaremos el comando `scale_colour_manual(values=c("color1", "color2", ....))` para establecer manualmente los colores. Lo mismo para el relleno pero será `scale_fill_manual(values=c("color1", "color2", ....))`. Es importante destacar que la cantidad de colores debe coincidir con los niveles del factor en cuestión.
+-   Si debemos modificar el color o el relleno según un criterio de clasificación (es decir que seteamos el parámetro que clasifica en el aes()) usaremos el comando `scale_colour_manual(values=c("color1", "color2", ....))` para establecer manualmente los colores. Lo mismo para el relleno pero será `scale_fill_manual(values=c("color1", "color2", ....))`. Es importante destacar que la cantidad de colores debe coincidir con los niveles del factor en cuestión.
 
 Veamos un ejemplo donde combinamos lo visto hasta ahora:
 
@@ -328,7 +329,7 @@ G2 + facet_nested(. ~ especie + sexo) # cada nivel de especie se divide por sexo
 
 ## Actividad 4.c
 
-Represente los dos modelos calculados en la actividad 3.a. en un solo gráfico de barras aplicando una división del panel gráfico por genotipo.
+Represente los dos modelos calculados en la actividad 3.a.2 en un solo gráfico de barras aplicando una división del panel gráfico por temporada.
 
 ## Definiendo la estética de nuestros gráficos
 
@@ -578,7 +579,11 @@ ggplot(data = JENYNSIA,
 
 ## Actividad 4.e
 
-Exporte los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera: - En una fila de todo el ancho de la figura, el modelo de regresión de la actividad 2.c. - En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano.
+Agrupe los gráficos que realizó en la actividad 4.b. combinados de la siguiente manera:
+
+-   En una fila de todo el ancho de la figura, el modelo de regresión lel peso con la longitud de peces (actividad 2.c).
+
+-   En una segunda fila un gráfico de barras del modelo para invierno y un Boxplot para verano (actividades 3.b y 3.c).
 
 Coloque etiquetas a cada gráfico y unifique leyendas si corresponde.
 

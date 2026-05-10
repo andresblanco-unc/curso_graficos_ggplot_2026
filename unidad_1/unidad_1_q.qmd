@@ -31,12 +31,12 @@ Por supuesto este apartado es totalmente subjetivo y (al igual que todo este esc
 
 De ahí en más, presenta muchas virtudes:
 
-- En primer lugar es software libre, al acceso de todos y multiplataforma.
-- Se usa en investigación en todas partes del mundo, lo que nos permite realizar intercambios con otros investigadores, mandar scripts a nuestros directores, colegas, consultar análisis de otros.
-- En lo personal, nos facilita seguir paso a paso cómo analizamos nuestros propios datos. Pongamos por caso que luego de 2 años queremos revisar unos datos que ya habíamos analizado y que nos quedaron colgados...acá podemos ver paso a paso todo lo que hicimos (también es cierto que si seguimos avanzando en el programa, nuestra forma de escritura habrá mutado, pero eso no lo hará menos entendible).
-- Otra ventaja, relacionada a la anterior, es la posibilidad de introducir comentarios en nuestros scripts. Todo lo que aparezca a la derecha del signo `#` en una línea no formará parte de la corrida. Esto nos permite agregar anotaciones, incluso resultados, hacernos recordatorios, silenciar partes del script que no queramos que se ejecuten, etc.
-- La esencia de R es la capacidad de repetición. Retomando lo que mencioné como una supuesta desventaja (pero que no lo era), una vez que logramos un gráfico (puede ser también un comando, pero vale el ejemplo) que estéticamente nos agrada, es muy sencillo extrapolar esa apariencia a otro gráfico, aún de diferente tipo. Por lo tanto, todo ese tiempo que nos llevó armarlo, es inversión y aprendizaje para que la siguiente vez todo sea más rápido.
-- El uso de funciones: relacionado al ítem anterior, y una vez que tengamos algo de manejo, podemos armar las funciones que nosotros queramos reuniendo los análisis que queramos ver y simplificar los comandos para que en una sola línea generemos mucha información.
+-   En primer lugar es software libre, al acceso de todos y multiplataforma.
+-   Se usa en investigación en todas partes del mundo, lo que nos permite realizar intercambios con otros investigadores, mandar scripts a nuestros directores, colegas, consultar análisis de otros.
+-   En lo personal, nos facilita seguir paso a paso cómo analizamos nuestros propios datos. Pongamos por caso que luego de 2 años queremos revisar unos datos que ya habíamos analizado y que nos quedaron colgados...acá podemos ver paso a paso todo lo que hicimos (también es cierto que si seguimos avanzando en el programa, nuestra forma de escritura habrá mutado, pero eso no lo hará menos entendible).
+-   Otra ventaja, relacionada a la anterior, es la posibilidad de introducir comentarios en nuestros scripts. Todo lo que aparezca a la derecha del signo `#` en una línea no formará parte de la corrida. Esto nos permite agregar anotaciones, incluso resultados, hacernos recordatorios, silenciar partes del script que no queramos que se ejecuten, etc.
+-   La esencia de R es la capacidad de repetición. Retomando lo que mencioné como una supuesta desventaja (pero que no lo era), una vez que logramos un gráfico (puede ser también un comando, pero vale el ejemplo) que estéticamente nos agrada, es muy sencillo extrapolar esa apariencia a otro gráfico, aún de diferente tipo. Por lo tanto, todo ese tiempo que nos llevó armarlo, es inversión y aprendizaje para que la siguiente vez todo sea más rápido.
+-   El uso de funciones: relacionado al ítem anterior, y una vez que tengamos algo de manejo, podemos armar las funciones que nosotros queramos reuniendo los análisis que queramos ver y simplificar los comandos para que en una sola línea generemos mucha información.
 
 Por supuesto que todas estas ventajas y desventajas han sufrido grandes modificaciones desde la irrupción de la inteligencia artificial. Hoy en día es muy fácil armar funciones complejas, gráficos muy avanzados y scripts infinitos sin tener grandes conocimientos. El objetivo de este curso es sentar las bases para que dicho uso sea medido y comprendido, además de poder realizar modificaciones manuales que creamos convenientes. En este sentido, es una invitación de este curso intentar trabajarlo sin la ayuda de la IA, aunque más no sea la última vez que trabajemos de esta forma.
 
@@ -62,9 +62,9 @@ Al abrir el programa lo primero que destaca es que se encuentra dividido en 4 ve
 
 4.  Ventana 4 - gráficos, paquetes y ayuda: abajo a la derecha. Usaremos 3 de las pestañas:
 
-- *Plots*: aquí visualizaremos todos los gráficos que vayamos generando. Nos permite mediante las flechas de arriba a la izquierda ir viendo también los gráficos anteriores. El icono Zoom nos facilita la visualización externa del gráfico que estemos viendo. Además presenta opciones de exportación.
-- *Packages*: aquí podemos visualizar la lista completa de paquetes que tenemos instalados. Si tildamos uno lo activamos (equivalente al comando `library`, ver más adelante). Si tildamos en *Install* podemos agregar nuevos paquetes que estén en el CRAN (base de datos de librerías).
-- *Help*: como bien dice el nombre es la ventana de ayuda. Súper útil y de consulta constante. Allí podemos ver las descripciones que escribieron los creadores de cada función y/o paquete que usemos.
+-   *Plots*: aquí visualizaremos todos los gráficos que vayamos generando. Nos permite mediante las flechas de arriba a la izquierda ir viendo también los gráficos anteriores. El icono Zoom nos facilita la visualización externa del gráfico que estemos viendo. Además presenta opciones de exportación.
+-   *Packages*: aquí podemos visualizar la lista completa de paquetes que tenemos instalados. Si tildamos uno lo activamos (equivalente al comando `library`, ver más adelante). Si tildamos en *Install* podemos agregar nuevos paquetes que estén en el CRAN (base de datos de librerías).
+-   *Help*: como bien dice el nombre es la ventana de ayuda. Súper útil y de consulta constante. Allí podemos ver las descripciones que escribieron los creadores de cada función y/o paquete que usemos.
 
 Como se ve RStudio nos permite realizar diversas acciones de forma gráfica, sin necesidad de utilizar código. Mi postura en general es dejar escrito en nuestro script la mayor cantidad de pasos posibles, ya que todo lo que hagamos de forma gráfica no nos queda disponible cuando volvamos a ver nuestro archivo. En este sentido, la instalación de paquetes o las búsquedas de ayuda no es algo que necesitemos en un futuro en nuestro script y podemos hacerlo de forma gráfica. Pero, contrariamente, la carga de la base de datos, paquetes, exportación de figuras, nos resultará de utilidad dejarlo plasmado en el escrito.
 
@@ -78,11 +78,11 @@ Lo primero que hay que hacer un vez ingresados en RStudio es crear un nuevo scri
 
 Todo script de trabajo tiene una estructura similar, la que yo utilizo es:
 
-- Carga de las librerías.
-- Carga de la base de datos.
-- Creación de las databases necesarias.
-- Armado de las funciones necesarias (si es que las tuviéramos).
-- Análisis de los datos separados por títulos.
+-   Carga de las librerías.
+-   Carga de la base de datos.
+-   Creación de las databases necesarias.
+-   Armado de las funciones necesarias (si es que las tuviéramos).
+-   Análisis de los datos separados por títulos.
 
 Los títulos son marcas que hacemos para volver sencillamente a otras partes de nuestro script (tengamos en cuenta que fácilmente se superan las 1000 líneas). Para introducir un título (o marcador) colocamos la palabra clave como un comentario y agregamos una serie de signos - a la derecha. Por ejemplo:
 
@@ -187,25 +187,25 @@ head(datos_peces)
 
 Para ver la tabla completa, se debe tildar en el nombre del objeto en la ventana 3. Aprovechando que tenemos la tabla a nuestra vista, daré aquí una breve descripción de los datos. Esta base de datos contiene registros morfométricos, fisiológicos y ambientales de peces colectados en tres lagunas pampeanas de la región central de Argentina. Se incluyen tres especies nativas con rangos de talla muy distintos, lo que la hace especialmente útil para explorar relaciones alométricas, correlaciones entre variables continuas y comparaciones entre grupos. Las variables registradas son:
 
-- **id:** Identificador numérico único de cada individuo.
+-   **id:** Identificador numérico único de cada individuo.
 
-- **especie:** Especie a la que pertenece el individuo (*Odontesthes bonariensis*, *Jenynsia multidentata* o *Cichlasoma dimerus*).
+-   **especie:** Especie a la que pertenece el individuo (*Odontesthes bonariensis*, *Jenynsia multidentata* o *Cichlasoma dimerus*).
 
-- **sitio:** Laguna de muestreo (Laguna Norte, Laguna Sur o Laguna Central).
+-   **sitio:** Laguna de muestreo (Laguna Norte, Laguna Sur o Laguna Central).
 
-- **sexo:** Sexo del individuo (M/F).
+-   **sexo:** Sexo del individuo (M/F).
 
-- **temporada:** Temporada de muestreo (Verano o Invierno).
+-   **temporada:** Temporada de muestreo (Verano o Invierno).
 
-- **longitud_cm:** Longitud total del pez en centímetros.
+-   **longitud_cm:** Longitud total del pez en centímetros.
 
-- **peso_g:** Peso corporal en gramos. Se relaciona con la longitud mediante una función alométrica (W = a·L\^b).
+-   **peso_g:** Peso corporal en gramos. Se relaciona con la longitud mediante una función alométrica (W = a·L\^b).
 
-- **temperatura_C:** Temperatura del agua en el momento del muestreo, en °C.
+-   **temperatura_C:** Temperatura del agua en el momento del muestreo, en °C.
 
-- **transparencia_cm:** Transparencia del agua medida con disco de Secchi, en centímetros.
+-   **transparencia_cm:** Transparencia del agua medida con disco de Secchi, en centímetros.
 
-- **cortisol_ugdL:** Concentración plasmática de cortisol en µg/dL, utilizada como indicador de estrés fisiológico.
+-   **cortisol_ugdL:** Concentración plasmática de cortisol en µg/dL, utilizada como indicador de estrés fisiológico.
 
 Siguiendo con el análisis de nuestra base de datos, podemos ver un resumen de nuestra base o hacerle "preguntas" a R sobre la base de datos. Al escribir "\$" a continuación de un objeto podemos ver las columnas individuales. Por ejemplo:
 
