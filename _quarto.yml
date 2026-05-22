@@ -41,6 +41,7 @@ format:
     toc: true
     toc-location: left
     toc-depth: 3
+    toc-expand: 3
     toc-title: "Contenidos"
     number-sections: true
     number-depth: 3
