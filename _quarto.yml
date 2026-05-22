@@ -45,6 +45,4 @@ format:
     toc-title: "Contenidos"
     number-sections: true
     number-depth: 3
-    
-
 editor: visual

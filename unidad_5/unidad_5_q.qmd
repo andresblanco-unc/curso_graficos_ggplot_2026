@@ -9,6 +9,7 @@ format:
     toc-location: left
     #number-sections: true
     toc-title: "Contenidos"
+    toc-expand: 3
 ---
 
 ::: {style="text-align: right;"}
